@@ -68,7 +68,7 @@ class NotificationList(Widget.Box):
         return widgets
 
 
-class NotificationCenter(Widget.Box):
+class NotificationPanel(Widget.Box):
     def __init__(self):
         header = Widget.Box(
             css_classes=["header"],

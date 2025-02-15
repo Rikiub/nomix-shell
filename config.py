@@ -3,8 +3,9 @@ from ignis.app import IgnisApp
 from ignis.utils import Utils
 
 from modules.bar import Bar
-from modules.control import ControlPanel
+from modules.control_center import ControlCenter
 from modules.launcher import Launcher
+from modules.notification_center import NotificationCenter
 from modules.notification_popup import NotificationPopup
 from modules.osd import OSD
 
@@ -17,7 +18,8 @@ Utils.FileMonitor(
 )
 
 Launcher()
-ControlPanel(valign="start", halign="end")
+ControlCenter(valign="start", halign="end")
+NotificationCenter()
 OSD()
 
 for i in range(Utils.get_n_monitors()):

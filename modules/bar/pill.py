@@ -113,5 +113,5 @@ class StatusPill(Widget.Button):
                 ]
             ),
             css_classes=["status-pill"],
-            on_click=lambda _: app.toggle_window(WindowName.control),
+            on_click=lambda _: app.toggle_window(WindowName.control_center),
         )

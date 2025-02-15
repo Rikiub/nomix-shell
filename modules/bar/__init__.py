@@ -4,6 +4,7 @@ from ignis.widgets import Widget
 from modules.bar.clock import Clock
 from modules.bar.keyboard import KeyboardLayout
 from modules.bar.mpris import Mpris
+from modules.bar.notification import NotificationIcon
 from modules.bar.pill import StatusPill
 from modules.bar.systemtray import SystemTray
 from modules.bar.workspaces import Workspaces
@@ -51,6 +52,7 @@ class Bar(Widget.Window):
                 SystemTray(),
                 Widget.Separator(),
                 KeyboardLayout(),
+                NotificationIcon(),
                 StatusPill(),
             ],
             spacing=15,

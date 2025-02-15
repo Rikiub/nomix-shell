@@ -1,0 +1,33 @@
+.notification-center {
+    min-width: 400px;
+    min-height: 500px;
+
+    .header {
+        font-weight: bold;
+        margin: 10px;
+    }
+
+    .clear-all {
+        padding: 7px 15px;
+        border-radius: 12px;
+    }
+
+    .dnd {
+        padding: 5px;
+        
+        label {
+            margin: 0 7px;
+        }
+
+    }
+
+    .info-label {
+        color: var(--color-text-muted);
+    }
+
+    .notification {
+        margin: 6px;
+        border: unset;
+        box-shadow: unset;
+    }
+}

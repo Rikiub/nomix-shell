@@ -205,7 +205,7 @@ class Launcher(PopupWindow):
         super().__init__(
             namespace=WindowName.launcher,
             setup=lambda self: self.connect("notify::visible", self._on_open),
-            overlays=[main_box],
+            child=[main_box],
         )
 
     def update_apps(self):

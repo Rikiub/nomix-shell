@@ -1,23 +1,4 @@
-.control {
-    background-color: var(--color-background);
-    box-shadow: var(--shadow);
-
-    border: var(--border);
-    border-radius: 12px;
-
-    margin: 10px;
-
-    min-width: 400px;
-    min-height: 650px;
-
-    padding: 20px;
-
-    button {
-        margin: 0 5px;
-        padding: 4px 20px;
-        border-radius: 8px;
-    }
-
+.control-center {
     .powermenu-button {
         padding: 8px 10px;
         border-radius: 100%;
@@ -30,37 +11,6 @@
         button {
             all: unset;
         }
-    }
-}
-
-.notification-center {
-    .header {
-        font-weight: bold;
-        margin: 10px;
-    }
-
-    .clear-all {
-        padding: 7px 15px;
-        border-radius: 12px;
-    }
-
-    .dnd {
-        padding: 5px;
-        
-        label {
-            margin: 0 7px;
-        }
-
-    }
-
-    .info-label {
-        color: var(--color-text-muted);
-    }
-
-    .notification {
-        margin: 6px;
-        border: unset;
-        box-shadow: unset;
     }
 }
 

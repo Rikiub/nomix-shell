@@ -1,20 +1,19 @@
-from __future__ import annotations
-
 from typing import Callable
 
-from ignis.app import IgnisApp
 from ignis.base_widget import BaseWidget
 from ignis.widgets import Widget
 
-app = IgnisApp.get_default()
-
+from modules.types import ALIGN
 
 class PopupWindow(Widget.Window):
     def __init__(
         self,
         namespace: str,
-        overlays: list[BaseWidget] = [],
+        valign: ALIGN = "start",
+        halign: ALIGN = "center",
         on_close: Callable | None = None,
+        css_classes: list[str] = [],
+        child: list[BaseWidget] = [],
         **kwargs,
     ):
         self._on_close = on_close
@@ -34,12 +33,24 @@ class PopupWindow(Widget.Window):
                     on_click=lambda _: self.set_visible(False),
                     css_classes=["unset"],
                 ),
-                overlays=overlays,
+                overlays=[
+                    Widget.Box(
+                        css_classes=["popup-window"] + css_classes,
+                        valign=valign,
+                        halign=halign,
+                        vertical=True,
+                        child=child,
+                    )
+                ],
             ),
             **kwargs,
         )
 
         self.connect(
             "notify::visible",
-            lambda *_: not self.visible and self._on_close and self._on_close(),
+            lambda *_: self._exit(),
         )
+
+    def _exit(self):
+        if not self.visible and self._on_close:
+            self._on_close()

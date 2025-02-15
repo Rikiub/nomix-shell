@@ -3,7 +3,8 @@ from typing import Literal
 
 
 class WindowName(str, Enum):
-    control = "control"
+    notification_center = "notification-center"
+    control_center = "control-center"
     launcher = "launcher"
     osd = "osd"
 

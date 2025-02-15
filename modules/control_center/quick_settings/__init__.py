@@ -1,8 +1,8 @@
 from ignis.services.network import NetworkService
 from ignis.widgets import Widget
 
-from modules.control.quick_settings.night import NightLightQS
-from modules.control.quick_settings.vpn import vpn_control
+from modules.control_center.quick_settings.night import NightLightQS
+from modules.control_center.quick_settings.vpn import vpn_control
 
 from .bluetooth import bluetooth_control
 from .dark import DarkModeQS
