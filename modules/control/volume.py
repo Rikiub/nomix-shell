@@ -3,6 +3,7 @@ from typing import Literal
 from ignis.services.audio import AudioService, Stream
 from ignis.widgets import Widget
 
+from user_options import user_options
 from widgets.menu_devices import DeviceItem, DeviceMenu
 from widgets.stream_slider import StreamVolume
 
@@ -54,7 +55,7 @@ class StreamMenu(DeviceMenu):
                 lambda value: [StreamItem(i, stream_type) for i in value],
             ),
             settings_label="Sound Settings",
-            settings_command="pavucontrol",
+            settings_command=user_options.control.sound_app,
         )
 
 

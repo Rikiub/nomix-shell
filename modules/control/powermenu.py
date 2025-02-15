@@ -1,4 +1,5 @@
 from typing import Callable
+
 from ignis.services.hyprland import HyprlandService
 from ignis.services.niri import NiriService
 from ignis.utils.exec_sh import exec_sh_async

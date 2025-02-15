@@ -1,7 +1,8 @@
 from ignis.services.network import NetworkService, WifiAccessPoint, WifiDevice
 
 from modules.control.quick_settings.qsbutton import QSButton
-from widgets.menu_devices import DeviceMenu, DeviceItem
+from user_options import user_options
+from widgets.menu_devices import DeviceItem, DeviceMenu
 from widgets.toggle_box import ToggleBox
 
 network = NetworkService.get_default()
@@ -33,7 +34,7 @@ class WifiMenu(DeviceMenu):
                 transform=lambda value: [WifiItem(i) for i in value],
             ),
             settings_label="Network Settings",
-            settings_command="nm-connection-editor",
+            settings_command=user_options.control.network_app,
         )
 
 

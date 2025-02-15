@@ -3,10 +3,10 @@ from ignis.app import IgnisApp
 from ignis.utils import Utils
 
 from modules.bar import Bar
+from modules.control import ControlPanel
 from modules.launcher import Launcher
 from modules.notification_popup import NotificationPopup
 from modules.osd import OSD
-from modules.control import ControlPanel
 
 app = IgnisApp.get_default()
 app.apply_css(f"{Utils.get_current_dir()}/style.scss")

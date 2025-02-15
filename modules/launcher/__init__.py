@@ -10,7 +10,7 @@ from ignis.services.applications import (
 from ignis.utils.exec_sh import exec_sh, exec_sh_async
 from ignis.widgets import Widget
 
-from modules.windows import WindowName
+from modules.types import ALIGN, WindowName
 from widgets.popup_window import PopupWindow
 
 app = IgnisApp.get_default()
@@ -138,7 +138,13 @@ class SearchWebButton(Widget.Button):
 
 
 class Launcher(PopupWindow):
-    def __init__(self, grid: bool = True, grid_columns: int = 4):
+    def __init__(
+        self,
+        valign: ALIGN = "start",
+        halign: ALIGN = "end",
+        grid: bool = False,
+        grid_columns: int = 4,
+    ):
         self.all_apps: list[LauncherAppItem] = []
         self.grid = grid
 
@@ -166,8 +172,8 @@ class Launcher(PopupWindow):
 
         main_box = Widget.Box(
             vertical=True,
-            valign="start",
-            halign="center",
+            valign=valign,
+            halign=halign,
             css_classes=["launcher"],
             child=[
                 Widget.Box(
@@ -183,7 +189,6 @@ class Launcher(PopupWindow):
                 ),
                 Widget.Scroll(
                     height_request=430,
-                    css_classes=["launcher-scroll"],
                     child=Widget.EventBox(
                         on_scroll_up=lambda _: self._entry.grab_focus(),
                         on_scroll_down=lambda _: self._entry.grab_focus(),
@@ -225,7 +230,7 @@ class Launcher(PopupWindow):
         else:
             apps = applications.search(applications.apps, query)[:10]
 
-            if apps == []:
+            if not apps:
                 self._app_list.child = [SearchWebButton(query)]
             else:
                 self._app_list.child = [LauncherAppItem(i, self.grid) for i in apps]

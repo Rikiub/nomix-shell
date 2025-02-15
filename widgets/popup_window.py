@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Callable
+
 from ignis.app import IgnisApp
 from ignis.base_widget import BaseWidget
 from ignis.widgets import Widget

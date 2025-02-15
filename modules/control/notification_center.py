@@ -1,6 +1,6 @@
 from gi.repository import GLib  # type: ignore
-from ignis.services.notifications import Notification, NotificationService
 from ignis.options import options
+from ignis.services.notifications import Notification, NotificationService
 from ignis.utils import Utils
 from ignis.widgets import Widget
 

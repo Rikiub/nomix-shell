@@ -1,5 +1,6 @@
 from ignis.services.bluetooth import BluetoothDevice, BluetoothService
 
+from user_options import user_options
 from widgets.menu_devices import DeviceItem, DeviceMenu
 from widgets.toggle_box import ToggleBox
 
@@ -34,7 +35,7 @@ class BluetoothMenu(DeviceMenu):
                 "devices", lambda value: [BluetoothItem(i) for i in value]
             ),
             settings_label="Bluetooth Settings",
-            settings_command="overskride",
+            settings_command=user_options.control.bluetooth_app,
         )
 
 

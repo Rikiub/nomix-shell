@@ -1,5 +1,6 @@
 from ignis.services.network import EthernetDevice, NetworkService
 
+from user_options import user_options
 from widgets.menu_devices import DeviceItem, DeviceMenu
 
 from .qsbutton import QSButton
@@ -30,7 +31,7 @@ class EthernetMenu(DeviceMenu):
                 lambda value: [EthernetItem(i) for i in value],
             ),
             settings_label="Network Settings",
-            settings_command="nm-connection-editor",
+            settings_command=user_options.control.network_app,
         )
 
 

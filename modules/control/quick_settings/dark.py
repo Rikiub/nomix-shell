@@ -1,6 +1,6 @@
 from gi.repository import Gio  # type: ignore
-
 from ignis.utils.exec_sh import exec_sh
+
 from .qsbutton import QSButton
 
 

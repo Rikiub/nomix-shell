@@ -3,9 +3,10 @@ from ignis.options import options
 from ignis.services.audio import AudioService
 from ignis.services.bluetooth import BluetoothDevice, BluetoothService
 from ignis.services.network import Ethernet, NetworkService, Wifi
+from ignis.services.upower import UPowerService
 from ignis.widgets import Widget
 
-from modules.windows import WindowName
+from modules.types import WindowName
 
 __all__ = ["StatusPill"]
 
@@ -14,6 +15,7 @@ app = IgnisApp.get_default()
 network = NetworkService.get_default()
 bluetooth = BluetoothService.get_default()
 audio = AudioService.get_default()
+battery = UPowerService.get_default()
 
 
 class IndicatorIcon(Widget.Icon):
@@ -88,6 +90,13 @@ class DNDIcon(IndicatorIcon):
             visible=options.notifications.bind("dnd"),
         )
 
+class BatteryIcon(IndicatorIcon):
+    def __init__(self):
+        super().__init__(
+            image=battery.bind("batteries", lambda v: v and v[0].icon_name),
+            visible=battery.bind("batteries", lambda v: bool(v)),
+        )
+
 
 class StatusPill(Widget.Button):
     def __init__(self):
@@ -96,10 +105,11 @@ class StatusPill(Widget.Button):
                 child=[
                     WifiIcon(),
                     EthernetIcon(),
-                    BluetoothIcon(),
                     VpnIcon(),
+                    BluetoothIcon(),
                     VolumeIcon(),
                     DNDIcon(),
+                    BatteryIcon(),
                 ]
             ),
             css_classes=["status-pill"],

@@ -1,6 +1,7 @@
 from ignis.services.network import NetworkService, VpnConnection
 from ignis.widgets import Widget
 
+from user_options import user_options
 from widgets.menu_devices import DeviceItem, DeviceMenu
 
 from .qsbutton import QSButton
@@ -32,7 +33,7 @@ class VpnMenu(DeviceMenu):
                 transform=lambda value: [VpnItem(i) for i in value],
             ),
             settings_label="Network Settings",
-            settings_command="nm-connection-editor",
+            settings_command=user_options.control.network_app,
         )
 
 
