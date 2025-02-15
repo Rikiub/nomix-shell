@@ -1,0 +1,33 @@
+@use "scss/bar";
+@use "scss/panel";
+@use "scss/launcher";
+@use "scss/notification";
+
+/* Global properties */
+:root {
+    --color-background: var(--window-bg-color);
+    --color-background-secondary: var(--sidebar-bg-color);
+
+    --color-border: var(--headerbar-shade-color);
+    --border: 2px solid var(--color-border);
+
+    --shadow: 0 0 4px 2px var(--color-border);
+
+    --color-accent: var(--accent-bg-color);
+    --color-accent-muted: color-mix(in srgb, var(--color-accent) 10%, var(--color-background));
+
+    --color-text: var(--headerbar-fg-color);
+    --color-text-muted: color-mix(in srgb, var(--color-text) 30%, gray);
+    --color-text-accent: var(--accent-fg-color);
+
+    --color-hover: color-mix(in srgb, var(--color-background) 60%, var(--color-accent));
+}
+
+/* Defaults */
+:root {
+    color: var(--color-text);
+}
+
+.unset {
+    background-color: rgb(0 0 0 / 0.1);
+}

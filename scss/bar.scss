@@ -1,0 +1,130 @@
+.bar {
+    background-color: var(--color-background);
+
+    border: var(--border);
+    border-radius: 15px;
+
+    margin: 0 1rem;
+    padding: 0.3rem 1rem;
+
+    button {
+        background-color: var(--color-background-secondary);
+        border-radius: 0.7rem;
+        padding: 2px 0.7rem;
+
+        &:hover {
+            background-color: var(--color-hover);
+        }
+    }
+
+    .status-pill {
+        background-color: var(--color-accent);
+        color: var(--color-text-accent);
+        padding: 0 10px;
+
+        .indicator-icon {
+            color: var(--color-text-accent);
+        }
+
+        &:hover {
+            background-color: var(--color-accent);
+            transform: scale(1.1);
+        }
+    }
+
+    .workspaces {
+        background-color: var(--color-background-secondary);
+        padding: 0.4rem 1rem;
+        border-radius: 10px;
+
+        .workspace-item {
+            all: unset;
+
+            background-color: color-mix(in srgb, var(--color-accent) 30%, var(--color-background-secondary));
+            padding: 0 0.6rem;
+            border-radius: 100px;
+
+            transition: transform 50ms ease-in-out;
+
+            &:hover {
+                background-color: var(--color-hover);
+                color: var(--color-text-accent);
+                transform: scale(1.1);
+            }
+
+            &.active {
+                background-color: var(--color-accent);
+                color: var(--color-text-accent);
+
+                padding: 0 1rem;
+                border-radius: 20px;
+
+                &:hover {
+                    transform: scale(1.07);
+                }
+            }
+        }
+
+        .enumerated {
+            border-radius: 5px;
+        }
+    }
+
+    .clock {
+        font-size: 1.1rem;
+    }
+
+    .volume {
+        padding: 0 0.6rem;
+        min-width: 50px;
+    }
+
+    .volume-slider trough {
+        background-color: gray;
+
+        min-width: 100px;
+        min-height: 0.3rem;
+        border-radius: 1rem;
+
+        highlight {
+            background-color: var(--color-accent);
+        }
+
+        slider {
+            background-color: var(--color-accent);
+            border-radius: 1rem;
+
+            min-height: 20px;
+            min-width: 20px;
+            margin: -8px;
+        }
+    }
+
+    .tray {
+        background-color: var(--color-background-secondary);
+        padding: 0 10px;
+        border-radius: 10px;
+
+        .tray-item {
+            background-color: unset;
+            padding: 0;
+
+            &:hover {
+                background-color: var(--color-hover);
+            }
+        }
+    }
+
+    /*
+    popover {
+        contents {
+            modelbutton {
+                &:hover,
+                &:focus {
+                    background-color: color-mix(in srgb, var(--color-background) 80%, var(--color-accent));
+                }
+            }
+        }
+    }
+    */
+}
