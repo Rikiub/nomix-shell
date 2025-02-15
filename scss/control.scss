@@ -39,25 +39,28 @@
         margin: 10px;
     }
 
+    .clear-all {
+        padding: 7px 15px;
+        border-radius: 12px;
+    }
+
     .dnd {
-        .dnd-label {
-            margin-right: 10px;
+        padding: 5px;
+        
+        label {
+            margin: 0 7px;
         }
+
     }
 
     .info-label {
         color: var(--color-text-muted);
     }
 
-    .clear-button {
-        padding: 7px 15px;
-        border-radius: 12px;
-    }
-
     .notification {
         margin: 6px;
-        box-shadow: unset;
         border: unset;
+        box-shadow: unset;
     }
 }
 

@@ -27,7 +27,6 @@ class NotificationList(Widget.Box):
             label="Loading notifications...",
             valign="center",
             vexpand=True,
-            css_classes=["notification-center-info-label"],
         )
 
         super().__init__(
@@ -73,28 +72,26 @@ class NotificationCenter(Widget.Box):
     def __init__(self):
         header = Widget.Box(
             css_classes=["header"],
-            hexpand=True,
             child=[
                 Widget.Box(
                     css_classes=["dnd"],
                     halign="start",
                     child=[
-                        Widget.Label(label="Do Not Disturb", css_classes=["dnd-label"]),
                         Widget.Switch(
-                            css_classes=["dnd-switch"],
                             active=options.notifications.bind("dnd"),
                             on_change=lambda x, active: options.notifications.set_dnd(
                                 active
                             ),
                         ),
+                        Widget.Label(label="Do Not Disturb"),
                     ],
                 ),
                 Widget.Button(
-                    child=Widget.Label(label="Clear"),
+                    label="Clear",
+                    on_click=lambda x: notifications.clear_all(),
                     halign="end",
                     hexpand=True,
-                    on_click=lambda x: notifications.clear_all(),
-                    css_classes=["clear-button"],
+                    css_classes=["clear-all"],
                 ),
             ],
         )
