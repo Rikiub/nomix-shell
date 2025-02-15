@@ -141,7 +141,7 @@ class Launcher(PopupWindow):
     def __init__(
         self,
         valign: ALIGN = "start",
-        halign: ALIGN = "end",
+        halign: ALIGN = "center",
         grid: bool = False,
         grid_columns: int = 4,
     ):

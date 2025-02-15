@@ -1,5 +1,7 @@
 from typing import Literal
 
+from modules.types import WindowName
+from ignis.app import IgnisApp
 from ignis.base_service import BaseService
 from ignis.services.hyprland import HyprlandService
 from ignis.services.niri import NiriService
@@ -8,8 +10,10 @@ from ignis.widgets import Widget
 hyprland = HyprlandService.get_default()
 niri = NiriService.get_default()
 
+app = IgnisApp.get_default()
 
-class BaseWorkspace(Widget.EventBox):
+
+class BaseWorkspaces(Widget.EventBox):
     def __init__(
         self, service: BaseService, monitor: str = "", enumerated: bool = False
     ) -> None:
@@ -19,8 +23,9 @@ class BaseWorkspace(Widget.EventBox):
         self.enumerated = enumerated
 
         super().__init__(
-            on_scroll_up=lambda x: self.scroll("up"),
-            on_scroll_down=lambda x: self.scroll("down"),
+            on_scroll_up=lambda _: self.scroll("up"),
+            on_scroll_down=lambda _: self.scroll("down"),
+            on_right_click=lambda _: app.toggle_window(WindowName.launcher),
             css_classes=["workspaces"],
             spacing=5,
             child=self.service.bind(
@@ -66,7 +71,7 @@ class BaseWorkspace(Widget.EventBox):
         self.service.switch_to_workspace(current)
 
 
-class HyprlandWorkspace(BaseWorkspace):
+class HyprlandWorkspace(BaseWorkspaces):
     def __init__(self) -> None:
         super().__init__(hyprland, "")
 
@@ -79,7 +84,7 @@ class HyprlandWorkspace(BaseWorkspace):
         return False
 
 
-class NiriWorkspace(BaseWorkspace):
+class NiriWorkspaces(BaseWorkspaces):
     def __init__(self, monitor: str) -> None:
         super().__init__(niri, monitor)
 
@@ -102,7 +107,7 @@ def Workspaces(monitor: str) -> Widget.EventBox:
     if hyprland.is_available:
         workspace = HyprlandWorkspace()
     elif niri.is_available:
-        workspace = NiriWorkspace(monitor)
+        workspace = NiriWorkspaces(monitor)
     else:
         return Widget.EventBox()
 
