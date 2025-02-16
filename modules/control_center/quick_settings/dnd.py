@@ -7,8 +7,6 @@ notifications = NotificationService.get_default()
 
 
 class DNDQS(QSButton):
-    __gtype_name__ = "DNDButton"
-
     def __init__(self):
         super().__init__(
             label=options.notifications.bind(

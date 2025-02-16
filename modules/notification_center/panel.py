@@ -31,6 +31,7 @@ class NotificationList(Widget.Box):
 
         super().__init__(
             vertical=True,
+            css_classes=["notification-list"],
             child=[loading_notifications_label],
             vexpand=True,
             setup=lambda self: notifications.connect(

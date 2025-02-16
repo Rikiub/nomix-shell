@@ -53,7 +53,6 @@ class PowerButton(Widget.Box):
 
         super().__init__(
             vertical=True,
-            halign="end",
             child=[
                 Widget.Box(
                     hexpand=True,
@@ -62,4 +61,5 @@ class PowerButton(Widget.Box):
                 ),
                 menu,
             ],
+            **kwargs,
         )

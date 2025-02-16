@@ -10,7 +10,6 @@
         }
     }
 
-
     .header {
         font-weight: bold;
         margin-bottom: 15px;
@@ -26,15 +25,15 @@
         label {
             margin: 0 7px;
         }
-
     }
 
     .info-label {
         color: var(--color-text-muted);
     }
-
+    
     .notification {
         margin: 6px 0;
+        margin-right: 20px; /* reserve space for scrollbar */
         border: unset;
         box-shadow: unset;
     }

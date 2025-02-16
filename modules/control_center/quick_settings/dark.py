@@ -1,11 +1,13 @@
 from gi.repository import Gio  # type: ignore
-from ignis.utils.exec_sh import exec_sh
+from ignis.utils.exec_sh import exec_sh_async
 
 from .qsbutton import QSButton
 
 
 class DarkModeQS(QSButton):
     def __init__(self):
+        self.settings = Gio.Settings.new("org.gnome.desktop.interface")
+
         super().__init__(
             label="Dark Style",
             icon_name="display-brightness-symbolic",
@@ -14,7 +16,7 @@ class DarkModeQS(QSButton):
             active=self.is_dark(),
         )
 
-        self.settings = Gio.Settings.new("org.gnome.desktop.interface")
+        exec_sh_async("darkman run")
         self.settings.connect("changed::color-scheme", self.on_change)
 
     def on_change(self, setting: Gio.Settings, key: str):
@@ -25,21 +27,20 @@ class DarkModeQS(QSButton):
 
     def set_light(self):
         self.settings.set_string("color-scheme", "prefer-light")
-        exec_sh("darkman set light")
+        exec_sh_async("darkman set light")
 
         self.set_active(False)
 
     def set_dark(self):
         self.settings.set_string("color-scheme", "prefer-dark")
-        exec_sh("darkman set dark")
+        exec_sh_async("darkman set dark")
 
         self.set_active(True)
 
     def is_dark(self) -> bool:
-        mode: str = exec_sh("darkman get").stdout
-        mode = mode.strip()
+        mode = self.settings.get_string("color-scheme")
 
-        if mode == "dark":
+        if mode == "prefer-dark":
             return True
         else:
             return False

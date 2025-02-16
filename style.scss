@@ -7,7 +7,7 @@
 /* Global properties */
 :root {
     --color-background: var(--window-bg-color);
-    --color-background-hover: oklch(from var(--color-background) calc(l + 5%) c h);
+    --color-background-hover: oklch(from var(--color-background) calc(l + 3%) c h);
     --color-background-secondary: var(--sidebar-bg-color);
     --color-background-secondary-hover: oklch(from var(--color-background-secondary) calc(l + 3%) c h);
 

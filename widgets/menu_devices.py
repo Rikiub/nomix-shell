@@ -28,6 +28,8 @@ class DeviceItem(Widget.Button):
                     ),
                     Widget.Label(
                         label=label,
+                        ellipsize="end",
+                        max_width_chars=35,
                         halign="start",
                         css_classes=["label"],
                     ),
