@@ -1,9 +1,13 @@
 from typing import Callable
 
 from ignis.base_widget import BaseWidget
+from ignis.variable import Variable
 from ignis.widgets import Widget
 
 from modules.types import ALIGN
+
+OPENED_POPUP = Variable("")
+
 
 class PopupWindow(Widget.Window):
     def __init__(
@@ -19,19 +23,19 @@ class PopupWindow(Widget.Window):
         self._on_close = on_close
 
         super().__init__(
-            namespace=namespace,
-            visible=False,
-            popup=True,
-            kb_mode="on_demand",
+            style="background-color: transparent;",
             anchor=["top", "bottom", "left", "right"],
-            css_classes=["window-backdrop"],
+            kb_mode="on_demand",
+            namespace=namespace,
+            popup=True,
+            visible=OPENED_POPUP.bind("value", lambda value: value == namespace),
             child=Widget.Overlay(
                 child=Widget.Button(
+                    css_classes=["window-backdrop"],
                     vexpand=True,
                     hexpand=True,
                     can_focus=False,
-                    on_click=lambda _: self.set_visible(False),
-                    css_classes=["window-backdrop"],
+                    on_click=lambda _: OPENED_POPUP.set_value(""),
                 ),
                 overlays=[
                     Widget.Box(
@@ -48,9 +52,11 @@ class PopupWindow(Widget.Window):
 
         self.connect(
             "notify::visible",
-            lambda *_: self._exit(),
+            lambda *_: self._toggle(),
         )
 
-    def _exit(self):
-        if not self.visible and self._on_close:
+    def _toggle(self):
+        if self.visible:
+            OPENED_POPUP.value = self.namespace
+        elif self._on_close:
             self._on_close()

@@ -3,7 +3,7 @@ from ignis.base_widget import BaseWidget
 from ignis.variable import Variable
 from ignis.widgets import Widget
 
-opened_menu = Variable()
+OPENED_MENU = Variable("")
 
 
 class Menu(Widget.Revealer):
@@ -24,16 +24,16 @@ class Menu(Widget.Revealer):
         super().__init__(
             transition_type="slide_down",
             transition_duration=300,
-            reveal_child=opened_menu.bind("value", lambda value: value == self._name),
+            reveal_child=OPENED_MENU.bind("value", lambda value: value == self._name),
             child=self._box,
             **kwargs,
         )
 
     def toggle(self) -> None:
         if self.reveal_child:
-            opened_menu.value = ""
+            OPENED_MENU.value = ""
         else:
-            opened_menu.value = self._name
+            OPENED_MENU.value = self._name
 
     @GObject.Property
     def box(self) -> Widget.Box:

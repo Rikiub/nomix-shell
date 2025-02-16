@@ -6,7 +6,7 @@ from modules.control_center.brightness import Brightness
 from modules.control_center.quick_settings import QuickSettings
 from modules.control_center.volume import Volume
 from modules.types import ALIGN, WindowName
-from widgets.menu import opened_menu
+from widgets.menu import OPENED_MENU
 from widgets.popup_window import PopupWindow
 from modules.control_center.power import PowerButton
 
@@ -18,7 +18,7 @@ class ControlCenter(PopupWindow):
 
         super().__init__(
             namespace=WindowName.control_center,
-            on_close=lambda: opened_menu.set_value(""),
+            on_close=lambda: OPENED_MENU.set_value(""),
             css_classes=["control-center"],
             valign=valign,
             halign=halign,

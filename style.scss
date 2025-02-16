@@ -32,28 +32,29 @@
 /* Defaults */
 :root {
     color: var(--color-text);
+}
 
-    button {
-        border-radius: var(--border-radius-sm);
-    }
+button {
+    border-radius: var(--border-radius-sm);
+}
 
-    popover contents {
-        border: var(--border);
-        border-radius: var(--border-radius-md);
-        background-color: var(--color-background-secondary);
+popover contents {
+    border: var(--border);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-background-secondary);
 
-        modelbutton {
+    modelbutton {
 
-            &:hover,
-            &:focus {
-                background-color: var(--color-background-secondary-hover);
-            }
+        &:hover,
+        &:focus {
+            background-color: var(--color-background-secondary-hover);
         }
     }
 }
 
 .window-backdrop {
-    background-color: rgb(0 0 0 / 0.1);
+    background-color: oklch(0 0 0 / 0.2);
+    border-radius: 0;
 }
 
 .popup-window {

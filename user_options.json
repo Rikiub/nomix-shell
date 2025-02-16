@@ -1,6 +1,6 @@
 {
     "control_apps": {},
     "night_light": {
-        "enabled": false
+        "enabled": true
     }
 }
