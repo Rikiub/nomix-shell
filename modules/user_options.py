@@ -4,7 +4,14 @@ from modules.types import IGNIS_PATH  # type: ignore
 
 
 class UserOptions(OptionsManager):
-    class ControlSettings(OptionsGroup):
+    class ClockFormat(OptionsGroup):
+        full_date = False
+        week_day = True
+
+        military_time = True
+        seconds = False
+
+    class ControlApps(OptionsGroup):
         network = "nm-connection-editor"
         sound = "pavucontrol"
         bluetooth = "overskride"
@@ -14,7 +21,8 @@ class UserOptions(OptionsManager):
         activate_command = "wlsunset"
         deactivate_command = "pkill wlsunset"
 
-    control_apps = ControlSettings()
+    clock = ClockFormat()
+    control_apps = ControlApps()
     night_light = NightLight()
 
 
