@@ -1,17 +1,22 @@
 from ignis.options_manager import OptionsGroup, OptionsManager
-from gi.repository import GLib  # type: ignore
+
+from modules.types import IGNIS_PATH  # type: ignore
 
 
 class UserOptions(OptionsManager):
-    class ControlCenter(OptionsGroup):
-        network_app = "nm-connection-editor"
-        sound_app = "pavucontrol"
-        bluetooth_app = "overskride"
+    class ControlSettings(OptionsGroup):
+        network = "nm-connection-editor"
+        sound = "pavucontrol"
+        bluetooth = "overskride"
 
-        night_light = False
+    class NightLight(OptionsGroup):
+        enabled = False
+        activate_command = "wlsunset"
+        deactivate_command = "pkill wlsunset"
 
-    control_center = ControlCenter()
+    control_apps = ControlSettings()
+    night_light = NightLight()
 
 
-config_file = f"{GLib.get_user_config_dir()}/ignis/user_options.json"
-user_options = UserOptions(config_file)
+config_file = IGNIS_PATH / "user_options.json"
+user_options = UserOptions(str(config_file))

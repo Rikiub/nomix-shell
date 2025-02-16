@@ -8,13 +8,14 @@ from modules.control_center.volume import Volume
 from modules.types import ALIGN, WindowName
 from widgets.menu import opened_menu
 from widgets.popup_window import PopupWindow
-from widgets.powermenu import PowerMenu
+from modules.control_center.power import PowerButton
 
 app = IgnisApp.get_default()
 
-
 class ControlCenter(PopupWindow):
     def __init__(self, valign: ALIGN = "start", halign: ALIGN = "center"):
+        power = PowerButton(hexpand=True, halign="end")
+
         super().__init__(
             namespace=WindowName.control_center,
             on_close=lambda: opened_menu.set_value(""),
@@ -23,8 +24,14 @@ class ControlCenter(PopupWindow):
             halign=halign,
             child=[
                 Widget.Box(
-                    css_classes=["actions"],
-                    child=[BatteryStatus(), PowerMenu(halign="end", hexpand=True)],
+                    vertical=True,
+                    child=[
+                        Widget.Box(
+                            css_classes=["actions"],
+                            child=[BatteryStatus(), power],
+                        ),
+                        power.menu,
+                    ],
                 ),
                 Volume("speaker"),
                 Brightness(),

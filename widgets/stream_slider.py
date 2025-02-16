@@ -27,7 +27,7 @@ class StreamVolume(Widget.Box):
             hexpand=True,
             child=[
                 Widget.Button(
-                    on_click=lambda self: stream.set_is_muted(not stream.is_muted),
+                    on_click=lambda _: stream.set_is_muted(not stream.is_muted),
                     child=Widget.Box(
                         child=[
                             Widget.Icon(

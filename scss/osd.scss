@@ -1,0 +1,12 @@
+.osd {
+    min-width: 200px;
+
+    background-color: var(--color-background-secondary);
+    color: var(--color-text);
+
+    border: var(--border);
+    border-radius: var(--border-radius-lg);
+
+    padding: 15px 20px;
+    margin: 50px;
+}

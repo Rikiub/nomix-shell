@@ -1,4 +1,5 @@
 @use "scss/bar";
+@use "scss/osd";
 @use "scss/launcher";
 @use "scss/notification";
 @use "scss/control_center";
@@ -51,7 +52,7 @@
     }
 }
 
-.unset {
+.window-backdrop {
     background-color: rgb(0 0 0 / 0.1);
 }
 
@@ -64,4 +65,24 @@
 
     margin: 10px;
     padding: 20px;
+}
+
+.volume-slider trough {
+    background-color: oklch(from var(--color-background-secondary) calc(l - 20%) c h);
+
+    min-width: 100px;
+    min-height: 0.3rem;
+    border-radius: var(--border-radius-lg);
+
+    highlight {
+        background-color: var(--color-accent);
+    }
+
+    slider {
+        background-color: var(--color-accent);
+
+        min-height: 20px;
+        min-width: 20px;
+        margin: -8px;
+    }
 }

@@ -7,7 +7,7 @@ from .qsbutton import QSButton
 class NightLightQS(QSButton):
     def __init__(self):
         def do_toggle():
-            user_options.control_center.night_light = not self.active
+            user_options.night_light.enabled = not self.active
 
         def on_activate(toggle):
             exec_sh_async("wlsunset")
@@ -26,7 +26,7 @@ class NightLightQS(QSButton):
             icon_name="night-light-symbolic",
             on_activate=lambda _: on_activate(True),
             on_deactivate=lambda _: on_deactivate(True),
-            active=user_options.control_center.bind("night_light"),
+            active=user_options.night_light.bind("enabled"),
         )
 
         if self.active:

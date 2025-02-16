@@ -49,15 +49,18 @@ class DeviceMenu(Menu):
     def __init__(
         self,
         name: str,
+        height: int = 130,
         header: BaseWidget | None = None,
         devices: list[DeviceItem] | Binding = [],
         settings_visible: bool = True,
         settings_label: str = "Settings",
         settings_command: str = "",
+        css_classes: list["str"] = [],
+        **kwargs,
     ):
         super().__init__(
             name=name,
-            css_classes=["device-menu"],
+            css_classes=["device-menu"] + css_classes,
             child=[
                 Widget.Box(
                     vertical=True,
@@ -65,7 +68,7 @@ class DeviceMenu(Menu):
                     child=[header if header else Widget.Label(visible=False)],
                 ),
                 Widget.Scroll(
-                    height_request=130,
+                    height_request=height,
                     child=Widget.Box(
                         css_classes=["devices"],
                         vertical=True,
@@ -78,7 +81,7 @@ class DeviceMenu(Menu):
                     child=[
                         Widget.Separator(),
                         Widget.Button(
-                            on_click=lambda x: exec_sh_async(settings_command),
+                            on_click=lambda _: exec_sh_async(settings_command),
                             child=Widget.Box(
                                 css_classes=["settings"],
                                 child=[
@@ -96,4 +99,5 @@ class DeviceMenu(Menu):
                     ],
                 ),
             ],
+            **kwargs,
         )

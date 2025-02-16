@@ -35,7 +35,7 @@ class BluetoothMenu(DeviceMenu):
                 "devices", lambda value: [BluetoothItem(i) for i in value]
             ),
             settings_label="Bluetooth Settings",
-            settings_command=user_options.control_center.bluetooth_app,
+            settings_command=user_options.control_apps.bluetooth,
         )
 
 

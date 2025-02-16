@@ -1,5 +1,6 @@
 {
-    "control_center": {
-        "night_light": true
+    "control_apps": {},
+    "night_light": {
+        "enabled": false
     }
 }

@@ -24,14 +24,14 @@ class PopupWindow(Widget.Window):
             popup=True,
             kb_mode="on_demand",
             anchor=["top", "bottom", "left", "right"],
-            css_classes=["unset"],
+            css_classes=["window-backdrop"],
             child=Widget.Overlay(
                 child=Widget.Button(
                     vexpand=True,
                     hexpand=True,
                     can_focus=False,
                     on_click=lambda _: self.set_visible(False),
-                    css_classes=["unset"],
+                    css_classes=["window-backdrop"],
                 ),
                 overlays=[
                     Widget.Box(

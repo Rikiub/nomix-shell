@@ -14,12 +14,12 @@ class DNDQS(QSButton):
             ),
             icon_name=options.notifications.bind(
                 "dnd",
-                transform=lambda value: "notification-disabled-symbolic"
+                lambda value: "notification-disabled-symbolic"
                 if value
                 else "notification-symbolic",
             ),
-            on_activate=lambda x: self._activate(True),
-            on_deactivate=lambda x: self._activate(False),
+            on_activate=lambda _: self._activate(True),
+            on_deactivate=lambda _: self._activate(False),
             active=options.notifications.bind("dnd"),
         )
 
