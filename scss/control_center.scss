@@ -1,4 +1,27 @@
-.control-center {
+.popup-window.control-center {
+    button {
+        background-color: var(--color-background-secondary);
+
+        &:hover {
+            background-color: var(--color-background-secondary-hover);
+        }
+    }
+
+    .actions {
+        padding: 0 10px;
+        margin: 5px 0;
+    }
+
+    .battery-status {
+        background-color: var(--color-background-secondary);
+        padding: 0 10px;
+        border-radius: var(--border-radius-lg);
+
+        .battery-item {
+            font-weight: bold;
+        }
+    }
+
     .powermenu-button {
         padding: 8px 10px;
         border-radius: 100%;
@@ -6,7 +29,7 @@
 
     .volume-slider {
         padding: 3px 8px;
-        border-radius: 20px;
+        border-radius: var(--border-radius-lg);
 
         button {
             all: unset;
@@ -18,14 +41,14 @@
     background-color: var(--color-background-secondary);
     padding: 10px 20px;
     margin: 10px;
-    border-radius: 20px;
+    border-radius: var(--border-radius-md);
 
     button {
         background-color: inherit;
     }
 
     button:hover {
-        background-color: var(--color-hover);
+        background-color: var(--color-background-secondary-hover);
     }
 
     separator {
@@ -58,7 +81,7 @@
         }
 
         &:hover {
-            background-color: color-mix(in srgb, var(--color-background-secondary) 50%, var(--color-background));
+            background-color: var(--color-background-secondary-hover);
         }
 
         &.active {
@@ -66,7 +89,7 @@
             color: var(--color-text-accent);
 
             &:hover {
-                background-color: color-mix(in srgb, var(--color-accent) 70%, var(--color-background));
+                background-color: var(--color-accent-hover);
             }
         }
     }

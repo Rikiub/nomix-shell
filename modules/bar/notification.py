@@ -1,6 +1,7 @@
 from ignis.app import IgnisApp
 from ignis.widgets import Widget
 from ignis.services.notifications import NotificationService
+from ignis.options import options
 
 from modules.types import WindowName
 
@@ -19,10 +20,18 @@ class NotificationIcon(Widget.Button):
             setup=lambda *_: notification.connect(
                 "new-popup", lambda *_: self._on_new()
             ),
-            tooltip_text="Open notification center",
+            tooltip_text="Notification center",
             child=Widget.Box(
                 child=[
-                    Widget.Icon(image="notification-symbolic", style="margin: 0 3px;"),
+                    Widget.Icon(
+                        image=options.notifications.bind(
+                            "dnd",
+                            lambda v: "notification-disabled-symbolic"
+                            if v
+                            else "notification-symbolic",
+                        ),
+                        style="margin: 0 3px;",
+                    ),
                     self._label,
                 ]
             ),

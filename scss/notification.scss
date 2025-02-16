@@ -3,15 +3,15 @@
 	box-shadow: var(--shadow);
 
 	border: var(--border);
-	border-radius: 12px;
+	border-radius: var(--border-radius-lg);
 
-	margin: 10px;
+	margin: 5px 10px;
 	padding: 20px;
 
 	transition: 0.3s;
 
 	&:hover {
-		background-color: color-mix(in srgb, var(--color-background-secondary) 50%, var(--color-background));
+		background-color: var(--color-background-secondary-hover);
 	}
 
 	.summary {
@@ -29,11 +29,11 @@
 		padding: 2px;
 
 		&:hover {
-			background-color: var(--color-hover);
+			background-color: var(--color-background-hover);
 		}
 	}
 }
 
 .notification-popup {
-	min-width: 350px;
+	min-width: 400px;
 }

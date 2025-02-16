@@ -18,7 +18,7 @@ class Clock(Widget.Button):
         if self.date:
             self.child = Widget.Label(
                 label=Utils.Poll(
-                    1000, lambda self: datetime.datetime.now().strftime("%d/%m/%Y")
+                    1000, lambda self: datetime.datetime.now().strftime("%A, %B %d, %Y")
                 ).bind("output")
             )
         else:

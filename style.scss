@@ -7,26 +7,48 @@
 /* Global properties */
 :root {
     --color-background: var(--window-bg-color);
+    --color-background-hover: oklch(from var(--color-background) calc(l + 5%) c h);
     --color-background-secondary: var(--sidebar-bg-color);
-
-    --color-border: var(--headerbar-shade-color);
-    --border: 2px solid var(--color-border);
-
-    --shadow: 0 0 4px 2px var(--color-border);
+    --color-background-secondary-hover: oklch(from var(--color-background-secondary) calc(l + 3%) c h);
 
     --color-accent: var(--accent-bg-color);
-    --color-accent-muted: color-mix(in srgb, var(--color-accent) 10%, var(--color-background));
+    --color-accent-hover: oklch(from var(--color-accent) calc(l + 5%) c h);
 
     --color-text: var(--headerbar-fg-color);
-    --color-text-muted: color-mix(in srgb, var(--color-text) 30%, gray);
+    --color-text-muted: oklch(from var(--color-text) l c h / 0.5);
     --color-text-accent: var(--accent-fg-color);
 
-    --color-hover: color-mix(in srgb, var(--color-background) 60%, var(--color-accent));
+    --color-border: var(--headerbar-shade-color);
+    --border: 1px solid var(--color-border);
+
+    --border-radius-sm: 15px;
+    --border-radius-md: 20px;
+    --border-radius-lg: 30px;
+
+    --shadow: 0 0 4px 2px var(--color-border);
 }
 
 /* Defaults */
 :root {
     color: var(--color-text);
+    
+    button {
+        border-radius: var(--border-radius-sm);
+    }
+
+    popover contents {
+        border: var(--border);
+        border-radius: var(--border-radius-md);
+        background-color: var(--color-background-secondary);
+
+        modelbutton {
+
+            &:hover,
+            &:focus {
+                background-color: var(--color-background-secondary-hover);
+            }
+        }
+    }
 }
 
 .unset {
@@ -38,14 +60,8 @@
     box-shadow: var(--shadow);
 
     border: var(--border);
-    border-radius: 12px;
+    border-radius: var(--border-radius-lg);
 
     margin: 10px;
     padding: 20px;
-
-    button {
-        margin: 0 5px;
-        padding: 4px 20px;
-        border-radius: 8px;
-    }
 }

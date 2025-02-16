@@ -1,5 +1,7 @@
 from ignis.app import IgnisApp
+from ignis.widgets import Widget
 
+from modules.control_center.battery import BatteryStatus
 from modules.control_center.brightness import Brightness
 from modules.control_center.quick_settings import QuickSettings
 from modules.control_center.volume import Volume
@@ -20,7 +22,10 @@ class ControlCenter(PopupWindow):
             valign=valign,
             halign=halign,
             child=[
-                PowerMenu(halign="end"),
+                Widget.Box(
+                    css_classes=["actions"],
+                    child=[BatteryStatus(), PowerMenu(halign="end", hexpand=True)],
+                ),
                 Volume("speaker"),
                 Brightness(),
                 QuickSettings(),

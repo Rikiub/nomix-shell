@@ -1,15 +1,23 @@
 .notification-center {
-    min-width: 400px;
+    min-width: 450px;
     min-height: 500px;
+
+    button {
+        background-color: var(--color-background-secondary);
+
+        &:hover {
+            background-color: var(--color-background-secondary-hover);
+        }
+    }
+
 
     .header {
         font-weight: bold;
-        margin: 10px;
+        margin-bottom: 15px;
     }
 
     .clear-all {
         padding: 7px 15px;
-        border-radius: 12px;
     }
 
     .dnd {
@@ -26,7 +34,7 @@
     }
 
     .notification {
-        margin: 6px;
+        margin: 6px 0;
         border: unset;
         box-shadow: unset;
     }
