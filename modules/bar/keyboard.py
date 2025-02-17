@@ -13,17 +13,17 @@ class KeyboardLayout(Widget.Button):
         elif niri.is_available:
             service = niri
         else:
-            return Widget.EventBox()
+            service = None
 
         super().__init__(
             css_classes=["kb-layout"],
             tooltip_text="Keyboard layout",
-            on_click=lambda self: service.switch_kb_layout(),
+            on_click=lambda _: service and service.switch_kb_layout(),
             child=Widget.Box(
                 child=[
                     Widget.Icon(image="input-keyboard", style="margin-right: 5px;"),
                     Widget.Label(
-                        label=service.bind("kb_layout"),
+                        label=service and service.bind("kb_layout"),
                     ),
                 ]
             ),

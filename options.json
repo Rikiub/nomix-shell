@@ -6,7 +6,7 @@
         "seconds": false
     },
     "launcher": {
-        "grid": true,
+        "grid": false,
         "grid_columns": 4
     },
     "control_apps": {
