@@ -74,12 +74,12 @@ class PopupBox(Widget.Box):
 
 
 class NotificationPopup(Widget.Window):
-    def __init__(self, monitor: int, anchor: list[str] = ["top", "right"]):
+    def __init__(self, monitor: int = 0, anchor: list[str] = ["top", "right"]):
         super().__init__(
             anchor=anchor,
+            monitor=monitor,
             namespace=f"notification_popup_{monitor}",
             layer="top",
-            monitor=monitor,
             visible=False,
             style="background-color: transparent;",
             child=PopupBox(window=self, monitor=monitor),

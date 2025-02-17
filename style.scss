@@ -1,9 +1,12 @@
+@use "scss/default";
+
 @use "scss/bar";
-@use "scss/osd";
 @use "scss/launcher";
-@use "scss/notification";
 @use "scss/control_center";
 @use "scss/notification_center";
+
+@use "scss/osd";
+@use "scss/notification";
 
 /* Global properties */
 :root {
@@ -27,63 +30,4 @@
     --border-radius-lg: 30px;
 
     --shadow: 0 0 4px 2px var(--color-border);
-}
-
-/* Defaults */
-:root {
-    color: var(--color-text);
-}
-
-button {
-    border-radius: var(--border-radius-sm);
-}
-
-popover contents {
-    border: var(--border);
-    border-radius: var(--border-radius-md);
-    background-color: var(--color-background-secondary);
-
-    modelbutton {
-
-        &:hover,
-        &:focus {
-            background-color: var(--color-background-secondary-hover);
-        }
-    }
-}
-
-.window-backdrop {
-    background-color: oklch(0 0 0 / 0.2);
-    border-radius: 0;
-}
-
-.popup-window {
-    background-color: var(--color-background);
-    box-shadow: var(--shadow);
-
-    border: var(--border);
-    border-radius: var(--border-radius-lg);
-
-    margin: 10px;
-    padding: 20px;
-}
-
-.volume-slider trough {
-    background-color: oklch(from var(--color-background-secondary) calc(l - 20%) c h);
-
-    min-width: 100px;
-    min-height: 0.3rem;
-    border-radius: var(--border-radius-lg);
-
-    highlight {
-        background-color: var(--color-accent);
-    }
-
-    slider {
-        background-color: var(--color-accent);
-
-        min-height: 20px;
-        min-width: 20px;
-        margin: -8px;
-    }
 }

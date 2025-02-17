@@ -13,6 +13,8 @@ from ignis.widgets import Widget
 from modules.types import ALIGN, WindowName
 from widgets.popup_window import PopupWindow
 
+from modules.user_options import user_options
+
 app = IgnisApp.get_default()
 applications = ApplicationsService.get_default()
 
@@ -142,8 +144,8 @@ class Launcher(PopupWindow):
         self,
         valign: ALIGN = "start",
         halign: ALIGN = "center",
-        grid: bool = False,
-        grid_columns: int = 4,
+        grid: bool = user_options.launcher.grid,
+        grid_columns: int = user_options.launcher.grid_columns,
     ):
         self.all_apps: list[LauncherAppItem] = []
         self.grid = grid

@@ -16,15 +16,20 @@ class UserOptions(OptionsManager):
         sound = "pavucontrol"
         bluetooth = "overskride"
 
+    class Launcher(OptionsGroup):
+        grid = False
+        grid_columns = 4
+
     class NightLight(OptionsGroup):
         enabled = False
         activate_command = "wlsunset"
         deactivate_command = "pkill wlsunset"
 
     clock = ClockFormat()
+    launcher = Launcher()
     control_apps = ControlApps()
     night_light = NightLight()
 
 
-config_file = IGNIS_PATH / "user_options.json"
+config_file = IGNIS_PATH / "options.json"
 user_options = UserOptions(str(config_file))

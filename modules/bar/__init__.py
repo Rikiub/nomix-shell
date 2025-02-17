@@ -11,14 +11,14 @@ from modules.bar.workspaces import Workspaces
 
 
 class Bar(Widget.Window):
-    def __init__(self, monitor_id: int = 0):
-        self.monitor_name = Utils.get_monitor(monitor_id).get_connector()  # type: ignore
+    def __init__(self, monitor: int = 0):
+        self.monitor_name = Utils.get_monitor(monitor).get_connector()  # type: ignore
 
         super().__init__(
             exclusivity="exclusive",
             anchor=["left", "top", "right"],
-            namespace=f"bar_{monitor_id}",
-            monitor=monitor_id,
+            namespace=f"bar_{monitor}",
+            monitor=monitor,
             kb_mode="on_demand",
             style="background-color: transparent;",
             child=Widget.CenterBox(
