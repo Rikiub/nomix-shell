@@ -1,4 +1,3 @@
-from gi.repository import GLib  # type: ignore
 from ignis.app import IgnisApp
 from ignis.utils import Utils
 
@@ -8,21 +7,19 @@ from modules.launcher import Launcher
 from modules.notification_center import NotificationCenter
 from modules.notification_popup import NotificationPopup
 from modules.osd import OSD
+from modules.utils import IGNIS_DIR, monitor_gtk4_css
 
 # SETUP
 app = IgnisApp.get_default()
-app.apply_css(f"{Utils.get_current_dir()}/style.scss")
+app.apply_css(str(IGNIS_DIR / "style.scss"))
 
-# Auto reload in GTK theme changes
-Utils.FileMonitor(
-    f"{GLib.get_user_config_dir()}/gtk-4.0/gtk.css",
-    callback=lambda path, event, _: app.reload(),
-)
+# Auto reload in GTK4 theme changes
+monitor_gtk4_css()
 
 # WINDOWS
 Launcher()
-ControlCenter(valign="start", halign="end")
-NotificationCenter()
+ControlCenter(halign="end", valign="start")
+NotificationCenter(halign="end")
 OSD()
 
 # Show in all monitors

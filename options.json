@@ -15,7 +15,7 @@
         "bluetooth": "overskride"
     },
     "night_light": {
-        "enabled": true,
+        "enabled": false,
         "activate_command": "wlsunset",
         "deactivate_command": "pkill wlsunset"
     }

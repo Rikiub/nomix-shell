@@ -6,7 +6,7 @@ from ignis.services.network import Ethernet, NetworkService, Wifi
 from ignis.services.upower import UPowerDevice, UPowerService
 from ignis.widgets import Widget
 
-from modules.types import WindowName
+from modules.utils import WindowName
 
 __all__ = ["StatusPill"]
 

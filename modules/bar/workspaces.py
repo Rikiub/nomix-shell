@@ -1,6 +1,6 @@
 from typing import Literal
 
-from modules.types import WindowName
+from modules.utils import WindowName
 from ignis.app import IgnisApp
 from ignis.base_service import BaseService
 from ignis.services.hyprland import HyprlandService

@@ -4,7 +4,7 @@ from ignis.base_widget import BaseWidget
 from ignis.variable import Variable
 from ignis.widgets import Widget
 
-from modules.types import ALIGN
+from modules.utils import ALIGN
 
 OPENED_POPUP = Variable("")
 

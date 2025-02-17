@@ -5,6 +5,7 @@ from ignis.services.notifications import Notification, NotificationService
 from ignis.utils import Utils
 from ignis.widgets import Widget
 
+from modules.utils import ANCHOR
 from widgets.notification import NotificationWidget
 
 app = IgnisApp.get_default()
@@ -23,7 +24,7 @@ class Popup(Widget.Box):
         widget.css_classes = ["notification", "notification-popup"]
 
         self._inner = Widget.Revealer(transition_type="crossfade", child=widget)
-        self._outer = Widget.Revealer(transition_type="slide_right", child=self._inner)
+        self._outer = Widget.Revealer(transition_type="crossfade", child=self._inner)
 
         super().__init__(
             child=[self._outer],
@@ -74,9 +75,9 @@ class PopupBox(Widget.Box):
 
 
 class NotificationPopup(Widget.Window):
-    def __init__(self, monitor: int = 0, anchor: list[str] = ["top", "right"]):
+    def __init__(self, monitor: int = 0, anchor: list[ANCHOR] = ["top", "right"]):
         super().__init__(
-            anchor=anchor,
+            anchor=anchor,  # type: ignore
             monitor=monitor,
             namespace=f"notification_popup_{monitor}",
             layer="top",

@@ -1,6 +1,6 @@
 from ignis.options_manager import OptionsGroup, OptionsManager
 
-from modules.types import IGNIS_PATH  # type: ignore
+from modules.utils import IGNIS_DIR  # type: ignore
 
 
 class UserOptions(OptionsManager):
@@ -31,5 +31,5 @@ class UserOptions(OptionsManager):
     night_light = NightLight()
 
 
-config_file = IGNIS_PATH / "options.json"
+config_file = IGNIS_DIR / "options.json"
 user_options = UserOptions(str(config_file))

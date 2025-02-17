@@ -1,4 +1,4 @@
-from modules.types import ALIGN, WindowName
+from modules.utils import ALIGN, WindowName
 from widgets.popup_window import PopupWindow
 
 from modules.notification_center.panel import NotificationPanel

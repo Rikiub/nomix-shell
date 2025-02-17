@@ -3,7 +3,6 @@ from ignis.widgets import Widget
 
 from modules.bar.clock import Clock
 from modules.bar.keyboard import KeyboardLayout
-from modules.bar.mpris import Mpris
 from modules.bar.notification import NotificationIcon
 from modules.bar.pill import StatusPill
 from modules.bar.systemtray import SystemTray
@@ -31,18 +30,13 @@ class Bar(Widget.Window):
 
     def left(self) -> Widget.Box:
         return Widget.Box(
-            child=[
-                Workspaces(self.monitor_name),
-            ],
+            child=[Workspaces(self.monitor_name)],
             spacing=10,
         )
 
     def center(self) -> Widget.Box:
         return Widget.Box(
-            child=[
-                Clock(),
-                Mpris(),
-            ],
+            child=[Clock()],
             spacing=10,
         )
 

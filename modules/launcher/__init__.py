@@ -10,7 +10,7 @@ from ignis.services.applications import (
 from ignis.utils.exec_sh import exec_sh, exec_sh_async
 from ignis.widgets import Widget
 
-from modules.types import ALIGN, WindowName
+from modules.utils import ALIGN, WindowName
 from widgets.popup_window import PopupWindow
 
 from modules.user_options import user_options
