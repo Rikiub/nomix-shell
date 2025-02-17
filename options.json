@@ -1,22 +1,22 @@
 {
-    "clock": {
-        "full_date": false,
-        "week_day": true,
-        "military_time": true,
-        "seconds": false
-    },
-    "launcher": {
-        "grid": false,
-        "grid_columns": 4
-    },
-    "control_apps": {
-        "network": "nm-connection-editor",
-        "sound": "pavucontrol",
-        "bluetooth": "overskride"
-    },
-    "night_light": {
-        "enabled": false,
-        "activate_command": "wlsunset",
-        "deactivate_command": "pkill wlsunset"
-    }
+	"clock": {
+		"full_date": false,
+		"week_day": true,
+		"military_time": true,
+		"seconds": false
+	},
+	"launcher": {
+		"grid": false,
+		"grid_columns": 4
+	},
+	"control_apps": {
+		"network": "nm-connection-editor",
+		"sound": "pavucontrol",
+		"bluetooth": "overskride"
+	},
+	"night_light": {
+		"enabled": false,
+		"activate_command": "wlsunset",
+		"deactivate_command": "pkill wlsunset"
+	}
 }
