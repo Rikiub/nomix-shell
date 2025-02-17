@@ -1,6 +1,34 @@
+import datetime
 from ignis.services.notifications import Notification
+from ignis.utils import Utils
 from ignis.variable import Variable
 from ignis.widgets import Widget
+
+
+def get_past_time(timestamp: float) -> tuple[int, int, int]:
+    current = datetime.datetime.now()
+    past = datetime.datetime.fromtimestamp(timestamp)
+    delta = current - past
+
+    hours, remainder = divmod(delta.total_seconds(), 3600)
+
+    hours = round(hours)
+    minutes = round(remainder // 60)
+
+    return delta.days, hours, minutes
+
+
+def format_time(notification: Notification) -> str:
+    days, hours, minutes = get_past_time(notification.time)
+
+    if days:
+        return f"{days} days ago"
+    elif hours:
+        return f"{hours} hours ago"
+    elif minutes:
+        return f"{minutes} minutes ago"
+    else:
+        return "Just now"
 
 
 class NotificationWidget(Widget.Box):
@@ -25,7 +53,22 @@ class NotificationWidget(Widget.Box):
                 Widget.Box(
                     css_classes=["notification-header"],
                     child=[
-                        Widget.Label(label=notification.app_name, halign="start"),
+                        Widget.Box(
+                            child=[
+                                Widget.Label(
+                                    label=notification.app_name,
+                                    halign="start",
+                                    style="margin-right: 8px;",
+                                    css_classes=["notification-app-name"],
+                                ),
+                                Widget.Label(
+                                    label=Utils.Poll(
+                                        1000, lambda _: format_time(notification)
+                                    ).bind("output"),
+                                    css_classes=["notification-time"],
+                                ),
+                            ]
+                        ),
                         Widget.Box(
                             halign="end",
                             hexpand=True,

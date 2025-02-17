@@ -1,4 +1,6 @@
 .popup-window.control-center {
+    min-width: 430px;
+
     button {
         background-color: var(--color-background-secondary);
 
@@ -65,10 +67,39 @@
 
     .device-item,
     .settings {
+        padding: 8px;
         font-weight: normal;
+        
+        &:hover {
+            background-color: var(--color-background-secondary-hover);
+            border-radius: var(--border-radius-sm);
+        }
 
-        .check {
-            margin-right: 10px;
+        .device-icons {
+            .icon {
+                margin: 0 2px;
+            }
+        }
+
+        .label {
+            margin-left: 5px;
+        }
+
+        .indicators {
+            margin-right: 20px;
+            padding: 0;
+
+            > * {
+                all: unset;
+
+                padding: 0px;
+                margin-left: 10px;
+                border-radius: 100%;
+
+                &:hover {
+                    background-color: var(--color-background-secondary-hover);
+                }
+            }
         }
     }
 }

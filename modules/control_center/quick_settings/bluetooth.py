@@ -1,4 +1,5 @@
 from ignis.services.bluetooth import BluetoothDevice, BluetoothService
+from ignis.widgets import Widget
 
 from modules.user_options import user_options
 from widgets.menu_devices import DeviceItem, DeviceMenu
@@ -15,9 +16,14 @@ class BluetoothItem(DeviceItem):
             icon_name=device.bind("icon_name"),
             label=device.alias,
             active=device.bind("connected"),
-            on_click=lambda x: device.disconnect_from()
+            on_click=lambda _: device.disconnect_from()
             if device.connected
             else device.connect_to(),
+            extra_widget=Widget.Icon(
+                image="bluetooth-paired-symbolic",
+                tooltip_text="Paired",
+                visible=device.bind("paired"),
+            ),
         )
 
 

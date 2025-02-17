@@ -15,6 +15,8 @@ class PopupWindow(Widget.Window):
         namespace: str,
         valign: ALIGN = "start",
         halign: ALIGN = "center",
+        width_request: int = -1,
+        height_request: int = -1,
         on_close: Callable | None = None,
         css_classes: list[str] = [],
         child: list[BaseWidget] = [],
@@ -40,10 +42,12 @@ class PopupWindow(Widget.Window):
                 overlays=[
                     Widget.Box(
                         css_classes=["popup-window"] + css_classes,
+                        vertical=True,
                         valign=valign,
                         halign=halign,
-                        vertical=True,
                         child=child,
+                        width_request=width_request,
+                        height_request=height_request,
                     )
                 ],
             ),

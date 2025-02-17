@@ -2,46 +2,70 @@ from typing import Callable
 
 from ignis.base_widget import BaseWidget
 from ignis.gobject import Binding
-from ignis.utils.exec_sh import exec_sh_async
 from ignis.widgets import Widget
+from ignis.utils.exec_sh import exec_sh_async
 
 from widgets.menu import Menu
 
 
-class DeviceItem(Widget.Button):
+class DeviceItem(Widget.Box):
     def __init__(
         self,
         on_click: Callable | None = None,
         icon_name: str | Binding = "",
+        extra_icon_name: str | Binding | None = None,
         label: str | Binding = "Device",
         active: bool | Binding = False,
+        extra_widget: BaseWidget | None = None,
     ):
+        start = Widget.Box(
+            css_classes=["device-icons"],
+            child=[
+                Widget.Icon(
+                    image=icon_name,
+                    css_classes=["icon"],
+                ),
+                Widget.Icon(
+                    image=extra_icon_name or "",
+                    visible=bool(extra_icon_name),
+                    pixel_size=10,
+                    css_classes=["icon"],
+                ),
+            ],
+        )
+
+        center = Widget.Label(
+            label=label,
+            max_width_chars=35,
+            ellipsize="end",
+            css_classes=["label"],
+        )
+
+        end = Widget.Box(
+            css_classes=["indicators"],
+            child=[
+                Widget.Icon(
+                    image="object-select-symbolic",
+                    visible=active,
+                    tooltip_text="Connected",
+                ),
+                extra_widget or Widget.Box(),
+            ],
+        )
+
         super().__init__(
-            on_click=on_click,
             css_classes=["device-item"],
-            child=Widget.Box(
-                child=[
-                    Widget.Icon(
-                        image=icon_name,
-                        style="margin-right: 8px;",
-                        css_classes=["icon"],
-                    ),
-                    Widget.Label(
-                        label=label,
-                        ellipsize="end",
-                        max_width_chars=35,
-                        halign="start",
-                        css_classes=["label"],
-                    ),
-                    Widget.Icon(
-                        image="object-select-symbolic",
-                        halign="end",
-                        hexpand=True,
-                        visible=active,
-                        css_classes=["check"],
-                    ),
-                ]
-            ),
+            child=[
+                Widget.EventBox(
+                    hexpand=True,
+                    on_click=on_click,
+                    child=[
+                        start,
+                        center,
+                    ],
+                ),
+                end,
+            ],
         )
 
 
@@ -81,9 +105,9 @@ class DeviceMenu(Menu):
                     child=[
                         Widget.Separator(),
                         Widget.Button(
+                            css_classes=["settings"],
                             on_click=lambda _: exec_sh_async(settings_command),
                             child=Widget.Box(
-                                css_classes=["settings"],
                                 child=[
                                     Widget.Icon(
                                         image="preferences-system-symbolic",

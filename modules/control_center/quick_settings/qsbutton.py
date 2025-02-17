@@ -26,7 +26,12 @@ class QSButton(Widget.Button):
             child=Widget.Box(
                 child=[
                     Widget.Icon(image=icon_name),
-                    Widget.Label(label=label, css_classes=["qs-button-label"]),
+                    Widget.Label(
+                        label=label,
+                        ellipsize="end",
+                        max_width_chars=15,
+                        css_classes=["qs-button-label"],
+                    ),
                     Widget.Arrow(
                         halign="end",
                         hexpand=True,
