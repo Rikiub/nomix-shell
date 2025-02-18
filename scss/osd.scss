@@ -1,8 +1,10 @@
+@use "./color";
+
 .osd {
     min-width: 200px;
 
-    background-color: var(--color-surface);
-    color: var(--color-on-surface);
+    background-color: color.$surface;
+    color: color.$on-surface;
 
     border: var(--border);
     border-radius: var(--border-radius-lg);

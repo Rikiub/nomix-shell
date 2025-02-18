@@ -1,6 +1,8 @@
+@use "./color";
+
 /* Defaults */
 :root {
-    color: var(--color-on-surface);
+    color: color.$on-surface;
 }
 
 button {
@@ -10,7 +12,7 @@ button {
 popover contents {
     border: var(--border);
     border-radius: var(--border-radius-md);
-    background-color: var(--color-surface);
+    background-color: color.$surface;
 
     modelbutton {
         &:hover,
@@ -21,7 +23,7 @@ popover contents {
 }
 
 switch:checked {
-    background-color: var(--color-primary);
+    background-color: color.$primary;
 }
 
 .window-backdrop {
@@ -41,7 +43,7 @@ switch:checked {
 }
 
 .volume-slider trough {
-    background-color: var(--color-surface);
+    background-color: color.$surface;
 
     min-width: 100px;
     min-height: 0.3rem;
@@ -49,12 +51,12 @@ switch:checked {
     border-radius: var(--border-radius-lg);
     
     highlight {
-        background-color: var(--color-primary);
+        background-color: color.$primary;
         padding: 7px 0;
     }
 
     slider {
         all: unset;
-        background-color: var(--color-primary);
+        background-color: color.$primary;
     }
 }

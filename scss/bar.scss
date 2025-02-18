@@ -1,5 +1,7 @@
+@use "./color";
+
 .bar {
-    background-color: var(--color-background);
+    background-color: color.$background;
 
     border: var(--border);
     border-radius: var(--border-radius-sm);
@@ -8,7 +10,7 @@
     padding: 0.3rem 1rem;
 
     button {
-        background-color: var(--color-surface);
+        background-color: color.$surface;
         padding: 0px 0.6rem;
 
         &:hover {
@@ -17,43 +19,43 @@
     }
 
     .status-pill {
-        background-color: var(--color-primary);
-        color: var(--color-on-primary);
+        background-color: color.$primary;
+        color: color.$on-primary;
         border-radius: var(--border-radius-md);
 
         .indicator-icon {
-            color: var(--color-on-primary);
+            color: color.$on-primary;
         }
 
         &:hover {
-            background-color: var(--color-primary);
+            background-color: color.$primary;
             transform: scale(1.1);
         }
     }
 
     .workspaces {
-        background-color: var(--color-surface);
+        background-color: color.$surface;
         padding: 0.4rem 1rem;
         border-radius: var(--border-radius-md);
 
         .workspace-item {
             all: unset;
 
-            background-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-surface));
+            background-color: color-mix(in srgb, color.$primary 30%, color.$surface);
             padding: 0 0.6rem;
             border-radius: 100%;
 
             transition: transform 50ms ease-in-out;
 
             &:hover {
-                background-color: color-mix(in srgb, var(--color-primary) 35%, var(--color-surface));
-                color: var(--color-on-primary);
+                background-color: color-mix(in srgb, color.$primary 35%, color.$surface);
+                color: color.$on-primary;
                 transform: scale(1.1);
             }
 
             &.active {
-                background-color: var(--color-primary);
-                color: var(--color-on-primary);
+                background-color: color.$primary;
+                color: color.$on-primary;
 
                 padding: 0 1rem;
                 border-radius: 20px;
@@ -70,7 +72,7 @@
     }
 
     .clock {
-        background-color: var(--color-surface);
+        background-color: color.$surface;
 
         font-size: 1.1rem;
         font-weight: bold;
@@ -85,7 +87,7 @@
     }
 
     .tray {
-        background-color: var(--color-surface);
+        background-color: color.$surface;
         padding: 0 10px;
         border-radius: var(--border-radius-sm);
 

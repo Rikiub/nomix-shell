@@ -1,8 +1,10 @@
+@use "./color";
+
 .control-center {
     min-width: 430px;
 
     button {
-        background-color: var(--color-surface);
+        background-color: color.$surface;
 
         &:hover {
             background-color: var(--color-surface-hover);
@@ -16,7 +18,7 @@
     }
 
     .battery-status {
-        background-color: var(--color-surface);
+        background-color: color.$surface;
         padding: 10px;
         border-radius: var(--border-radius-lg);
 
@@ -42,7 +44,7 @@
 }
 
 .accordion-menu {
-    background-color: var(--color-surface);
+    background-color: color.$surface;
     padding: 10px 20px;
     margin: 10px;
     border-radius: var(--border-radius-md);
@@ -107,7 +109,7 @@
 
 .quick-settings {
     .qs-button {
-        background-color: var(--color-surface);
+        background-color: color.$surface;
         border-radius: var(--border-radius-md);
         
         padding: 15px;
@@ -121,8 +123,8 @@
         }
 
         &.active {
-            background-color: var(--color-primary);
-            color: var(--color-on-primary);
+            background-color: color.$primary;
+            color: color.$on-primary;
 
             &:hover {
                 background-color: var(--color-primary-hover);

@@ -1,0 +1,17 @@
+$primary: var(--accent-bg-color);
+$on-primary: var(--accent-fg-color);
+
+$background: var(--window-bg-color);
+$on-background: var(--window-fg-color);
+
+$surface: var(--sidebar-bg-color);
+$on-surface: var(--headerbar-fg-color);
+$on-surface-muted: oklch(from $on-surface l c h / 0.5);
+
+$surface-variant: oklch(from $surface calc(l - 5%) c h);
+
+$border: var(--headerbar-shade-color);
+
+@function hover($color) {
+    @return oklch(from $color calc(l + 5%) c h);
+}
