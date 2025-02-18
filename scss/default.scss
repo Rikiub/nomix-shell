@@ -1,6 +1,6 @@
 /* Defaults */
 :root {
-    color: var(--color-text);
+    color: var(--color-on-surface);
 }
 
 button {
@@ -10,18 +10,18 @@ button {
 popover contents {
     border: var(--border);
     border-radius: var(--border-radius-md);
-    background-color: var(--color-background-secondary);
+    background-color: var(--color-surface);
 
     modelbutton {
         &:hover,
         &:focus {
-            background-color: var(--color-background-secondary-hover);
+            background-color: var(--color-surface-hover);
         }
     }
 }
 
 switch:checked {
-    background-color: var(--color-accent);
+    background-color: var(--color-primary);
 }
 
 .window-backdrop {
@@ -41,7 +41,7 @@ switch:checked {
 }
 
 .volume-slider trough {
-    background-color: var(--color-background-secondary);
+    background-color: var(--color-surface);
 
     min-width: 100px;
     min-height: 0.3rem;
@@ -49,12 +49,12 @@ switch:checked {
     border-radius: var(--border-radius-lg);
     
     highlight {
-        background-color: var(--color-accent);
+        background-color: var(--color-primary);
         padding: 7px 0;
     }
 
     slider {
         all: unset;
-        background-color: var(--color-accent);
+        background-color: var(--color-primary);
     }
 }

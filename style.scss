@@ -8,21 +8,31 @@
 @use "scss/osd";
 @use "scss/notification";
 
-/* Global properties */
+/* Colors */
 :root {
+    /* accent */
+    --color-primary: var(--accent-bg-color);
+    --color-primary-hover: oklch(from var(--color-primary) calc(l + 5%) c h);
+    --color-on-primary: var(--accent-fg-color);
+
+    /* background */
     --color-background: var(--window-bg-color);
     --color-background-hover: oklch(from var(--color-background) calc(l + 3%) c h);
-    --color-background-secondary: var(--sidebar-bg-color);
-    --color-background-secondary-hover: oklch(from var(--color-background-secondary) calc(l + 3%) c h);
 
-    --color-accent: var(--accent-bg-color);
-    --color-accent-hover: oklch(from var(--color-accent) calc(l + 5%) c h);
+    /* surface */
+    --color-surface: var(--sidebar-bg-color);
+    --color-surface-hover: oklch(from var(--color-surface) calc(l + 3%) c h);
 
-    --color-text: var(--headerbar-fg-color);
-    --color-text-muted: oklch(from var(--color-text) l c h / 0.5);
-    --color-text-accent: var(--accent-fg-color);
+    --color-surface-variant: var(--sidebar-bg-color);
+    
+    --color-on-surface: var(--headerbar-fg-color);
+    --color-on-surface-muted: oklch(from var(--color-on-surface) l c h / 0.5);
 
     --color-border: var(--headerbar-shade-color);
+}
+
+/* Modifiers */
+:root {
     --border: 1px solid var(--color-border);
 
     --border-radius-sm: 15px;

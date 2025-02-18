@@ -1,5 +1,5 @@
 .notification {
-	background-color: var(--color-background-secondary);
+	background-color: var(--color-surface);
 	box-shadow: var(--shadow);
 
 	border: var(--border);
@@ -14,7 +14,7 @@
 	transition: 0.3s;
 
 	&:hover {
-		background-color: var(--color-background-secondary-hover);
+		background-color: var(--color-surface-hover);
 	}
 
 	.notification-header {
@@ -23,12 +23,12 @@
 		.notification-app-name {
 			font-size: 1.1em;
 			font-weight: bold;
-			color: var(--color-text-muted);
+			color: var(--color-on-surface-muted);
 		}
 
 		.notification-time {
 			font-size: 0.9em;
-			color: var(--color-text-muted);
+			color: var(--color-on-surface-muted);
 		}
 
 		button {

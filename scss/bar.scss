@@ -8,52 +8,52 @@
     padding: 0.3rem 1rem;
 
     button {
-        background-color: var(--color-background-secondary);
+        background-color: var(--color-surface);
         padding: 0px 0.6rem;
 
         &:hover {
-            background-color: var(--color-background-secondary-hover);
+            background-color: var(--color-surface-hover);
         }
     }
 
     .status-pill {
-        background-color: var(--color-accent);
-        color: var(--color-text-accent);
+        background-color: var(--color-primary);
+        color: var(--color-on-primary);
         border-radius: var(--border-radius-md);
 
         .indicator-icon {
-            color: var(--color-text-accent);
+            color: var(--color-on-primary);
         }
 
         &:hover {
-            background-color: var(--color-accent);
+            background-color: var(--color-primary);
             transform: scale(1.1);
         }
     }
 
     .workspaces {
-        background-color: var(--color-background-secondary);
+        background-color: var(--color-surface);
         padding: 0.4rem 1rem;
         border-radius: var(--border-radius-md);
 
         .workspace-item {
             all: unset;
 
-            background-color: color-mix(in srgb, var(--color-accent) 30%, var(--color-background-secondary));
+            background-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-surface));
             padding: 0 0.6rem;
             border-radius: 100%;
 
             transition: transform 50ms ease-in-out;
 
             &:hover {
-                background-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-background-secondary));
-                color: var(--color-text-accent);
+                background-color: color-mix(in srgb, var(--color-primary) 35%, var(--color-surface));
+                color: var(--color-on-primary);
                 transform: scale(1.1);
             }
 
             &.active {
-                background-color: var(--color-accent);
-                color: var(--color-text-accent);
+                background-color: var(--color-primary);
+                color: var(--color-on-primary);
 
                 padding: 0 1rem;
                 border-radius: 20px;
@@ -70,7 +70,7 @@
     }
 
     .clock {
-        background-color: var(--color-background-secondary);
+        background-color: var(--color-surface);
 
         font-size: 1.1rem;
         font-weight: bold;
@@ -85,7 +85,7 @@
     }
 
     .tray {
-        background-color: var(--color-background-secondary);
+        background-color: var(--color-surface);
         padding: 0 10px;
         border-radius: var(--border-radius-sm);
 

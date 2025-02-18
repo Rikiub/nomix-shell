@@ -3,10 +3,10 @@
     min-height: 500px;
 
     button {
-        background-color: var(--color-background-secondary);
+        background-color: var(--color-surface);
 
         &:hover {
-            background-color: var(--color-background-secondary-hover);
+            background-color: var(--color-surface-hover);
         }
     }
 
@@ -27,10 +27,6 @@
         }
     }
 
-    .info-label {
-        color: var(--color-text-muted);
-    }
-    
     .notification {
         margin: 6px 0;
         margin-right: 20px; /* reserve space for scrollbar */

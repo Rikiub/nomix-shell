@@ -1,11 +1,11 @@
-.popup-window.control-center {
+.control-center {
     min-width: 430px;
 
     button {
-        background-color: var(--color-background-secondary);
+        background-color: var(--color-surface);
 
         &:hover {
-            background-color: var(--color-background-secondary-hover);
+            background-color: var(--color-surface-hover);
         }
     }
     
@@ -16,7 +16,7 @@
     }
 
     .battery-status {
-        background-color: var(--color-background-secondary);
+        background-color: var(--color-surface);
         padding: 10px;
         border-radius: var(--border-radius-lg);
 
@@ -42,7 +42,7 @@
 }
 
 .accordion-menu {
-    background-color: var(--color-background-secondary);
+    background-color: var(--color-surface);
     padding: 10px 20px;
     margin: 10px;
     border-radius: var(--border-radius-md);
@@ -52,7 +52,7 @@
     }
 
     button:hover {
-        background-color: var(--color-background-secondary-hover);
+        background-color: var(--color-surface-hover);
     }
 
     separator {
@@ -72,7 +72,7 @@
         font-weight: normal;
         
         &:hover {
-            background-color: var(--color-background-secondary-hover);
+            background-color: var(--color-surface-hover);
             border-radius: var(--border-radius-sm);
         }
 
@@ -98,7 +98,7 @@
                 border-radius: 100%;
 
                 &:hover {
-                    background-color: var(--color-background-secondary-hover);
+                    background-color: var(--color-surface-hover);
                 }
             }
         }
@@ -107,7 +107,7 @@
 
 .quick-settings {
     .qs-button {
-        background-color: var(--color-background-secondary);
+        background-color: var(--color-surface);
         border-radius: var(--border-radius-md);
         
         padding: 15px;
@@ -117,15 +117,15 @@
         }
 
         &:hover {
-            background-color: var(--color-background-secondary-hover);
+            background-color: var(--color-surface-hover);
         }
 
         &.active {
-            background-color: var(--color-accent);
-            color: var(--color-text-accent);
+            background-color: var(--color-primary);
+            color: var(--color-on-primary);
 
             &:hover {
-                background-color: var(--color-accent-hover);
+                background-color: var(--color-primary-hover);
             }
         }
     }
