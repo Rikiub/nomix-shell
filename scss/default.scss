@@ -20,6 +20,10 @@ popover contents {
     }
 }
 
+switch:checked {
+    background-color: var(--color-accent);
+}
+
 .window-backdrop {
     background-color: oklch(0 0 0 / 0.0);
     border-radius: 0;
@@ -37,28 +41,20 @@ popover contents {
 }
 
 .volume-slider trough {
-    background-color: oklch(
-        from
-        var(--color-background-secondary)
-        calc(l - 20%)
-        c
-        h
-    );
+    background-color: var(--color-background-secondary);
 
     min-width: 100px;
     min-height: 0.3rem;
     margin-left: 10px;
     border-radius: var(--border-radius-lg);
-
+    
     highlight {
         background-color: var(--color-accent);
+        padding: 7px 0;
     }
 
     slider {
+        all: unset;
         background-color: var(--color-accent);
-
-        min-height: 20px;
-        min-width: 20px;
-        margin: -8px;
     }
 }

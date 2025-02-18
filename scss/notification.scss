@@ -19,15 +19,16 @@
 
 	.notification-header {
 		margin-bottom: 5px;
-		color: var(--color-text-muted);
 
 		.notification-app-name {
 			font-size: 1.1em;
 			font-weight: bold;
+			color: var(--color-text-muted);
 		}
 
 		.notification-time {
 			font-size: 0.9em;
+			color: var(--color-text-muted);
 		}
 
 		button {
