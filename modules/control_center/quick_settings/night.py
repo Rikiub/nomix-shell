@@ -1,6 +1,6 @@
 from ignis.utils.exec_sh import exec_sh_async
 
-from modules.user_options import cache_options
+from utils.user_options import cache_options
 
 from .qsbutton import QSButton
 

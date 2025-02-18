@@ -6,7 +6,7 @@ from ignis.services.hyprland import HyprlandService
 from ignis.services.niri import NiriService
 from ignis.widgets import Widget
 
-from modules.utils import WindowName
+from utils.constants import WindowName
 
 hyprland = HyprlandService.get_default()
 niri = NiriService.get_default()

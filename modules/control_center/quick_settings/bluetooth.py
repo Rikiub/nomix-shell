@@ -1,7 +1,7 @@
 from ignis.services.bluetooth import BluetoothDevice, BluetoothService
 from ignis.widgets import Widget
 
-from modules.user_options import user_options
+from utils.user_options import user_options
 from widgets.menu_devices import DeviceItem, DeviceMenu
 from widgets.toggle_box import ToggleBox
 

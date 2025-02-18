@@ -6,7 +6,8 @@ from modules.control_center.brightness import Brightness
 from modules.control_center.power import PowerButton
 from modules.control_center.quick_settings import QuickSettings
 from modules.control_center.volume import Volume
-from modules.utils import ALIGN, WindowName
+from utils.types import ALIGN
+from utils.constants import WindowName
 from widgets.menu import OPENED_MENU
 from widgets.popup_window import PopupWindow
 

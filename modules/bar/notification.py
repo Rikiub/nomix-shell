@@ -3,7 +3,7 @@ from ignis.options import options
 from ignis.services.notifications import NotificationService
 from ignis.widgets import Widget
 
-from modules.utils import WindowName
+from utils.constants import WindowName
 
 notification = NotificationService.get_default()
 

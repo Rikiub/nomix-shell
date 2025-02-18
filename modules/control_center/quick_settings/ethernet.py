@@ -1,6 +1,6 @@
 from ignis.services.network import EthernetDevice, NetworkService
 
-from modules.user_options import user_options
+from utils.user_options import user_options
 from widgets.menu_devices import DeviceItem, DeviceMenu
 
 from .qsbutton import QSButton

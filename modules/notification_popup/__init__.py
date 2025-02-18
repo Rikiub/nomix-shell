@@ -5,7 +5,7 @@ from ignis.services.notifications import Notification, NotificationService
 from ignis.utils import Utils
 from ignis.widgets import Widget
 
-from modules.utils import ANCHOR
+from utils.types import ANCHOR
 from widgets.notification import NotificationWidget
 
 app = IgnisApp.get_default()

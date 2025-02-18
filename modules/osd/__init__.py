@@ -2,7 +2,7 @@ from ignis.services.audio import AudioService
 from ignis.utils.debounce import debounce
 from ignis.widgets import Widget
 
-from modules.utils import WindowName
+from utils.constants import WindowName
 from widgets.stream_slider import StreamVolume
 
 audio = AudioService.get_default()

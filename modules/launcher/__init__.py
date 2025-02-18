@@ -10,8 +10,9 @@ from ignis.services.applications import (
 from ignis.utils.exec_sh import exec_sh, exec_sh_async
 from ignis.widgets import Widget
 
-from modules.user_options import user_options
-from modules.utils import ALIGN, WindowName
+from utils.user_options import user_options
+from utils.types import ALIGN
+from utils.constants import WindowName
 from widgets.popup_window import PopupWindow
 
 app = IgnisApp.get_default()

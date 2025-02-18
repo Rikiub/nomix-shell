@@ -1,6 +1,6 @@
 from ignis.options_manager import OptionsGroup, OptionsManager
 
-from modules.utils import CACHE_DIR, IGNIS_DIR  # type: ignore
+from utils.constants import CACHE_DIR, IGNIS_DIR
 
 
 class CacheOptions(OptionsManager):

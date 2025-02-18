@@ -7,7 +7,8 @@ from modules.launcher import Launcher
 from modules.notification_center import NotificationCenter
 from modules.notification_popup import NotificationPopup
 from modules.osd import OSD
-from modules.utils import IGNIS_DIR, monitor_gtk4_css
+from utils.constants import IGNIS_DIR
+from utils.helpers import monitor_gtk4_css
 
 # SETUP
 app = IgnisApp.get_default()
