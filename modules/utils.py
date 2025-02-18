@@ -14,7 +14,18 @@ IGNIS_DIR = CONFIG_DIR / "ignis"
 
 ALIGN = Literal["start", "center", "end"]
 ANCHOR = Literal["top", "bottom", "left", "right"]
-
+TRANSITION_TYPE = Literal[
+    "none",
+    "crossfade",
+    "slide_right",
+    "slide_left",
+    "slide_up",
+    "slide_down",
+    "swing_right",
+    "swing_left",
+    "swing_up",
+    "swing_down",
+]
 
 class WindowName(str, Enum):
     notification_center = "notification-center"
