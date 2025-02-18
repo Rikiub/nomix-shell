@@ -23,11 +23,13 @@
     --color-surface: var(--sidebar-bg-color);
     --color-surface-hover: oklch(from var(--color-surface) calc(l + 3%) c h);
 
-    --color-surface-variant: var(--sidebar-bg-color);
+    --color-surface-variant: hsl(from var(--sidebar-bg-color) h s calc(l - 5%));
+    --color-surface-variant-hover: oklch(from var(--color-surface-variant) calc(l + 3%) c h);
     
     --color-on-surface: var(--headerbar-fg-color);
     --color-on-surface-muted: oklch(from var(--color-on-surface) l c h / 0.5);
-
+    
+    /* border */
     --color-border: var(--headerbar-shade-color);
 }
 

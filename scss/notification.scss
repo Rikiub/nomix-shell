@@ -32,12 +32,12 @@
 		}
 
 		button {
-			background-color: var(--color-background);
+			background-color: var(--color-surface-variant);
 			padding: 2px;
 			margin: 0 3px;
 	
 			&:hover {
-				background-color: var(--color-background-hover);
+				background-color: var(--color-surface-variant-hover);
 			}
 		}
 	}
@@ -53,13 +53,13 @@
 	*/
 
 	.notification-action {
-		background-color: var(--color-background);
+		background-color: var(--color-surface-variant);
 		border-radius: var(--border-radius-sm);
 
 		margin-top: 5px;
 
 		&:hover {
-			background-color: var(--color-background-hover);
+			background-color: var(--color-surface-variant-hover);
 		}
 	}
 }
