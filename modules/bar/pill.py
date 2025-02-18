@@ -1,4 +1,5 @@
 from ignis.app import IgnisApp
+from ignis.gobject import Binding
 from ignis.options import options
 from ignis.services.audio import AudioService
 from ignis.services.bluetooth import BluetoothDevice, BluetoothService
@@ -7,6 +8,7 @@ from ignis.services.upower import UPowerDevice, UPowerService
 from ignis.widgets import Widget
 
 from modules.utils import WindowName
+from modules.user_options import user_options
 
 __all__ = ["StatusPill"]
 
@@ -18,10 +20,18 @@ audio = AudioService.get_default()
 upower = UPowerService.get_default()
 
 
-class IndicatorIcon(Widget.Icon):
-    def __init__(self, **kwargs):
+class IndicatorIcon(Widget.Box):
+    def __init__(
+        self,
+        icon_name: str | Binding = "",
+        label: str | Binding = "",
+        **kwargs,
+    ):
         super().__init__(
-            style="margin-right: 0.5rem;", css_classes=["indicator-icon"], **kwargs
+            style="margin-right: 0.5rem;",
+            css_classes=["indicator-icon"],
+            child=[Widget.Icon(image=icon_name), Widget.Label(label=label)],
+            **kwargs,
         )
 
 
@@ -39,7 +49,7 @@ class NetworkIndicatorIcon(IndicatorIcon):
             other_device_type.bind("is_connected", self._check_visibility),
             device_type.bind("is_connected", self._check_visibility),
         ):
-            self.visible = binding  # type: ignore
+            self.visible = binding
 
     def _check_visibility(self, *args) -> bool:
         return len(self._device_type.devices) > 0 and (
@@ -60,33 +70,33 @@ class EthernetIcon(NetworkIndicatorIcon):
 class BluetoothIcon(IndicatorIcon):
     def __init__(self):
         super().__init__(
-            image=bluetooth.bind("connected_devices", self._get_image),
+            icon_name=bluetooth.bind("connected_devices", self._get_image),
             visible=bluetooth.bind("connected_devices", lambda v: bool(v)),
         )
         bluetooth.notify("connected_devices")
 
     def _get_image(self, devices: list[BluetoothDevice]):
         if devices:
-            self.set_image(devices[0].icon_name)
+            self.image = devices[0].icon_name
 
 
 class VpnIcon(IndicatorIcon):
     def __init__(self):
         super().__init__(
-            image=network.vpn.bind("icon_name"),
+            icon_name=network.vpn.bind("icon_name"),
             visible=network.vpn.bind("is_connected"),
         )
 
 
 class VolumeIcon(IndicatorIcon):
     def __init__(self):
-        super().__init__(image=audio.speaker.bind("icon-name"))
+        super().__init__(icon_name=audio.speaker.bind("icon-name"))
 
 
 class DNDIcon(IndicatorIcon):
     def __init__(self):
         super().__init__(
-            image="notification-disabled-symbolic",
+            icon_name="notification-disabled-symbolic",
             visible=options.notifications.bind("dnd"),
         )
 
@@ -94,7 +104,10 @@ class DNDIcon(IndicatorIcon):
 class BatteryItem(IndicatorIcon):
     def __init__(self, device: UPowerDevice):
         super().__init__(
-            image=device.bind("icon_name"),
+            icon_name=device.bind("icon_name"),
+            label=device.bind("percent", lambda v: f"{round(v)}%")
+            if user_options.bar.battery_percent
+            else "",
             setup=lambda self: device.connect("removed", lambda _: self.unparent()),
         )
 

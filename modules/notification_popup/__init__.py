@@ -58,7 +58,7 @@ class PopupBox(Widget.Box):
             vertical=True,
             setup=lambda self: notifications.connect(
                 "new_popup",
-                lambda x, notification: self._on_notified(notification),
+                lambda _, notification: self._on_notified(notification),
             ),
         )
 

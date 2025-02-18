@@ -15,7 +15,7 @@ network = NetworkService.get_default()
 
 class QuickSettings(Widget.Box):
     def __init__(self):
-        super().__init__(vertical=True, css_classes=["qs-main-box"])
+        super().__init__(vertical=True, css_classes=["quick-settings"])
 
         network.wifi.connect("notify::devices", lambda x, y: self._refresh())
         network.ethernet.connect("notify::devices", lambda x, y: self._refresh())

@@ -24,10 +24,14 @@ class UserOptions(OptionsManager):
         grid = False
         grid_columns = 4
 
+    class Bar(OptionsGroup):
+        battery_percent = False
+
     class NightLight(OptionsGroup):
         activate_command = "wlsunset"
         deactivate_command = "pkill wlsunset"
 
+    bar = Bar()
     clock = ClockFormat()
     launcher = Launcher()
     control_apps = ControlApps()

@@ -8,10 +8,11 @@
             background-color: var(--color-background-secondary-hover);
         }
     }
-
+    
+    .slider-control,
+    .quick-settings,
     .actions {
-        padding: 0 10px;
-        margin: 5px 0;
+        margin: 10px 0;
     }
 
     .battery-status {
@@ -104,13 +105,12 @@
     }
 }
 
-.qs-main-box {
-    margin: 20px 0;
-
+.quick-settings {
     .qs-button {
         background-color: var(--color-background-secondary);
+        border-radius: var(--border-radius-md);
+        
         padding: 15px;
-        border-radius: 30px;
 
         .qs-button-label {
             margin-left: 7px;

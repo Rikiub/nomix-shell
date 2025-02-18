@@ -16,25 +16,30 @@ class ControlCenter(PopupWindow):
     def __init__(self, valign: ALIGN = "start", halign: ALIGN = "center"):
         power = PowerButton(hexpand=True, halign="end")
 
+        sliders = Widget.Box(
+            vertical=True,
+            css_classes=["slider-control"],
+            child=[
+                Volume("speaker"),
+                Brightness(),
+            ],
+        )
+        actions = Widget.Box(
+            vertical=True,
+            child=[
+                Widget.Box(
+                    css_classes=["actions"],
+                    child=[BatteryStatus(), power],
+                ),
+                power.menu,
+            ],
+        )
+
         super().__init__(
             namespace=WindowName.control_center,
             on_close=lambda: OPENED_MENU.set_value(""),
             css_classes=["control-center"],
             valign=valign,
             halign=halign,
-            child=[
-                Widget.Box(
-                    vertical=True,
-                    child=[
-                        Widget.Box(
-                            css_classes=["actions"],
-                            child=[BatteryStatus(), power],
-                        ),
-                        power.menu,
-                    ],
-                ),
-                Volume("speaker"),
-                Brightness(),
-                QuickSettings(),
-            ],
+            child=[actions, sliders, QuickSettings()],
         )
