@@ -3,12 +3,12 @@ from ignis.widgets import Widget
 
 from modules.control_center.battery import BatteryStatus
 from modules.control_center.brightness import Brightness
+from modules.control_center.power import PowerButton
 from modules.control_center.quick_settings import QuickSettings
 from modules.control_center.volume import Volume
 from modules.utils import ALIGN, WindowName
 from widgets.menu import OPENED_MENU
 from widgets.popup_window import PopupWindow
-from modules.control_center.power import PowerButton
 
 app = IgnisApp.get_default()
 

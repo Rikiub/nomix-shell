@@ -3,8 +3,8 @@ from pathlib import Path
 from typing import Literal
 
 from gi.repository import GLib  # type: ignore
-from ignis.utils import Utils
 from ignis.app import IgnisApp
+from ignis.utils import Utils
 
 app = IgnisApp.get_default()
 

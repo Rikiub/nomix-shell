@@ -2,8 +2,8 @@ from typing import Callable
 
 from ignis.base_widget import BaseWidget
 from ignis.gobject import Binding
-from ignis.widgets import Widget
 from ignis.utils.exec_sh import exec_sh_async
+from ignis.widgets import Widget
 
 from widgets.menu import Menu
 

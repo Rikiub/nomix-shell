@@ -1,7 +1,6 @@
+from modules.notification_center.panel import NotificationPanel
 from modules.utils import ALIGN, WindowName
 from widgets.popup_window import PopupWindow
-
-from modules.notification_center.panel import NotificationPanel
 
 
 class NotificationCenter(PopupWindow):

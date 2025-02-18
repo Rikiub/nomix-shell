@@ -7,6 +7,7 @@ from ignis.widgets import Widget
 
 from modules.user_options import user_options
 
+
 class Clock(Widget.Label):
     def __init__(self):
         fmt = self.get_format()
