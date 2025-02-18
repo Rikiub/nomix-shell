@@ -1,13 +1,13 @@
 from ignis.utils.exec_sh import exec_sh_async
 
-from modules.user_options import user_options
+from modules.user_options import cache_options
 from .qsbutton import QSButton
 
 
 class NightLightQS(QSButton):
     def __init__(self):
         def do_toggle():
-            user_options.night_light.enabled = not self.active
+            cache_options.night_light = not self.active
 
         def on_activate(toggle):
             exec_sh_async("wlsunset")
@@ -26,7 +26,7 @@ class NightLightQS(QSButton):
             icon_name="night-light-symbolic",
             on_activate=lambda _: on_activate(True),
             on_deactivate=lambda _: on_deactivate(True),
-            active=user_options.night_light.bind("enabled"),
+            active=cache_options.bind("night_light"),
         )
 
         if self.active:
