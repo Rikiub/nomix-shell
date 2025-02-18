@@ -11,8 +11,8 @@ class DarkModeQS(QSButton):
         super().__init__(
             label="Dark Style",
             icon_name="display-brightness-symbolic",
-            on_activate=lambda x: self.set_dark(),
-            on_deactivate=lambda x: self.set_light(),
+            on_activate=lambda _: self.set_dark(),
+            on_deactivate=lambda _: self.set_light(),
             active=self.is_dark(),
         )
 
