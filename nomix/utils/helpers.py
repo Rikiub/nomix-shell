@@ -1,7 +1,7 @@
-from nomix.utils.constants import CONFIG_DIR
-
 from ignis.app import IgnisApp
 from ignis.utils import Utils
+
+from nomix.utils.constants import CONFIG_DIR
 
 app = IgnisApp.get_default()
 

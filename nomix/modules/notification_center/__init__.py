@@ -1,6 +1,6 @@
 from nomix.modules.notification_center.panel import NotificationPanel
-from nomix.utils.types import ALIGN
 from nomix.utils.constants import WindowName
+from nomix.utils.types import ALIGN
 from nomix.widgets.popup_window import PopupWindow
 
 

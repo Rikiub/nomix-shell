@@ -1,6 +1,6 @@
 from typing import Literal
-from gi.repository import GObject, Gio  # type: ignore
 
+from gi.repository import Gio, GObject  # type: ignore
 from ignis.base_service import BaseService
 
 from .constants import STYLE_FILE, STYLE_TEMPLATE

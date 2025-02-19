@@ -1,6 +1,5 @@
 from typing import Literal
 
-
 ALIGN = Literal["start", "center", "end"]
 ANCHOR = Literal["top", "bottom", "left", "right"]
 TRANSITION_TYPE = Literal[

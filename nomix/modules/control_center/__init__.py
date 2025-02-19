@@ -6,8 +6,8 @@ from nomix.modules.control_center.brightness import Brightness
 from nomix.modules.control_center.power import PowerButton
 from nomix.modules.control_center.quick_settings import QuickSettings
 from nomix.modules.control_center.volume import Volume
-from nomix.utils.types import ALIGN
 from nomix.utils.constants import WindowName
+from nomix.utils.types import ALIGN
 from nomix.widgets.menu import OPENED_MENU
 from nomix.widgets.popup_window import PopupWindow
 
