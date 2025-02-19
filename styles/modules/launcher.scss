@@ -1,4 +1,6 @@
-@use "./color";
+@use "../color";
+@use "../size";
+@use "../lib/helper";
 
 .launcher {
     min-width: 30rem;
@@ -8,7 +10,7 @@
 
         padding: 0.75rem 1rem;
         margin-bottom: 10px;
-        border-radius: var(--border-radius-md);
+        border-radius: size.$border-radius-md;
 
         .launcher-search {
             background-color: inherit;
@@ -17,7 +19,7 @@
 
     .launcher-app {
         background-color: var(--color-background);
-        border-radius: var(--border-radius-md);
+        border-radius: size.$border-radius-md;
 
         margin: 0 5px;
         margin-top: 0.25rem;
@@ -29,7 +31,7 @@
         }
 
         &:hover {
-            background-color: var(--color-surface-hover);
+            background-color: helper.hover(color.$surface);
         }
 
         .launcher-app-label {
@@ -44,6 +46,6 @@
 
     .launcher-app {
         margin: 10px;
-        border-radius: var(--border-radius-md);
+        border-radius: size.$border-radius-md;
     }
 }

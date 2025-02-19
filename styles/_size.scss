@@ -1,0 +1,9 @@
+@use "color";
+
+$border: 1px solid color.$border;
+
+$border-radius-sm: 15px;
+$border-radius-md: 20px;
+$border-radius-lg: 30px;
+
+$shadow: 0 0 4px 2px $border;

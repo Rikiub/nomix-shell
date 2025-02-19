@@ -11,7 +11,3 @@ $on-surface-muted: oklch(from $on-surface l c h / 0.5);
 $surface-variant: oklch(from $surface calc(l - 5%) c h);
 
 $border: var(--headerbar-shade-color);
-
-@function hover($color) {
-    @return oklch(from $color calc(l + 5%) c h);
-}

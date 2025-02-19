@@ -1,11 +1,13 @@
-@use "./color";
+@use "../color";
+@use "../size";
+@use "../lib/helper";
 
 .notification {
 	background-color: color.$surface;
-	box-shadow: var(--shadow);
+	box-shadow: size.$shadow;
 
-	border: var(--border);
-	border-radius: var(--border-radius-md);
+	border: size.$border;
+	border-radius: size.$border-radius-md;
 
 	margin: 10px;
 	margin-bottom: 0px;
@@ -16,7 +18,7 @@
 	transition: 0.3s;
 
 	&:hover {
-		background-color: var(--color-surface-hover);
+		background-color: helper.hover(color.$surface);
 	}
 
 	.notification-header {
@@ -37,9 +39,9 @@
 			background-color: color.$surface-variant;
 			padding: 2px;
 			margin: 0 3px;
-	
+
 			&:hover {
-				background-color: var(--color-surface-variant-hover);
+				background-color: helper.hover(color.$surface-variant);
 			}
 		}
 	}
@@ -56,12 +58,12 @@
 
 	.notification-action {
 		background-color: color.$surface-variant;
-		border-radius: var(--border-radius-sm);
+		border-radius: size.$border-radius-sm;
 
 		margin-top: 5px;
 
 		&:hover {
-			background-color: var(--color-surface-variant-hover);
+			background-color: helper.hover(color.$surface-variant);
 		}
 	}
 }

@@ -12,7 +12,7 @@ from utils.helpers import monitor_gtk4_css
 
 # SETUP
 app = IgnisApp.get_default()
-app.apply_css(str(IGNIS_DIR / "style.scss"))
+app.apply_css(str(IGNIS_DIR / "styles" / "index.scss"))
 
 # Auto reload in GTK4 theme changes
 monitor_gtk4_css()

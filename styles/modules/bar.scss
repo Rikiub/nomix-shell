@@ -1,10 +1,12 @@
-@use "./color";
+@use "../color";
+@use "../size";
+@use "../lib/helper";
 
 .bar {
     background-color: color.$background;
 
-    border: var(--border);
-    border-radius: var(--border-radius-sm);
+    border: size.$border;
+    border-radius: size.$border-radius-sm;
 
     margin: 0 1rem;
     padding: 0.3rem 1rem;
@@ -14,14 +16,14 @@
         padding: 0px 0.6rem;
 
         &:hover {
-            background-color: var(--color-surface-hover);
+            background-color: helper.hover(color.$surface);
         }
     }
 
     .status-pill {
         background-color: color.$primary;
         color: color.$on-primary;
-        border-radius: var(--border-radius-md);
+        border-radius: size.$border-radius-md;
 
         .indicator-icon {
             color: color.$on-primary;
@@ -36,19 +38,27 @@
     .workspaces {
         background-color: color.$surface;
         padding: 0.4rem 1rem;
-        border-radius: var(--border-radius-md);
+        border-radius: size.$border-radius-md;
 
         .workspace-item {
             all: unset;
 
-            background-color: color-mix(in srgb, color.$primary 30%, color.$surface);
+            background-color: color-mix(
+                in srgb,
+                color.$primary 30%,
+                color.$surface
+            );
             padding: 0 0.6rem;
             border-radius: 100%;
 
             transition: transform 50ms ease-in-out;
 
             &:hover {
-                background-color: color-mix(in srgb, color.$primary 35%, color.$surface);
+                background-color: color-mix(
+                    in srgb,
+                    color.$primary 35%,
+                    color.$surface
+                );
                 color: color.$on-primary;
                 transform: scale(1.1);
             }
@@ -67,7 +77,7 @@
         }
 
         .enumerated {
-            border-radius: var(--border-radius-sm);
+            border-radius: size.$border-radius-sm;
         }
     }
 
@@ -78,7 +88,7 @@
         font-weight: bold;
 
         padding: 0 20px;
-        border-radius: var(--border-radius-lg);
+        border-radius: size.$border-radius-lg;
     }
 
     .volume {
@@ -89,14 +99,14 @@
     .tray {
         background-color: color.$surface;
         padding: 0 10px;
-        border-radius: var(--border-radius-sm);
+        border-radius: size.$border-radius-sm;
 
         .tray-item {
             background-color: unset;
             padding: 0 3px;
 
             &:hover {
-                background-color: var(--color-background-hover);
+                background-color: helper.hover(color.$surface);
             }
         }
     }

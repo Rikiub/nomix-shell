@@ -1,0 +1,9 @@
+@use "dark";
+
+@function hover($color) {
+    @if dark.$is-dark {
+        @return oklch(from $color calc(l + 5%) c h);
+    } @else {
+        @return oklch(from $color calc(l - 5%) c h);
+    }
+}

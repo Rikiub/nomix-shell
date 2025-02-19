@@ -1,4 +1,6 @@
-@use "./color";
+@use "../color";
+@use "../size";
+@use "../lib/helper";
 
 .notification-center {
     min-width: 450px;
@@ -8,7 +10,7 @@
         background-color: color.$surface;
 
         &:hover {
-            background-color: var(--color-surface-hover);
+            background-color: helper.hover(color.$surface);
         }
     }
 
@@ -23,7 +25,7 @@
 
     .dnd {
         padding: 5px;
-        
+
         label {
             margin: 0 7px;
         }

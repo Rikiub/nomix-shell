@@ -1,4 +1,6 @@
-@use "./color";
+@use "../color";
+@use "../size";
+@use "../lib/helper";
 
 /* Defaults */
 :root {
@@ -6,18 +8,18 @@
 }
 
 button {
-    border-radius: var(--border-radius-sm);
+    border-radius: size.$border-radius-sm;
 }
 
 popover contents {
-    border: var(--border);
-    border-radius: var(--border-radius-md);
+    border: size.$border;
+    border-radius: size.$border-radius-md;
     background-color: color.$surface;
 
     modelbutton {
         &:hover,
         &:focus {
-            background-color: var(--color-surface-hover);
+            background-color: helper.hover(color.$surface);
         }
     }
 }
@@ -32,11 +34,11 @@ switch:checked {
 }
 
 .popup-window {
-    background-color: var(--color-background);
-    box-shadow: var(--shadow);
+    background-color: color.$background;
+    box-shadow: size.$shadow;
 
-    border: var(--border);
-    border-radius: var(--border-radius-lg);
+    border: size.$border;
+    border-radius: size.$border-radius-lg;
 
     margin: 10px;
     padding: 20px;
@@ -48,8 +50,8 @@ switch:checked {
     min-width: 100px;
     min-height: 0.3rem;
     margin-left: 10px;
-    border-radius: var(--border-radius-lg);
-    
+    border-radius: size.$border-radius-lg;
+
     highlight {
         background-color: color.$primary;
         padding: 7px 0;

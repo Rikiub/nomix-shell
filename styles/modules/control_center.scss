@@ -1,4 +1,6 @@
-@use "./color";
+@use "../color";
+@use "../size";
+@use "../lib/helper";
 
 .control-center {
     min-width: 430px;
@@ -7,10 +9,10 @@
         background-color: color.$surface;
 
         &:hover {
-            background-color: var(--color-surface-hover);
+            background-color: helper.hover(color.$surface);
         }
     }
-    
+
     .slider-control,
     .quick-settings,
     .actions {
@@ -20,7 +22,7 @@
     .battery-status {
         background-color: color.$surface;
         padding: 10px;
-        border-radius: var(--border-radius-lg);
+        border-radius: size.$border-radius-lg;
 
         .battery-item {
             font-weight: bold;
@@ -35,7 +37,7 @@
 
     .volume-slider {
         padding: 3px 8px;
-        border-radius: var(--border-radius-lg);
+        border-radius: size.$border-radius-lg;
 
         button {
             all: unset;
@@ -47,14 +49,14 @@
     background-color: color.$surface;
     padding: 10px 20px;
     margin: 10px;
-    border-radius: var(--border-radius-md);
+    border-radius: size.$border-radius-md;
 
     button {
         background-color: inherit;
     }
 
     button:hover {
-        background-color: var(--color-surface-hover);
+        background-color: helper.hover(color.$surface);
     }
 
     separator {
@@ -72,10 +74,10 @@
     .settings {
         padding: 8px;
         font-weight: normal;
-        
+
         &:hover {
-            background-color: var(--color-surface-hover);
-            border-radius: var(--border-radius-sm);
+            background-color: helper.hover(color.$surface);
+            border-radius: size.$border-radius-sm;
         }
 
         .device-icons {
@@ -100,7 +102,7 @@
                 border-radius: 100%;
 
                 &:hover {
-                    background-color: var(--color-surface-hover);
+                    background-color: helper.hover(color.$surface);
                 }
             }
         }
@@ -110,8 +112,8 @@
 .quick-settings {
     .qs-button {
         background-color: color.$surface;
-        border-radius: var(--border-radius-md);
-        
+        border-radius: size.$border-radius-md;
+
         padding: 15px;
 
         .qs-button-label {
@@ -119,7 +121,7 @@
         }
 
         &:hover {
-            background-color: var(--color-surface-hover);
+            background-color: helper.hover(color.$surface);
         }
 
         &.active {
@@ -127,7 +129,7 @@
             color: color.$on-primary;
 
             &:hover {
-                background-color: var(--color-primary-hover);
+                background-color: helper.hover(color.$primary);
             }
         }
     }
