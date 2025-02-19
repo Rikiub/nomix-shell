@@ -7,12 +7,12 @@ from modules.launcher import Launcher
 from modules.notification_center import NotificationCenter
 from modules.notification_popup import NotificationPopup
 from modules.osd import OSD
-from utils.constants import IGNIS_DIR
+from utils.constants import STYLES_DIR
 from utils.helpers import monitor_gtk4_css
 
 # SETUP
 app = IgnisApp.get_default()
-app.apply_css(str(IGNIS_DIR / "styles" / "index.scss"))
+app.apply_css(str(STYLES_DIR / "index.scss"))
 
 # Auto reload in GTK4 theme changes
 monitor_gtk4_css()
