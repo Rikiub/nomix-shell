@@ -16,5 +16,5 @@ GTK_THEME_LIGHT = "adw-gtk3"
 GTK_THEME_DARK = "adw-gtk3-dark"
 
 CHANGE_ICON = False
-GTK_ICON_LIGHT = os.getenv("GTK_ICON_LIGHT") or "Adwaita"
-GTK_ICON_DARK = os.getenv("GTK_ICON_DARK") or "Adwaita"
+GTK_ICON_LIGHT = os.getenv("GTK_ICON_LIGHT") or ""
+GTK_ICON_DARK = os.getenv("GTK_ICON_DARK") or ""

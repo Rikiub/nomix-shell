@@ -14,9 +14,9 @@ class WifiItem(DeviceItem):
         super().__init__(
             label=access_point.ssid,
             icon_name=access_point.bind("strength", lambda _: access_point.icon_name),
-            extra_icon_name="lock-symbolic"
+            extra_icon_name="changes-prevent-symbolic"
             if access_point.security
-            else "unlock-symbolic",
+            else "changes-allow-symbolic",
             active=access_point.bind("is_connected"),
             on_click=lambda _: self.toggle(access_point),
             extra_widget=Widget.Button(

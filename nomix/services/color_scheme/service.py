@@ -23,6 +23,10 @@ class ColorSchemeService(BaseService):
         self._color_scheme: COLOR_SCHEME = self._settings.get_string("color-scheme")  # type: ignore
         self._is_dark: bool = False
 
+        self._settings.connect(
+            "changed::color-scheme",
+            lambda config, key: self.set_color_scheme(config.get_string(key)),
+        )
         self._sync()
 
     @GObject.Property
