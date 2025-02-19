@@ -1,14 +1,14 @@
 from ignis.app import IgnisApp
 from ignis.utils import Utils
 
-from modules.bar import Bar
-from modules.control_center import ControlCenter
-from modules.launcher import Launcher
-from modules.notification_center import NotificationCenter
-from modules.notification_popup import NotificationPopup
-from modules.osd import OSD
-from utils.constants import STYLES_DIR
-from utils.helpers import monitor_gtk4_css
+from nomix.modules.bar import Bar
+from nomix.modules.control_center import ControlCenter
+from nomix.modules.launcher import Launcher
+from nomix.modules.notification_center import NotificationCenter
+from nomix.modules.notification_popup import NotificationPopup
+from nomix.modules.osd import OSD
+from nomix.utils.constants import STYLES_DIR
+from nomix.utils.helpers import monitor_gtk4_css
 
 # SETUP
 app = IgnisApp.get_default()
