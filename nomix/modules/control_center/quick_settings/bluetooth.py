@@ -13,14 +13,14 @@ bluetooth = BluetoothService.get_default()
 class BluetoothItem(DeviceItem):
     def __init__(self, device: BluetoothDevice):
         super().__init__(
-            icon_name=device.bind("icon_name"),
+            icon_name=device.bind("icon_name", lambda v: v + "-symbolic"),
             label=device.alias,
             active=device.bind("connected"),
             on_click=lambda _: device.disconnect_from()
             if device.connected
             else device.connect_to(),
             extra_widget=Widget.Icon(
-                image="bluetooth-paired-symbolic",
+                image="bluetooth-active-symbolic",
                 tooltip_text="Paired",
                 visible=device.bind("paired"),
             ),

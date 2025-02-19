@@ -77,7 +77,7 @@ class BluetoothIcon(IndicatorIcon):
 
     def _get_image(self, devices: list[BluetoothDevice]):
         if devices:
-            self.image = devices[0].icon_name
+            return devices[0].icon_name + "-symbolic"
 
 
 class VpnIcon(IndicatorIcon):
@@ -104,7 +104,7 @@ class DNDIcon(IndicatorIcon):
 class BatteryItem(IndicatorIcon):
     def __init__(self, device: UPowerDevice):
         super().__init__(
-            icon_name=device.bind("icon_name"),
+            icon_name=device.bind("icon_name", lambda v: v + "-symbolic"),
             label=device.bind("percent", lambda v: f"{round(v)}%")
             if user_options.bar.battery_percent
             else "",

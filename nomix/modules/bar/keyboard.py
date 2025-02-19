@@ -21,7 +21,9 @@ class KeyboardLayout(Widget.Button):
             on_click=lambda _: service and service.switch_kb_layout(),
             child=Widget.Box(
                 child=[
-                    Widget.Icon(image="input-keyboard", style="margin-right: 5px;"),
+                    Widget.Icon(
+                        image="input-keyboard-symbolic", style="margin-right: 5px;"
+                    ),
                     Widget.Label(
                         label=service and service.bind("kb_layout"),
                     ),
