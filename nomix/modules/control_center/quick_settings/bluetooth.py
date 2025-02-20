@@ -23,6 +23,7 @@ class BluetoothItem(DeviceItem):
                 image="bluetooth-active-symbolic",
                 tooltip_text="Paired",
                 visible=device.bind("paired"),
+                css_classes=["no-actionable"],
             ),
         )
 

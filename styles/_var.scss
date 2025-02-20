@@ -17,7 +17,8 @@ $color-border: var(--headerbar-shade-color, rgb(60, 60, 60));
 
 /* MODIFIERS */
 $border: 1px solid $color-border;
-$border-focus: 2px solid $color-secondary;
+$outline: 1px solid $color-secondary;
+$outline-offset: 2px;
 
 $border-radius-sm: 15px;
 $border-radius-md: 20px;

@@ -8,7 +8,7 @@ from ignis.widgets import Widget
 from nomix.widgets.menu import Menu
 
 
-class DeviceItem(Widget.Box):
+class DeviceItem(Widget.EventBox):
     def __init__(
         self,
         on_click: Callable | None = None,
@@ -41,14 +41,18 @@ class DeviceItem(Widget.Box):
             css_classes=["label"],
         )
 
+        check = Widget.Icon(
+            image="object-select-symbolic",
+            visible=active,
+            tooltip_text="Connected",
+            css_classes=["no-actionable"],
+            halign="end",
+            hexpand=True,
+        )
+
         end = Widget.Box(
             css_classes=["indicators"],
             child=[
-                Widget.Icon(
-                    image="object-select-symbolic",
-                    visible=active,
-                    tooltip_text="Connected",
-                ),
                 extra_widget or Widget.Box(),
             ],
         )
@@ -56,13 +60,10 @@ class DeviceItem(Widget.Box):
         super().__init__(
             css_classes=["device-item"],
             child=[
-                Widget.EventBox(
+                Widget.Button(
                     hexpand=True,
                     on_click=on_click,
-                    child=[
-                        start,
-                        center,
-                    ],
+                    child=Widget.Box(child=[start, center, check]),
                 ),
                 end,
             ],
@@ -105,7 +106,7 @@ class DeviceMenu(Menu):
                     child=[
                         Widget.Separator(),
                         Widget.Button(
-                            css_classes=["settings"],
+                            css_classes=["device-item", "settings"],
                             on_click=lambda _: exec_sh_async(settings_command),
                             child=Widget.Box(
                                 child=[

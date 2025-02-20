@@ -8,7 +8,7 @@
     border-radius: var.$border-radius-sm;
 
     margin: 0 1rem;
-    padding: 0.3rem 1rem;
+    padding: 0.4rem 1rem;
 
     button {
         background-color: var.$color-surface;
@@ -72,6 +72,11 @@
                 &:hover {
                     transform: scale(1.07);
                 }
+            }
+
+            &:focus {
+                outline: var.$outline;
+                outline-offset: var.$outline-offset;
             }
         }
 
