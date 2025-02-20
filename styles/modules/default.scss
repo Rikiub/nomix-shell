@@ -1,31 +1,30 @@
-@use "../color";
-@use "../size";
-@use "../lib/helper";
+@use "../var";
+@use "helper";
 
 /* Defaults */
 :root {
-    color: color.$on-surface;
+    color: var.$color-on-surface;
 }
 
 button {
-    border-radius: size.$border-radius-sm;
+    border-radius: var.$border-radius-sm;
 }
 
 popover contents {
-    border: size.$border;
-    border-radius: size.$border-radius-md;
-    background-color: color.$surface;
+    border: var.$color-border;
+    border-radius: var.$border-radius-md;
+    background-color: var.$color-surface;
 
     modelbutton {
         &:hover,
         &:focus {
-            background-color: helper.hover(color.$surface);
+            background-color: helper.hover(var.$color-surface);
         }
     }
 }
 
 switch:checked {
-    background-color: color.$primary;
+    background-color: var.$color-primary;
 }
 
 .window-backdrop {
@@ -34,31 +33,31 @@ switch:checked {
 }
 
 .popup-window {
-    background-color: color.$background;
-    box-shadow: size.$shadow;
+    background-color: var.$color-background;
+    box-shadow: var.$shadow;
 
-    border: size.$border;
-    border-radius: size.$border-radius-lg;
+    border: var.$color-border;
+    border-radius: var.$border-radius-lg;
 
     margin: 10px;
     padding: 20px;
 }
 
 .volume-slider trough {
-    background-color: color.$surface;
+    background-color: var.$color-surface;
 
     min-width: 100px;
     min-height: 0.3rem;
     margin-left: 10px;
-    border-radius: size.$border-radius-lg;
+    border-radius: var.$border-radius-lg;
 
     highlight {
-        background-color: color.$primary;
+        background-color: var.$color-primary;
         padding: 7px 0;
     }
 
     slider {
         all: unset;
-        background-color: color.$primary;
+        background-color: var.$color-primary;
     }
 }

@@ -1,13 +1,12 @@
-@use "../color";
-@use "../size";
-@use "../lib/helper";
+@use "../var";
+@use "helper";
 
 .notification {
-	background-color: color.$surface;
-	box-shadow: size.$shadow;
+	background-color: var.$color-surface;
+	box-shadow: var.$shadow;
 
-	border: size.$border;
-	border-radius: size.$border-radius-md;
+	border: var.$color-border;
+	border-radius: var.$border-radius-md;
 
 	margin: 10px;
 	margin-bottom: 0px;
@@ -18,7 +17,7 @@
 	transition: 0.3s;
 
 	&:hover {
-		background-color: helper.hover(color.$surface);
+		background-color: helper.hover(var.$color-surface);
 	}
 
 	.notification-header {
@@ -36,12 +35,12 @@
 		}
 
 		button {
-			background-color: color.$surface-variant;
+			background-color: var.$color-surface-variant;
 			padding: 2px;
 			margin: 0 3px;
 
 			&:hover {
-				background-color: helper.hover(color.$surface-variant);
+				background-color: helper.hover(var.$color-surface-variant);
 			}
 		}
 	}
@@ -57,13 +56,13 @@
 	*/
 
 	.notification-action {
-		background-color: color.$surface-variant;
-		border-radius: size.$border-radius-sm;
+		background-color: var.$color-surface-variant;
+		border-radius: var.$border-radius-sm;
 
 		margin-top: 5px;
 
 		&:hover {
-			background-color: helper.hover(color.$surface-variant);
+			background-color: helper.hover(var.$color-surface-variant);
 		}
 	}
 }

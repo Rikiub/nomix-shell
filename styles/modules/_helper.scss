@@ -1,4 +1,4 @@
-@use "dark";
+@use "../../.cache/dark";
 
 @function hover($color) {
     @if dark.$is-dark {

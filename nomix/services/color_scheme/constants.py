@@ -1,10 +1,11 @@
 import os
 from typing import Literal
-from nomix.utils.constants import STYLES_DIR
+
+from nomix.utils.constants import CACHE_DIR
 
 COLOR_SCHEME = Literal["default", "prefer-light", "prefer-dark"]
 
-STYLE_FILE = STYLES_DIR / "lib" / "_dark.scss"
+STYLE_FILE = CACHE_DIR / "_dark.scss"
 
 # Template for generated file
 STYLE_DISCLAIMER = "DON'T MODIFY THIS FILE, WILL BE OVERWRITED"

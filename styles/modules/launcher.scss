@@ -1,16 +1,15 @@
-@use "../color";
-@use "../size";
-@use "../lib/helper";
+@use "../var";
+@use "helper";
 
 .launcher {
     min-width: 30rem;
 
     .launcher-search-box {
-        background-color: color.$surface;
+        background-color: var.$color-surface;
 
         padding: 0.75rem 1rem;
         margin-bottom: 10px;
-        border-radius: size.$border-radius-md;
+        border-radius: var.$border-radius-md;
 
         .launcher-search {
             background-color: inherit;
@@ -19,7 +18,7 @@
 
     .launcher-app {
         background-color: var(--color-background);
-        border-radius: size.$border-radius-md;
+        border-radius: var.$border-radius-md;
 
         margin: 0 5px;
         margin-top: 0.25rem;
@@ -27,11 +26,11 @@
         padding: 0.6rem 1.3rem;
 
         &:focus {
-            background-color: color.$surface;
+            background-color: var.$color-surface;
         }
 
         &:hover {
-            background-color: helper.hover(color.$surface);
+            background-color: helper.hover(var.$color-surface);
         }
 
         .launcher-app-label {
@@ -46,6 +45,6 @@
 
     .launcher-app {
         margin: 10px;
-        border-radius: size.$border-radius-md;
+        border-radius: var.$border-radius-md;
     }
 }

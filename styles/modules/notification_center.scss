@@ -1,16 +1,15 @@
-@use "../color";
-@use "../size";
-@use "../lib/helper";
+@use "../var";
+@use "helper";
 
 .notification-center {
     min-width: 450px;
     min-height: 500px;
 
     button {
-        background-color: color.$surface;
+        background-color: var.$color-surface;
 
         &:hover {
-            background-color: helper.hover(color.$surface);
+            background-color: helper.hover(var.$color-surface);
         }
     }
 

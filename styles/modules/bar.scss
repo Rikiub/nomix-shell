@@ -1,52 +1,51 @@
-@use "../color";
-@use "../size";
-@use "../lib/helper";
+@use "../var";
+@use "helper";
 
 .bar {
-    background-color: color.$background;
+    background-color: var.$color-background;
 
-    border: size.$border;
-    border-radius: size.$border-radius-sm;
+    border: var.$color-border;
+    border-radius: var.$border-radius-sm;
 
     margin: 0 1rem;
     padding: 0.3rem 1rem;
 
     button {
-        background-color: color.$surface;
+        background-color: var.$color-surface;
         padding: 0px 0.6rem;
 
         &:hover {
-            background-color: helper.hover(color.$surface);
+            background-color: helper.hover(var.$color-surface);
         }
     }
 
     .status-pill {
-        background-color: color.$primary;
-        color: color.$on-primary;
-        border-radius: size.$border-radius-md;
+        background-color: var.$color-primary;
+        color: var.$color-on-primary;
+        border-radius: var.$border-radius-md;
 
         .indicator-icon {
-            color: color.$on-primary;
+            color: var.$color-on-primary;
         }
 
         &:hover {
-            background-color: color.$primary;
+            background-color: var.$color-primary;
             transform: scale(1.1);
         }
     }
 
     .workspaces {
-        background-color: color.$surface;
+        background-color: var.$color-surface;
         padding: 0.4rem 1rem;
-        border-radius: size.$border-radius-md;
+        border-radius: var.$border-radius-md;
 
         .workspace-item {
             all: unset;
 
             background-color: color-mix(
                 in srgb,
-                color.$primary 30%,
-                color.$surface
+                var.$color-primary 30%,
+                var.$color-surface
             );
             padding: 0 0.6rem;
             border-radius: 100%;
@@ -56,16 +55,16 @@
             &:hover {
                 background-color: color-mix(
                     in srgb,
-                    color.$primary 35%,
-                    color.$surface
+                    var.$color-primary 35%,
+                    var.$color-surface
                 );
-                color: color.$on-primary;
+                color: var.$color-on-primary;
                 transform: scale(1.1);
             }
 
             &.active {
-                background-color: color.$primary;
-                color: color.$on-primary;
+                background-color: var.$color-primary;
+                color: var.$color-on-primary;
 
                 padding: 0 1rem;
                 border-radius: 20px;
@@ -77,18 +76,18 @@
         }
 
         .enumerated {
-            border-radius: size.$border-radius-sm;
+            border-radius: var.$border-radius-sm;
         }
     }
 
     .clock {
-        background-color: color.$surface;
+        background-color: var.$color-surface;
 
         font-size: 1.1rem;
         font-weight: bold;
 
         padding: 0 20px;
-        border-radius: size.$border-radius-lg;
+        border-radius: var.$border-radius-lg;
     }
 
     .volume {
@@ -97,16 +96,16 @@
     }
 
     .tray {
-        background-color: color.$surface;
+        background-color: var.$color-surface;
         padding: 0 10px;
-        border-radius: size.$border-radius-sm;
+        border-radius: var.$border-radius-sm;
 
         .tray-item {
             background-color: unset;
             padding: 0 3px;
 
             &:hover {
-                background-color: helper.hover(color.$surface);
+                background-color: helper.hover(var.$color-surface);
             }
         }
     }

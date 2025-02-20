@@ -1,15 +1,14 @@
-@use "../color";
-@use "../size";
-@use "../lib/helper";
+@use "../var";
+@use "helper";
 
 .control-center {
     min-width: 430px;
 
     button {
-        background-color: color.$surface;
+        background-color: var.$color-surface;
 
         &:hover {
-            background-color: helper.hover(color.$surface);
+            background-color: helper.hover(var.$color-surface);
         }
     }
 
@@ -20,9 +19,9 @@
     }
 
     .battery-status {
-        background-color: color.$surface;
+        background-color: var.$color-surface;
         padding: 10px;
-        border-radius: size.$border-radius-lg;
+        border-radius: var.$border-radius-lg;
 
         .battery-item {
             font-weight: bold;
@@ -37,7 +36,7 @@
 
     .volume-slider {
         padding: 3px 8px;
-        border-radius: size.$border-radius-lg;
+        border-radius: var.$border-radius-lg;
 
         button {
             all: unset;
@@ -46,17 +45,17 @@
 }
 
 .accordion-menu {
-    background-color: color.$surface;
+    background-color: var.$color-surface;
     padding: 10px 20px;
     margin: 10px;
-    border-radius: size.$border-radius-md;
+    border-radius: var.$border-radius-md;
 
     button {
         background-color: inherit;
     }
 
     button:hover {
-        background-color: helper.hover(color.$surface);
+        background-color: helper.hover(var.$color-surface);
     }
 
     separator {
@@ -76,8 +75,8 @@
         font-weight: normal;
 
         &:hover {
-            background-color: helper.hover(color.$surface);
-            border-radius: size.$border-radius-sm;
+            background-color: helper.hover(var.$color-surface);
+            border-radius: var.$border-radius-sm;
         }
 
         .device-icons {
@@ -102,7 +101,7 @@
                 border-radius: 100%;
 
                 &:hover {
-                    background-color: helper.hover(color.$surface);
+                    background-color: helper.hover(var.$color-surface);
                 }
             }
         }
@@ -111,8 +110,8 @@
 
 .quick-settings {
     .qs-button {
-        background-color: color.$surface;
-        border-radius: size.$border-radius-md;
+        background-color: var.$color-surface;
+        border-radius: var.$border-radius-md;
 
         padding: 15px;
 
@@ -121,15 +120,15 @@
         }
 
         &:hover {
-            background-color: helper.hover(color.$surface);
+            background-color: helper.hover(var.$color-surface);
         }
 
         &.active {
-            background-color: color.$primary;
-            color: color.$on-primary;
+            background-color: var.$color-primary;
+            color: var.$color-on-primary;
 
             &:hover {
-                background-color: helper.hover(color.$primary);
+                background-color: helper.hover(var.$color-primary);
             }
         }
     }

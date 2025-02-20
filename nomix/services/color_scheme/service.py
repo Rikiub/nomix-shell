@@ -62,7 +62,7 @@ class ColorSchemeService(BaseService):
     def _write_style(self) -> None:
         STYLE_FILE.touch(exist_ok=True)
 
-        content = f"/* {STYLE_DISCLAIMER} */\n${STYLE_VARIABLE_NAME}: {'true' if self._is_dark else 'false'}"
+        content = f"/* {STYLE_DISCLAIMER} */\n${STYLE_VARIABLE_NAME}: {'true' if self._is_dark else 'false'};"
         STYLE_FILE.write_text(content)
 
     def _sync(self):
