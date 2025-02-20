@@ -7,7 +7,7 @@
     .launcher-search-box {
         background-color: var.$color-surface;
 
-        padding: 0.75rem 1rem;
+        padding: 0.50rem 1rem;
         margin-bottom: 10px;
         border-radius: var.$border-radius-md;
 
@@ -20,13 +20,12 @@
         background-color: var.$color-background;
         border-radius: var.$border-radius-md;
 
-        margin: 0 5px;
-        margin-top: 0.25rem;
-
-        padding: 0.6rem 1.3rem;
+        margin: 3px 5px;
+        padding: .7rem 1rem;
 
         &:focus {
             background-color: var.$color-surface;
+            outline-offset: 0;
         }
 
         &:hover {

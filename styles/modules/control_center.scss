@@ -28,12 +28,6 @@
         }
     }
 
-    .power-menu {
-        padding-top: 0;
-        padding-bottom: 0;
-        margin: 5px;
-    }
-
     .volume-slider {
         padding: 3px 8px;
         border-radius: var.$border-radius-lg;
@@ -71,7 +65,7 @@
 
     .device-item {
         font-weight: normal;
-        padding: 1px;
+        padding: 1px 3px;
         border-radius: var.$border-radius-sm;
         
         button {
