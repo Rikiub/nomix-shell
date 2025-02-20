@@ -1,6 +1,5 @@
 import os
 from typing import Literal
-
 from nomix.utils.constants import STYLES_DIR
 
 COLOR_SCHEME = Literal["default", "prefer-light", "prefer-dark"]

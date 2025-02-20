@@ -1,1 +1,1 @@
-from .service import COLOR_SCHEME, ColorSchemeService  # noqa: F401
+from .service import ColorSchemeService, COLOR_SCHEME  # noqa: F401
