@@ -10,13 +10,13 @@ from nomix.utils.user_options import user_options
 
 class Clock(Widget.Label):
     def __init__(self):
-        fmt = self.get_format()
+        self.format = self._update_format()
 
         super().__init__(
             css_classes=["clock"],
             label=Utils.Poll(
                 1000,
-                lambda _: datetime.datetime.now().strftime(fmt),
+                lambda _: datetime.datetime.now().strftime(self.format),
             ).bind("output"),
         )
 
@@ -32,7 +32,7 @@ class Clock(Widget.Label):
         except locale.Error:
             return "24"
 
-    def get_format(self) -> str:
+    def _update_format(self) -> str:
         options = user_options.clock
 
         # Time
@@ -53,4 +53,5 @@ class Clock(Widget.Label):
 
         date_format = f"{week}{'%B' if options.full_date else '%b'} %d"
 
-        return f"{date_format}   {time_format}"
+        self.format = f"{date_format}   {time_format}"
+        return self.format
