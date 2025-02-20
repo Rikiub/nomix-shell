@@ -74,7 +74,7 @@ class DeviceMenu(Menu):
     def __init__(
         self,
         name: str,
-        height: int = 130,
+        height_request: int = 150,
         header: BaseWidget | None = None,
         devices: list[DeviceItem] | Binding = [],
         settings_visible: bool = True,
@@ -93,7 +93,8 @@ class DeviceMenu(Menu):
                     child=[header if header else Widget.Label(visible=False)],
                 ),
                 Widget.Scroll(
-                    height_request=height,
+                    height_request=height_request,
+                    vexpand=True,
                     child=Widget.Box(
                         css_classes=["devices"],
                         vertical=True,

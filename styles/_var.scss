@@ -17,11 +17,11 @@ $color-border: var(--headerbar-shade-color, rgb(60, 60, 60));
 
 /* MODIFIERS */
 $border: 1px solid $color-border;
-$outline: 1px solid $color-secondary;
-$outline-offset: 2px;
+$outline: 1px solid transparent;
+$outline-offset: 1.3px;
 
 $border-radius-sm: 15px;
 $border-radius-md: 20px;
 $border-radius-lg: 30px;
 
-$shadow: 0 0 4px 2px $border;
+$shadow: 0 0 4px 2px $color-border;
