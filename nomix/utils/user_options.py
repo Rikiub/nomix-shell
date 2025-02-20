@@ -41,8 +41,9 @@ class UserOptions(OptionsManager):
 config_file = IGNIS_DIR / "options.json"
 cache_file = CACHE_DIR / "options.json"
 
-cache_file.parent.mkdir(exist_ok=True)
-cache_file.write_text("{}")
+if not cache_file.exists():
+    cache_file.parent.mkdir(exist_ok=True)
+    cache_file.write_text("{}")
 
 user_options = UserOptions(str(config_file))
 cache_options = CacheOptions(str(cache_file))
