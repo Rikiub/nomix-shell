@@ -2,8 +2,10 @@ from typing import Literal
 
 from ignis.app import IgnisApp
 from ignis.base_service import BaseService
+from ignis.gobject import Binding
 from ignis.services.hyprland import HyprlandService
 from ignis.services.niri import NiriService
+from ignis.utils import Utils
 from ignis.widgets import Widget
 
 from nomix.utils.constants import WindowName
@@ -15,12 +17,8 @@ app = IgnisApp.get_default()
 
 
 class BaseWorkspaces(Widget.EventBox):
-    def __init__(
-        self, service: BaseService, monitor: str = "", enumerated: bool = False
-    ) -> None:
+    def __init__(self, service: BaseService, enumerated: bool = False) -> None:
         self.service = service
-        self.monitor = monitor
-
         self.enumerated = enumerated
 
         super().__init__(
@@ -29,15 +27,10 @@ class BaseWorkspaces(Widget.EventBox):
             on_right_click=lambda _: app.toggle_window(WindowName.launcher),
             css_classes=["workspaces"],
             spacing=5,
-            child=self.service.bind(
-                "workspaces",
-                transform=lambda value: [
-                    self.button(i)
-                    for i in value
-                    if self.monitor and i["output"] == self.monitor
-                ],
-            ),
+            child=self.button_generator(),
         )
+
+    def button_generator(self) -> Binding: ...
 
     def active_workspace_id(self) -> int: ...
 
@@ -74,7 +67,12 @@ class BaseWorkspaces(Widget.EventBox):
 
 class HyprlandWorkspace(BaseWorkspaces):
     def __init__(self) -> None:
-        super().__init__(hyprland, "")
+        super().__init__(hyprland)
+
+    def button_generator(self) -> Binding:
+        return self.service.bind(
+            "workspaces", lambda value: [self.button(i) for i in value]
+        )
 
     def active_workspace_id(self) -> int:
         return hyprland.active_workspace["id"]  # type: ignore
@@ -86,8 +84,19 @@ class HyprlandWorkspace(BaseWorkspaces):
 
 
 class NiriWorkspaces(BaseWorkspaces):
-    def __init__(self, monitor: str) -> None:
-        super().__init__(niri, monitor)
+    def __init__(self, monitor: int) -> None:
+        self.monitor = Utils.get_monitor(monitor).get_connector()  # type: ignore
+        super().__init__(niri)
+
+    def button_generator(self) -> Binding:
+        return self.service.bind(
+            "workspaces",
+            lambda value: [
+                self.button(i)
+                for i in value
+                if self.monitor and i["output"] == self.monitor
+            ],
+        )
 
     def active_workspace_id(self) -> int:
         filtered = [
@@ -104,7 +113,7 @@ class NiriWorkspaces(BaseWorkspaces):
         return False
 
 
-def Workspaces(monitor: str) -> Widget.EventBox:
+def Workspaces(monitor: int) -> Widget.EventBox:
     if hyprland.is_available:
         workspace = HyprlandWorkspace()
     elif niri.is_available:

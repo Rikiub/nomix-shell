@@ -1,4 +1,3 @@
-from ignis.utils import Utils
 from ignis.widgets import Widget
 
 from nomix.modules.bar.clock import Clock
@@ -11,13 +10,13 @@ from nomix.modules.bar.workspaces import Workspaces
 
 class Bar(Widget.Window):
     def __init__(self, monitor: int = 0):
-        self.monitor_name = Utils.get_monitor(monitor).get_connector()  # type: ignore
+        self.monitor_id = monitor
 
         super().__init__(
             exclusivity="exclusive",
             anchor=["left", "top", "right"],
-            namespace=f"bar_{monitor}",
-            monitor=monitor,
+            namespace=f"bar_{self.monitor_id}",
+            monitor=self.monitor_id,
             kb_mode="on_demand",
             style="background-color: transparent;",
             child=Widget.CenterBox(
@@ -30,7 +29,7 @@ class Bar(Widget.Window):
 
     def left(self) -> Widget.Box:
         return Widget.Box(
-            child=[Workspaces(self.monitor_name)],
+            child=[Workspaces(self.monitor_id)],
             spacing=10,
         )
 
