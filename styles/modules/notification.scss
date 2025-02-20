@@ -26,12 +26,12 @@
 		.notification-app-name {
 			font-size: 1.1em;
 			font-weight: bold;
-			color: var(--color-on-surface-muted);
+			color: var.$color-on-surface-muted;
 		}
 
 		.notification-time {
 			font-size: 0.9em;
-			color: var(--color-on-surface-muted);
+			color: var.$color-on-surface-muted;
 		}
 
 		button {

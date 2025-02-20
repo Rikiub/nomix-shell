@@ -8,6 +8,10 @@
 
 button {
     border-radius: var.$border-radius-sm;
+
+    &:focus {
+        outline: var.$border-focus;
+    }
 }
 
 popover contents {
@@ -23,8 +27,14 @@ popover contents {
     }
 }
 
-switch:checked {
-    background-color: var.$color-primary;
+switch {
+    &:checked {
+        background-color: var.$color-primary;
+    }
+
+    &:focus {
+        outline: var.$border-focus;
+    }
 }
 
 .window-backdrop {
@@ -57,7 +67,7 @@ switch:checked {
     }
 
     slider {
-        all: unset;
         background-color: var.$color-primary;
+        box-shadow: unset;
     }
 }

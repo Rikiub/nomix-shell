@@ -2,6 +2,8 @@
 $color-primary: var(--accent-bg-color, hsl(240, 82%, 87%));
 $color-on-primary: var(--accent-fg-color, white);
 
+$color-secondary: oklch(from $color-primary calc(l + 20%) calc(c + 20%) h);
+
 $color-background: var(--window-bg-color, hsl(255, 6%, 27%));
 $color-on-background: var(--window-fg-color, white),;
 
@@ -9,12 +11,13 @@ $color-surface: var(--sidebar-bg-color, hsl(305, 6%, 37%));
 $color-on-surface: var(--headerbar-fg-color, white);
 $color-on-surface-muted: oklch(from $color-on-surface l c h / 0.5);
 
-$color-surface-variant: oklch(from $color-surface calc(l - 5%) c h);
+$color-surface-variant: oklch(from $color-surface calc(l - 10%) c h);
 
 $color-border: var(--headerbar-shade-color, rgb(60, 60, 60));
 
 /* MODIFIERS */
 $border: 1px solid $color-border;
+$border-focus: 2px solid $color-secondary;
 
 $border-radius-sm: 15px;
 $border-radius-md: 20px;
