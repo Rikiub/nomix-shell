@@ -3,7 +3,7 @@ from ignis.widgets import Widget
 
 
 class StreamSlider(Widget.Scale):
-    def __init__(self, stream: Stream, step):
+    def __init__(self, stream: Stream, step: int):
         super().__init__(
             min=0,
             max=100,
@@ -28,6 +28,12 @@ class StreamVolume(Widget.Box):
             child=[
                 Widget.Button(
                     on_click=lambda _: stream.set_is_muted(not stream.is_muted),
+                    tooltip_text=stream.bind_many(
+                        ["is_muted", "volume"],
+                        lambda is_muted, volume: str(0) + "%" + "\nMuted"
+                        if is_muted
+                        else str(volume) + "%",
+                    ),
                     css_classes=["volume-icon"],
                     child=Widget.Box(
                         child=[
