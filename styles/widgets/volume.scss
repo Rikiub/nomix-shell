@@ -29,7 +29,7 @@
             box-shadow: unset;
             border: var.$outline;
             
-            &:focus {
+            &:focus-visible {
                 outline-color: red;
             }
         }

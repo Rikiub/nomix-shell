@@ -14,7 +14,7 @@ button {
         background-color: func.hover(var.$color-surface);
     }
 
-    &:focus {
+    &:focus-visible {
         outline: var.$outline;
         outline-offset: var.$outline-offset;
     }
@@ -27,7 +27,7 @@ popover contents {
 
     modelbutton {
         &:hover,
-        &:focus {
+        &:focus-visible {
             background-color: func.hover(var.$color-surface);
         }
     }
@@ -38,7 +38,7 @@ switch {
         background-color: var.$color-primary;
     }
 
-    &:focus {
+    &:focus-visible {
         outline: var.$outline;
         outline-offset: var.$outline-offset;
     }

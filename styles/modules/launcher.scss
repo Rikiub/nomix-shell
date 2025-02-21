@@ -23,7 +23,7 @@
         margin: 3px 5px;
         padding: .7rem 1rem;
 
-        &:focus {
+        &:focus-visible {
             background-color: var.$color-surface;
         }
 

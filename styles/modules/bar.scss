@@ -53,8 +53,7 @@
             transition: transform 50ms ease-in-out;
 
             &:hover {
-                background-color: color-mix(
-                    in srgb,
+                background-color: color-mix(in srgb,
                     var.$color-primary 60%,
                     var.$color-surface
                 );
@@ -75,12 +74,10 @@
                 }
             }
 
-            /*
-            &:focus {
+            &:focus-visible {
                 outline: var.$outline;
                 outline-offset: var.$outline-offset;
             }
-                                        */
         }
 
         .enumerated {

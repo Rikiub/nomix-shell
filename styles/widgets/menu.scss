@@ -32,18 +32,14 @@
         padding: 3px;
         border-radius: var.$border-radius-sm;
         
-        button {
+        button,
+        &.settings {
             all: unset;
             border-radius: var.$border-radius-sm;
 
             &:hover,
-            &:focus {
+            &:focus-visible {
                 background-color: func.hover(var.$color-surface);
-            }
-
-            &:focus {
-                outline: var.$outline;
-                outline-offset: var.$outline-offset;
             }
         }
 
