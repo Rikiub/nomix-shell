@@ -12,6 +12,13 @@
         padding: 5px;
     }
 
+    button {
+        &:hover,
+        &:focus-visible {
+            background-color: var.$color-surface;
+        }
+    }
+
     trough {
         background-color: var.$color-surface;
 
