@@ -4,14 +4,6 @@
 .control-center {
     min-width: 430px;
 
-    button {
-        background-color: var.$color-surface;
-
-        &:hover {
-            background-color: func.active(var.$color-surface);
-        }
-    }
-
     .slider-control,
     .quick-settings,
     .actions {
@@ -20,8 +12,8 @@
 
     .battery-status {
         background-color: var.$color-surface;
-        padding: 10px;
         border-radius: var.$border-radius-lg;
+        padding: 10px;
 
         .battery-item {
             font-weight: bold;

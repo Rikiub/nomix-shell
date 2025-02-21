@@ -11,17 +11,13 @@
     padding: 0.4rem 1rem;
 
     button {
-        background-color: var.$color-surface;
         padding: 0px 0.6rem;
-
-        &:hover {
-            background-color: func.active(var.$color-surface);
-        }
     }
 
     .status-pill {
         background-color: var.$color-primary;
         color: var.$color-on-primary;
+        
         border-radius: var.$border-radius-md;
 
         .indicator-icon {
@@ -102,8 +98,9 @@
 
     .tray {
         background-color: var.$color-surface;
-        padding: 0 10px;
         border-radius: var.$border-radius-sm;
+        
+        padding: 0 10px;
 
         .tray-item {
             background-color: unset;

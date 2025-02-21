@@ -7,7 +7,7 @@ $color-on-primary: var(--accent-fg-color, white);
 $color-background: var(--window-bg-color, hsl(255, 6%, 27%));
 $color-on-background: var(--window-fg-color, white),;
 
-$color-surface: var(--sidebar-bg-color, hsl(305, 6%, 37%));
+$color-surface: var(--sidebar-bg-color);
 $color-surface-variant: oklch(from $color-surface calc(l - 8%) c h);
 
 $color-on-surface: var(--headerbar-fg-color, white);
