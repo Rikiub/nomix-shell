@@ -8,7 +8,7 @@
         background-color: var.$color-surface;
 
         &:hover {
-            background-color: func.hover(var.$color-surface);
+            background-color: func.active(var.$color-surface);
         }
     }
 

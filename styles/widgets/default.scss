@@ -7,11 +7,11 @@
 }
 
 button {
-    background-color: func.hover(var.$color-surface);
+    background-color: func.active(var.$color-surface);
     border-radius: var.$border-radius-sm;
 
     &:hover {
-        background-color: func.hover(var.$color-surface);
+        background-color: func.active(var.$color-surface);
     }
 
     &:focus-visible {
@@ -28,7 +28,7 @@ popover contents {
     modelbutton {
         &:hover,
         &:focus-visible {
-            background-color: func.hover(var.$color-surface);
+            background-color: func.active(var.$color-surface);
         }
     }
 }

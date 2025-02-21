@@ -13,7 +13,7 @@
 
     &:hover,
     &:focus-visible {
-        background-color: func.hover(var.$color-surface);
+        background-color: func.active(var.$color-surface);
     }
 
     &.active {
@@ -22,7 +22,7 @@
 
         &:hover,
         &:focus-visible {
-            background-color: func.hover(var.$color-primary);
+            background-color: func.active(var.$color-primary);
         }
     }
 }

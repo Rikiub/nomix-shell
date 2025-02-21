@@ -15,7 +15,7 @@
         padding: 0px 0.6rem;
 
         &:hover {
-            background-color: func.hover(var.$color-surface);
+            background-color: func.active(var.$color-surface);
         }
     }
 
@@ -29,7 +29,7 @@
         }
 
         &:hover {
-            background-color: func.hover(var.$color-primary);
+            background-color: func.active(var.$color-primary);
             transform: scale(1.1);
         }
     }
@@ -69,7 +69,7 @@
                 border-radius: 20px;
 
                 &:hover {
-                    background-color: func.hover(var.$color-primary);
+                    background-color: func.active(var.$color-primary);
                     transform: scale(1.07);
                 }
             }
@@ -110,7 +110,7 @@
             padding: 0 3px;
 
             &:hover {
-                background-color: func.hover(var.$color-surface);
+                background-color: func.active(var.$color-surface);
             }
         }
     }

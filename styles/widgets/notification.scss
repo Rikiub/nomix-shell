@@ -17,7 +17,7 @@
 	transition: 0.3s;
 
 	&:hover {
-		background-color: func.hover(var.$color-surface);
+		background-color: func.active(var.$color-surface, 2%);
 	}
 
 	.notification-header {
@@ -40,7 +40,7 @@
 			margin: 0 3px;
 
 			&:hover {
-				background-color: func.hover(var.$color-surface-variant);
+				background-color: func.active(var.$color-surface-variant);
 			}
 		}
 	}
@@ -62,7 +62,7 @@
 		margin-top: 5px;
 
 		&:hover {
-			background-color: func.hover(var.$color-surface-variant);
+			background-color: func.active(var.$color-surface-variant);
 		}
 	}
 }

@@ -1,9 +1,17 @@
 @use "../../.cache/dark";
 
-@function hover($color) {
+@function lighter($color, $scale: 5%) {
+    @return oklch(from $color calc(l + $scale) c h);
+}
+
+@function darker($color, $scale: 5%) {
+    @return oklch(from $color calc(l - $scale) c h);
+}
+
+@function active($color, $scale: 5%) {
     @if dark.$is-dark {
-        @return oklch(from $color calc(l + 5%) c h);
+        @return lighter($color, $scale);
     } @else {
-        @return oklch(from $color calc(l - 5%) c h);
+        @return darker($color, $scale);
     }
 }

@@ -8,7 +8,7 @@ $color-background: var(--window-bg-color, hsl(255, 6%, 27%));
 $color-on-background: var(--window-fg-color, white),;
 
 $color-surface: var(--sidebar-bg-color, hsl(305, 6%, 37%));
-$color-surface-variant: oklch(from $color-surface calc(l - 10%) c h);
+$color-surface-variant: oklch(from $color-surface calc(l - 8%) c h);
 
 $color-on-surface: var(--headerbar-fg-color, white);
 $color-on-surface-muted: oklch(from $color-on-surface l c h / 0.5);
@@ -18,7 +18,7 @@ $color-shadow: var(--headerbar-shade-color, rgb(60, 60, 60));
 /* MODIFIERS */
 $border: 1px solid $color-shadow;
 
-$outline: 1px solid func.hover($color-primary);
+$outline: 1px solid func.active($color-primary);
 $outline-offset: 1.3px;
 
 $border-radius-sm: 15px;
