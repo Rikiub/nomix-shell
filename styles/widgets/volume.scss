@@ -27,6 +27,11 @@
         slider {
             background-color: var.$color-primary;
             box-shadow: unset;
+            border: var.$outline;
+            
+            &:focus {
+                outline-color: red;
+            }
         }
     }
 }
