@@ -20,7 +20,7 @@ class NotificationIcon(Widget.Button):
             setup=lambda *_: notification.connect(
                 "new-popup", lambda *_: self._on_new()
             ),
-            tooltip_text="Notification center",
+            tooltip_text="Notification Center",
             child=Widget.Box(
                 child=[
                     Widget.Icon(

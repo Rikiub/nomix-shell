@@ -136,7 +136,7 @@ class StatusPill(Widget.Button):
                     BatteriesIcons(),
                 ]
             ),
-            tooltip_text="Control center",
+            tooltip_text="Control Center",
             css_classes=["status-pill"],
             on_click=lambda _: app.toggle_window(ModuleWindow.control_center),
         )

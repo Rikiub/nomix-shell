@@ -49,6 +49,19 @@ class PowerMenu(DeviceMenu):
             height_request=210,
             settings_visible=False,
             devices=menu,
+            header=Widget.Box(
+                child=[
+                    Widget.Icon(
+                        image="system-shutdown-symbolic",
+                        pixel_size=24,
+                        style="margin-right: 5px;",
+                    ),
+                    Widget.Label(
+                        label="Power Menu",
+                        halign="start",
+                    ),
+                ],
+            ),
         )
 
     def _logout(self) -> None:
