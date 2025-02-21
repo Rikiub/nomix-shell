@@ -25,15 +25,14 @@ class Brightness(Widget.Box):
             style="padding: 0 16px;",
             visible=backlight.bind("available"),
             child=[
-                Widget.Button(
-                    child=Widget.Box(
-                        child=[
-                            Widget.Icon(
-                                image="display-brightness-symbolic",
-                                pixel_size=20,
-                            ),
-                        ],
-                    ),
+                Widget.Box(
+                    css_classes=["volume-icon"],
+                    child=[
+                        Widget.Icon(
+                            image="display-brightness-symbolic",
+                            pixel_size=20,
+                        )
+                    ],
                 ),
                 BacklightSlider(step),
             ],

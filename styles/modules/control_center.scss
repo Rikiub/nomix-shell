@@ -27,34 +27,6 @@
             font-weight: bold;
         }
     }
-
-    .volume-slider {
-        padding: 3px 8px;
-        border-radius: var.$border-radius-lg;
-
-        button {
-            all: unset;
-        }
-    }
-}
-
-.accordion-menu {
-    background-color: var.$color-surface;
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: var.$border-radius-md;
-
-    button {
-        background-color: inherit;
-    }
-
-    button:hover {
-        background-color: func.hover(var.$color-surface);
-    }
-
-    separator {
-        margin: 10px 0;
-    }
 }
 
 .device-menu {

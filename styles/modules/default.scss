@@ -60,21 +60,52 @@ switch {
     padding: 20px;
 }
 
-.volume-slider trough {
-    background-color: var.$color-surface;
+.volume-slider {
+    padding: 3px 8px;
 
-    min-width: 100px;
-    min-height: 0.3rem;
-    margin-left: 10px;
-    border-radius: var.$border-radius-lg;
-
-    highlight {
-        background-color: var.$color-primary;
-        padding: 7px 0;
+    .volume-icon,
+    .volume-arrow,
+    button {
+        background-color: transparent;
+        padding: 5px;
     }
 
-    slider {
-        background-color: var.$color-primary;
-        box-shadow: unset;
+    trough {
+        background-color: var.$color-surface;
+
+        min-width: 100px;
+        min-height: 0.3rem;
+        margin-left: 10px;
+        border-radius: var.$border-radius-lg;
+
+        highlight {
+            background-color: var.$color-primary;
+            padding: 7px 0;
+        }
+
+        slider {
+            background-color: var.$color-primary;
+            box-shadow: unset;
+        }
+    }
+
+}
+
+.accordion-menu {
+    background-color: var.$color-surface;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: var.$border-radius-md;
+
+    button {
+        background-color: inherit;
+    }
+
+    button:hover {
+        background-color: func.hover(var.$color-surface);
+    }
+
+    separator {
+        margin: 10px 0;
     }
 }

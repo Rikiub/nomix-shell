@@ -28,6 +28,7 @@ class StreamVolume(Widget.Box):
             child=[
                 Widget.Button(
                     on_click=lambda _: stream.set_is_muted(not stream.is_muted),
+                    css_classes=["volume-icon"],
                     child=Widget.Box(
                         child=[
                             Widget.Icon(

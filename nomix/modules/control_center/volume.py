@@ -27,7 +27,7 @@ class StreamItem(DeviceItem):
             icon_name="audio-card-symbolic",
             label=stream.description,
             active=stream.bind("is_default"),
-            on_click=lambda x: setattr(audio, stream_type, stream),
+            on_click=lambda _: setattr(audio, stream_type, stream),
         )
 
 
@@ -64,12 +64,10 @@ class Volume(Widget.Box):
         stream = getattr(audio, stream_type)
 
         device_menu = StreamMenu(stream_type=stream_type)
-        scale = StreamVolume(
-            stream=stream,
-        )
+        scale = StreamVolume(stream=stream)
         arrow = Widget.Button(
             child=Widget.Arrow(pixel_size=20, rotated=device_menu.bind("reveal_child")),
-            on_click=lambda x: device_menu.toggle(),
+            on_click=lambda _: device_menu.toggle(),
             css_classes=["volume-arrow"],
         )
 
