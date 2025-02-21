@@ -1,5 +1,5 @@
 @use "../var";
-@use "helper";
+@use "func";
 
 .bar {
     background-color: var.$color-background;
@@ -15,7 +15,7 @@
         padding: 0px 0.6rem;
 
         &:hover {
-            background-color: helper.hover(var.$color-surface);
+            background-color: func.hover(var.$color-surface);
         }
     }
 
@@ -29,7 +29,7 @@
         }
 
         &:hover {
-            background-color: var.$color-primary;
+            background-color: func.hover(var.$color-primary);
             transform: scale(1.1);
         }
     }
@@ -70,6 +70,7 @@
                 border-radius: 20px;
 
                 &:hover {
+                    background-color: func.hover(var.$color-primary);
                     transform: scale(1.07);
                 }
             }
@@ -110,7 +111,7 @@
             padding: 0 3px;
 
             &:hover {
-                background-color: helper.hover(var.$color-surface);
+                background-color: func.hover(var.$color-surface);
             }
         }
     }

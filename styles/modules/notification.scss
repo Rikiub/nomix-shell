@@ -1,5 +1,5 @@
 @use "../var";
-@use "helper";
+@use "func";
 
 .notification {
 	background-color: var.$color-surface;
@@ -17,7 +17,7 @@
 	transition: 0.3s;
 
 	&:hover {
-		background-color: helper.hover(var.$color-surface);
+		background-color: func.hover(var.$color-surface);
 	}
 
 	.notification-header {
@@ -40,7 +40,7 @@
 			margin: 0 3px;
 
 			&:hover {
-				background-color: helper.hover(var.$color-surface-variant);
+				background-color: func.hover(var.$color-surface-variant);
 			}
 		}
 	}
@@ -62,7 +62,7 @@
 		margin-top: 5px;
 
 		&:hover {
-			background-color: helper.hover(var.$color-surface-variant);
+			background-color: func.hover(var.$color-surface-variant);
 		}
 	}
 }

@@ -1,5 +1,5 @@
 @use "../var";
-@use "helper";
+@use "func";
 
 .launcher {
     min-width: 30rem;
@@ -28,7 +28,7 @@
         }
 
         &:hover {
-            background-color: helper.hover(var.$color-surface);
+            background-color: func.hover(var.$color-surface);
         }
 
         .launcher-app-label {

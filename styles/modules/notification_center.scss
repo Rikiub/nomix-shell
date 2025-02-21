@@ -1,5 +1,5 @@
 @use "../var";
-@use "helper";
+@use "func";
 
 .notification-center {
     min-width: 450px;
@@ -9,7 +9,7 @@
         background-color: var.$color-surface;
 
         &:hover {
-            background-color: helper.hover(var.$color-surface);
+            background-color: func.hover(var.$color-surface);
         }
     }
 

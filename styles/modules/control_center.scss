@@ -1,5 +1,5 @@
 @use "../var";
-@use "helper";
+@use "func";
 
 .control-center {
     min-width: 430px;
@@ -8,7 +8,7 @@
         background-color: var.$color-surface;
 
         &:hover {
-            background-color: helper.hover(var.$color-surface);
+            background-color: func.hover(var.$color-surface);
         }
     }
 
@@ -49,7 +49,7 @@
     }
 
     button:hover {
-        background-color: helper.hover(var.$color-surface);
+        background-color: func.hover(var.$color-surface);
     }
 
     separator {
@@ -74,7 +74,7 @@
 
             &:hover,
             &:focus {
-                background-color: helper.hover(var.$color-surface);
+                background-color: func.hover(var.$color-surface);
             }
 
             &:focus {
@@ -89,7 +89,7 @@
         }
 
         &:hover {
-            background-color: helper.hover(var.$color-surface);
+            background-color: func.hover(var.$color-surface);
         }
 
         .device-icons .icon {
@@ -112,7 +112,7 @@
                 border-radius: 100%;
 
                 &:hover {
-                    background-color: helper.hover(var.$color-surface);
+                    background-color: func.hover(var.$color-surface);
                 }
             }
         }
@@ -131,7 +131,7 @@
         }
 
         &:hover {
-            background-color: helper.hover(var.$color-surface);
+            background-color: func.hover(var.$color-surface);
         }
 
         &.active {
@@ -139,7 +139,7 @@
             color: var.$color-on-primary;
 
             &:hover {
-                background-color: helper.hover(var.$color-primary);
+                background-color: func.hover(var.$color-primary);
             }
         }
     }
