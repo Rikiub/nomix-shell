@@ -10,7 +10,7 @@ STYLES_DIR = IGNIS_DIR / "styles"
 CACHE_DIR = IGNIS_DIR / ".cache"
 
 
-class WindowName(str, Enum):
+class ModuleWindow(str, Enum):
     notification_center = "notification-center"
     control_center = "control-center"
     launcher = "launcher"

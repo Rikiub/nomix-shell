@@ -1,0 +1,84 @@
+@use "../var";
+@use "../lib/func";
+
+.accordion-menu {
+    background-color: var.$color-surface;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: var.$border-radius-md;
+
+    button {
+        background-color: inherit;
+    }
+
+    button:hover {
+        background-color: func.hover(var.$color-surface);
+    }
+
+    separator {
+        margin: 10px 0;
+    }
+}
+
+
+.device-menu {
+    .header {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .device-item {
+        font-weight: normal;
+        padding: 1px 3px;
+        border-radius: var.$border-radius-sm;
+        
+        button {
+            all: unset;
+            border-radius: var.$border-radius-sm;
+
+            &:hover,
+            &:focus {
+                background-color: func.hover(var.$color-surface);
+            }
+
+            &:focus {
+                outline: var.$outline;
+                outline-offset: var.$outline-offset;
+            }
+        }
+
+        button,
+        &.settings {
+            padding: 8px;
+        }
+
+        &:hover {
+            background-color: func.hover(var.$color-surface);
+        }
+
+        .device-icons .icon {
+            margin: 0 2px;
+        }
+
+        .label {
+            margin-left: 5px;
+        }
+
+        .indicators {
+            margin-right: 15px;
+            
+            > * {
+                margin: 0 3px;
+            }
+
+            > *:not(.no-actionable) {
+                padding: 2px 8px;
+                border-radius: 100%;
+
+                &:hover {
+                    background-color: func.hover(var.$color-surface);
+                }
+            }
+        }
+    }
+}

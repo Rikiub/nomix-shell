@@ -6,7 +6,7 @@ from nomix.modules.control_center.brightness import Brightness
 from nomix.modules.control_center.power import PowerButton
 from nomix.modules.control_center.quick_settings import QuickSettings
 from nomix.modules.control_center.volume import Volume
-from nomix.utils.constants import WindowName
+from nomix.utils.constants import ModuleWindow
 from nomix.utils.types import ALIGN
 from nomix.widgets.menu import OPENED_MENU
 from nomix.widgets.popup_window import PopupWindow
@@ -38,7 +38,7 @@ class ControlCenter(PopupWindow):
         )
 
         super().__init__(
-            namespace=WindowName.control_center,
+            namespace=ModuleWindow.control_center,
             on_close=lambda: OPENED_MENU.set_value(""),
             css_classes=["control-center"],
             valign=valign,

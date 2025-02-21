@@ -1,7 +1,7 @@
 from ignis.options import options
 from ignis.services.notifications import NotificationService
 
-from .qsbutton import QSButton
+from nomix.widgets.qsbutton import QSButton
 
 notifications = NotificationService.get_default()
 

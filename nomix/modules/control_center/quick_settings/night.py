@@ -2,7 +2,7 @@ from ignis.utils.exec_sh import exec_sh_async
 
 from nomix.utils.user_options import cache_options
 
-from .qsbutton import QSButton
+from nomix.widgets.qsbutton import QSButton
 
 
 class NightLightQS(QSButton):

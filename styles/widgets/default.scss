@@ -1,0 +1,45 @@
+@use "../var";
+@use "../lib/func";
+
+/* Defaults */
+:root {
+    color: var.$color-on-surface;
+}
+
+button {
+    background-color: func.hover(var.$color-surface);
+    border-radius: var.$border-radius-sm;
+
+    &:hover {
+        background-color: func.hover(var.$color-surface);
+    }
+
+    &:focus {
+        outline: var.$outline;
+        outline-offset: var.$outline-offset;
+    }
+}
+
+popover contents {
+    background-color: var.$color-surface;
+    border: var.$border;
+    border-radius: var.$border-radius-md;
+
+    modelbutton {
+        &:hover,
+        &:focus {
+            background-color: func.hover(var.$color-surface);
+        }
+    }
+}
+
+switch {
+    &:checked {
+        background-color: var.$color-primary;
+    }
+
+    &:focus {
+        outline: var.$outline;
+        outline-offset: var.$outline-offset;
+    }
+}

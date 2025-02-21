@@ -1,11 +1,11 @@
 @use "../var";
-@use "func";
+@use "../lib/func";
 
 .notification {
 	background-color: var.$color-surface;
 	box-shadow: var.$shadow;
 
-	border: var.$color-border;
+	border: var.$border;
 	border-radius: var.$border-radius-md;
 
 	margin: 10px;

@@ -10,7 +10,7 @@ from ignis.services.applications import (
 from ignis.utils.exec_sh import exec_sh, exec_sh_async
 from ignis.widgets import Widget
 
-from nomix.utils.constants import WindowName
+from nomix.utils.constants import ModuleWindow
 from nomix.utils.types import ALIGN
 from nomix.utils.user_options import user_options
 from nomix.widgets.popup_window import PopupWindow
@@ -47,11 +47,11 @@ class LauncherAppItem(Widget.Button):
 
     def launch(self) -> None:
         self._application.launch()
-        app.close_window(WindowName.launcher)
+        app.close_window(ModuleWindow.launcher)
 
     def launch_action(self, action: ApplicationAction) -> None:
         action.launch()
-        app.close_window(WindowName.launcher)
+        app.close_window(ModuleWindow.launcher)
 
     def _sync_menu(self) -> None:
         pin = (
@@ -144,7 +144,7 @@ class SearchWebButton(Widget.Button):
 
     def launch(self) -> None:
         exec_sh_async(f"xdg-open {self._url}")
-        app.close_window(WindowName.launcher)
+        app.close_window(ModuleWindow.launcher)
 
 
 class Launcher(PopupWindow):
@@ -214,7 +214,7 @@ class Launcher(PopupWindow):
             main_box.add_css_class("launcher-grid")
 
         super().__init__(
-            namespace=WindowName.launcher,
+            namespace=ModuleWindow.launcher,
             setup=lambda self: self.connect("notify::visible", self._on_open),
             child=[main_box],
         )

@@ -1,9 +1,13 @@
-@use "modules/default";
+@use "widgets/default";
 
+@use "widgets/menu.scss";
+@use "widgets/notification";
+@use "widgets/qsbutton.scss";
+@use "widgets/volume.scss";
+@use "widgets/window.scss";
+
+@use "modules/osd";
 @use "modules/bar";
 @use "modules/launcher";
 @use "modules/control_center";
 @use "modules/notification_center";
-
-@use "modules/osd";
-@use "modules/notification";

@@ -1,10 +1,10 @@
 @use "../var";
-@use "func";
+@use "../lib/func";
 
 .bar {
     background-color: var.$color-background;
 
-    border: var.$color-border;
+    border: var.$border;
     border-radius: var.$border-radius-sm;
 
     margin: 0 1rem;

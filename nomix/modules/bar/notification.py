@@ -3,7 +3,7 @@ from ignis.options import options
 from ignis.services.notifications import NotificationService
 from ignis.widgets import Widget
 
-from nomix.utils.constants import WindowName
+from nomix.utils.constants import ModuleWindow
 
 notification = NotificationService.get_default()
 
@@ -39,7 +39,7 @@ class NotificationIcon(Widget.Button):
         )
 
     def _on_open(self):
-        app.toggle_window(WindowName.notification_center)
+        app.toggle_window(ModuleWindow.notification_center)
 
         self.counter = 0
         self._label.set_label("")

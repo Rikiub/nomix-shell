@@ -1,6 +1,6 @@
 from nomix.services.color_scheme import ColorSchemeService
 
-from .qsbutton import QSButton
+from nomix.widgets.qsbutton import QSButton
 
 color_scheme = ColorSchemeService.get_default()
 

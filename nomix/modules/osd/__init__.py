@@ -2,7 +2,7 @@ from ignis.services.audio import AudioService
 from ignis.utils.debounce import debounce
 from ignis.widgets import Widget
 
-from nomix.utils.constants import WindowName
+from nomix.utils.constants import ModuleWindow
 from nomix.widgets.stream_slider import StreamVolume
 
 audio = AudioService.get_default()
@@ -11,7 +11,7 @@ audio = AudioService.get_default()
 class OSD(Widget.Window):
     def __init__(self, anchor: list["str"] = ["bottom"]):
         super().__init__(
-            namespace=WindowName.osd,
+            namespace=ModuleWindow.osd,
             anchor=anchor,
             visible=False,
             layer="overlay",

@@ -4,7 +4,7 @@ from ignis.widgets import Widget
 from nomix.utils.user_options import user_options
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu
 
-from .qsbutton import QSButton
+from nomix.widgets.qsbutton import QSButton
 
 network = NetworkService.get_default()
 

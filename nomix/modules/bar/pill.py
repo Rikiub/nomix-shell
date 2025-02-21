@@ -7,7 +7,7 @@ from ignis.services.network import Ethernet, NetworkService, Wifi
 from ignis.services.upower import UPowerDevice, UPowerService
 from ignis.widgets import Widget
 
-from nomix.utils.constants import WindowName
+from nomix.utils.constants import ModuleWindow
 from nomix.utils.user_options import user_options
 
 __all__ = ["StatusPill"]
@@ -138,5 +138,5 @@ class StatusPill(Widget.Button):
             ),
             tooltip_text="Control center",
             css_classes=["status-pill"],
-            on_click=lambda _: app.toggle_window(WindowName.control_center),
+            on_click=lambda _: app.toggle_window(ModuleWindow.control_center),
         )

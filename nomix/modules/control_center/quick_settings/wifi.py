@@ -1,7 +1,7 @@
 from ignis.services.network import NetworkService, WifiAccessPoint, WifiDevice
 from ignis.widgets import Widget
 
-from nomix.modules.control_center.quick_settings.qsbutton import QSButton
+from nomix.widgets.qsbutton import QSButton
 from nomix.utils.user_options import user_options
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu
 from nomix.widgets.toggle_box import ToggleBox

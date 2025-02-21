@@ -1,0 +1,18 @@
+@use "../var";
+@use "../lib/func";
+
+.window-backdrop {
+    background-color: oklch(0 0 0 / 0.0);
+    border-radius: 0;
+}
+
+.popup-window {
+    background-color: var.$color-background;
+    box-shadow: var.$shadow;
+
+    border: var.$border;
+    border-radius: var.$border-radius-lg;
+
+    margin: 10px;
+    padding: 20px;
+}
