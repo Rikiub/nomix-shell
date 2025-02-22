@@ -1,15 +1,12 @@
-@use "../var";
-@use "../lib/func";
-
 .launcher {
     min-width: 30rem;
 
     .launcher-search-box {
-        background-color: var.$color-surface;
+        background-color: var(--color-surface);
 
         padding: 0.50rem 1rem;
         margin-bottom: 10px;
-        border-radius: var.$border-radius-md;
+        border-radius: var(--border-radius-md);
 
         .launcher-search {
             background-color: inherit;
@@ -17,18 +14,18 @@
     }
 
     .launcher-app {
-        background-color: var.$color-background;
-        border-radius: var.$border-radius-md;
+        background-color: var(--color-background);
+        border-radius: var(--border-radius-md);
 
         margin: 3px 5px;
         padding: .7rem 1rem;
 
         &:focus-visible {
-            background-color: var.$color-surface;
+            background-color: var(--color-surface);
         }
 
         &:hover {
-            background-color: func.active(var.$color-surface);
+            background-color: var(--color-surface-hover);
         }
 
         .launcher-app-label {
@@ -43,6 +40,6 @@
 
     .launcher-app {
         margin: 10px;
-        border-radius: var.$border-radius-md;
+        border-radius: var(--border-radius-md);
     }
 }

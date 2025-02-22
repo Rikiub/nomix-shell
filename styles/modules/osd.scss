@@ -1,13 +1,11 @@
-@use "../var";
-
 .osd {
     min-width: 200px;
 
-    background-color: var.$color-surface;
-    color: var.$color-on-surface;
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
 
-    border: var.$border;
-    border-radius: var.$border-radius-lg;
+    border: var(--border);
+    border-radius: var(--border-radius-lg);
 
     padding: 15px 20px;
     margin: 50px;

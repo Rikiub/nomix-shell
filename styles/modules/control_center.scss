@@ -1,6 +1,3 @@
-@use "../var";
-@use "../lib/func";
-
 .control-center {
     min-width: 430px;
 
@@ -11,8 +8,8 @@
     }
 
     .battery-status {
-        background-color: var.$color-surface;
-        border-radius: var.$border-radius-lg;
+        background-color: var(--color-surface);
+        border-radius: var(--border-radius-lg);
         padding: 10px;
 
         .battery-item {

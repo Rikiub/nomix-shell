@@ -1,6 +1,8 @@
 from gi.repository import Gio, GObject  # type: ignore
 from ignis.base_service import BaseService
 
+from nomix.utils.user_options import cache_options
+
 from .constants import (
     CHANGE_ICON,
     CHANGE_THEME,
@@ -27,6 +29,8 @@ class ColorSchemeService(BaseService):
             "changed::color-scheme",
             lambda config, key: self.set_color_scheme(config.get_string(key)),
         )
+        cache_options.connect("notify::theme_dark", lambda *_: self._write_style())
+
         self._sync()
 
     @GObject.Property
@@ -62,7 +66,11 @@ class ColorSchemeService(BaseService):
     def _write_style(self) -> None:
         STYLE_FILE.touch(exist_ok=True)
 
-        content = f"/* {STYLE_DISCLAIMER} */\n${STYLE_VARIABLE_NAME}: {'true' if self._is_dark else 'false'};"
+        boolean = "false"
+        if cache_options.theme_dark or self._is_dark:
+            boolean = "true"
+
+        content = f"/* {STYLE_DISCLAIMER} */\n${STYLE_VARIABLE_NAME}: {boolean};"
         STYLE_FILE.write_text(content)
 
     def _sync(self):

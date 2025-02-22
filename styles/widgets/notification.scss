@@ -1,12 +1,9 @@
-@use "../var";
-@use "../lib/func";
-
 .notification {
-	background-color: var.$color-surface;
-	box-shadow: var.$shadow;
+	background-color: var(--color-surface);
+	box-shadow: var(--shadow);
 
-	border: var.$border;
-	border-radius: var.$border-radius-md;
+	border: var(--border);
+	border-radius: var(--border-radius-md);
 
 	margin: 10px;
 	margin-bottom: 0px;
@@ -17,30 +14,32 @@
 	transition: 0.3s;
 
 	&:hover {
-		background-color: func.active(var.$color-surface, 2%);
+		background-color: var(--color-surface-hover);
 	}
 
 	.notification-header {
+		--text-muted: oklch(from var(--color-on-surface) l c h / 0.5);
+		
 		margin-bottom: 5px;
 
 		.notification-app-name {
 			font-size: 1.1em;
 			font-weight: bold;
-			color: var.$color-on-surface-muted;
+			color: var(--text-muted);
 		}
 
 		.notification-time {
 			font-size: 0.9em;
-			color: var.$color-on-surface-muted;
+			color: var(--text-muted);
 		}
 
 		button {
-			background-color: var.$color-surface-variant;
+			background-color: var(--color-surface-variant);
 			padding: 2px;
 			margin: 0 3px;
 
 			&:hover {
-				background-color: func.active(var.$color-surface-variant);
+				background-color: var(--color-surface-variant-hover);
 			}
 		}
 	}
@@ -56,13 +55,13 @@
 	*/
 
 	.notification-action {
-		background-color: var.$color-surface-variant;
-		border-radius: var.$border-radius-sm;
+		background-color: var(--color-surface-variant);
+		border-radius: var(--border-radius-sm);
 
 		margin-top: 5px;
 
 		&:hover {
-			background-color: func.active(var.$color-surface-variant);
+			background-color: var(--color-surface-variant-hover);
 		}
 	}
 }

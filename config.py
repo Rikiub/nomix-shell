@@ -8,17 +8,22 @@ from nomix.modules.notification_center import NotificationCenter
 from nomix.modules.notification_popup import NotificationPopup
 from nomix.modules.osd import OSD
 from nomix.services.color_scheme.service import ColorSchemeService
+from nomix.services.matugen import MatugenService
 from nomix.utils.constants import STYLES_DIR
-from nomix.utils.helpers import monitor_gtk4_css
+from nomix.utils.helpers import monitor_gtk4_css, setup_cache
 
 # SETUP
+# cache directory
+setup_cache()
+
+# services
+MatugenService.get_default()
+ColorSchemeService.get_default()
+
 app = IgnisApp.get_default()
 app.apply_css(str(STYLES_DIR / "index.scss"))
 
-# Dark mode switcher
-ColorSchemeService.get_default()
-
-# Auto reload in GTK4 theme changes
+# auto reload in GTK4 theme changes
 monitor_gtk4_css()
 
 # WINDOWS

@@ -1,0 +1,6 @@
+
+[config]
+
+[templates.ignis]
+input_path = '/home/sus/.config/ignis/nomix/services/matugen/template.scss'
+output_path = '/home/sus/.config/ignis/.cache/override.scss'

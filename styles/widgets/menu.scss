@@ -1,25 +1,21 @@
-@use "../var";
-@use "../lib/func";
-
 .accordion-menu {
-    background-color: var.$color-surface;
+    background-color: var(--color-surface);
     padding: 10px 20px;
     margin: 10px;
-    border-radius: var.$border-radius-md;
+    border-radius: var(--border-radius-md);
 
     button {
         background-color: inherit;
     }
 
     button:hover {
-        background-color: func.active(var.$color-surface);
+        background-color: var(--color-surface-hover);
     }
 
     separator {
         margin: 10px 0;
     }
 }
-
 
 .device-menu {
     .header {
@@ -28,28 +24,19 @@
     }
 
     .device-item {
-        font-weight: normal;
-        padding: 3px;
-        border-radius: var.$border-radius-sm;
-        
-        button,
-        &.settings {
+        &.settings, 
+        button {
             all: unset;
-            border-radius: var.$border-radius-sm;
+            font-weight: normal;
+            border-radius: var(--border-radius-sm);
+            padding: 8px;
+
+            margin: 1px 0;
 
             &:hover,
             &:focus-visible {
-                background-color: func.active(var.$color-surface);
+                background-color: var(--color-surface-hover);
             }
-        }
-
-        button,
-        &.settings {
-            padding: 8px;
-        }
-
-        &:hover {
-            background-color: func.active(var.$color-surface);
         }
 
         .device-icons .icon {
@@ -65,15 +52,6 @@
             
             > * {
                 margin: 0 3px;
-            }
-
-            > *:not(.no-actionable) {
-                padding: 2px 8px;
-                border-radius: 100%;
-
-                &:hover {
-                    background-color: func.active(var.$color-surface);
-                }
             }
         }
     }

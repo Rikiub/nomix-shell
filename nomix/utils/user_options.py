@@ -4,10 +4,13 @@ from nomix.utils.constants import CACHE_DIR, IGNIS_DIR
 
 
 class CacheOptions(OptionsManager):
+    theme_dark = False
     night_light = False
 
 
 class UserOptions(OptionsManager):
+    force_dark_theme = False
+
     class ClockFormat(OptionsGroup):
         full_date = False
         week_day = True
@@ -47,3 +50,4 @@ if not cache_file.exists():
 
 user_options = UserOptions(str(config_file))
 cache_options = CacheOptions(str(cache_file))
+cache_options.theme_dark = False

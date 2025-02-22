@@ -1,9 +1,6 @@
-@use "../_var";
-@use "../lib/func";
-
 .qs-button {
-    background-color: var.$color-surface;
-    border-radius: var.$border-radius-md;
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-md);
 
     padding: 15px;
 
@@ -13,16 +10,16 @@
 
     &:hover,
     &:focus-visible {
-        background-color: func.active(var.$color-surface);
+        background-color: var(--color-surface-hover);
     }
 
     &.active {
-        background-color: var.$color-primary;
-        color: var.$color-on-primary;
+        background-color: var(--color-primary);
+        color: var(--color-on-primary);
 
         &:hover,
         &:focus-visible {
-            background-color: func.active(var.$color-primary);
+            background-color: var(--color-primary-hover);
         }
     }
 }

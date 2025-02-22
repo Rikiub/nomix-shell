@@ -1,0 +1,65 @@
+@use "../.cache/dark";
+
+$OPERATOR: "-";
+@if dark.$is-dark {
+	$OPERATOR: "+";
+}
+
+@mixin hover_variant($scale, $prefix, $properties...) {
+	@each $name in $properties {
+		$property: "--#{$prefix}-#{$name}";
+		#{$property}-hover: oklch(
+			from
+			var(#{$property})
+			calc(l #{$OPERATOR} $scale)
+			c
+			h
+		);
+	}
+}
+
+:root {
+	/* COLORS */
+	--color-primary: var(--accent-bg-color, hsl(240, 82%, 87%));
+	--color-on-primary: var(--accent-fg-color, white);
+
+	--color-background: var(--window-bg-color, hsl(255, 6%, 27%));
+	--color-on-background: var(--window-fg-color, white);
+
+	--color-surface: var(--sidebar-bg-color);
+	--color-surface-variant: oklch(
+		from
+		var(--color-surface)
+		calc(l #{$OPERATOR} 8%)
+		c
+		h
+	);
+	--color-on-surface: var(--headerbar-fg-color, white);
+
+	--color-shadow: var(--headerbar-shade-color, rgb(60, 60, 60));
+	--color-border: var(--color-shadow);
+	--color-outline: var(--color-primary);
+
+	@include hover_variant(
+		5%,
+		"color",
+		"primary",
+		"background",
+		"surface",
+		"surface-variant",
+	);
+
+	/* MODIFIERS */
+	--border: 1px solid var(--color-border);
+
+	--outline: 1px solid var(--color-outline);
+	--outline-offset: 1.3px;
+
+	--border-radius-sm: 15px;
+	--border-radius-md: 20px;
+	--border-radius-lg: 30px;
+
+	--shadow: 0 0 4px 2px var(--color-shadow);
+}
+
+@import "../.cache/override.scss";
