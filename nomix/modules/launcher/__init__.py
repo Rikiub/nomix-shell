@@ -176,7 +176,7 @@ class Launcher(PopupWindow):
         self._entry = Widget.Entry(
             hexpand=True,
             css_classes=["launcher-search"],
-            placeholder_text="Search",
+            placeholder_text="Search...",
             on_change=self._search,
             on_accept=self._on_accept,
         )

@@ -8,8 +8,17 @@
         margin-bottom: 10px;
         border-radius: var(--border-radius-md);
 
+        &:focus-within {
+            outline: var(--outline);
+            outline-offset: var(--outline-offset);
+        }
+
         .launcher-search {
             background-color: inherit;
+
+            &:focus-within {
+                outline: unset;
+            }
         }
     }
 

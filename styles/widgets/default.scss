@@ -2,9 +2,6 @@
 :root {
     background-color: var(--color-background);
     color: var(--color-on-surface);
-
-    border: var(--border);
-    box-shadow: var(--shadow);
 }
 
 button {
@@ -52,4 +49,9 @@ check:checked {
 
 entry {
     background-color: var(--color-surface);
+
+    &:focus-within {
+        outline: var(--outline);
+        outline-offset: var(--outline-offset);
+    }
 }

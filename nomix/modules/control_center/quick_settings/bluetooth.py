@@ -36,7 +36,7 @@ class BluetoothMenu(DeviceMenu):
             header=ToggleBox(
                 label="Bluetooth",
                 active=bluetooth.bind("powered"),
-                on_change=lambda x, state: bluetooth.set_powered(state),
+                on_change=lambda _, state: bluetooth.set_powered(state),
                 css_classes=["network-header-box"],
             ),
             devices=bluetooth.bind(
@@ -59,8 +59,8 @@ class BluetoothQS(QSButton):
             else:
                 return f"{len(devices)} pairs"
 
-        def toggle_menu(x) -> None:
-            bluetooth.set_setup_mode(True)
+        def toggle_menu(_):
+            bluetooth.setup_mode = True
             menu.toggle()
 
         super().__init__(
