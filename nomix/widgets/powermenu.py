@@ -1,6 +1,6 @@
 from ignis.services.hyprland import HyprlandService
 from ignis.services.niri import NiriService
-from ignis.utils.exec_sh import exec_sh_async
+from ignis.utils.exec_sh import exec_sh
 from ignis.widgets import Widget
 
 hyprland = HyprlandService.get_default()
@@ -13,25 +13,25 @@ class PowerMenu(Widget.Button):
             items=[
                 Widget.MenuItem(
                     label="Lock",
-                    on_activate=lambda x: exec_sh_async("swaylock"),
+                    on_activate=lambda x: exec_sh("swaylock"),
                 ),
                 Widget.Separator(),
                 Widget.MenuItem(
                     label="Suspend",
-                    on_activate=lambda x: exec_sh_async("systemctl suspend"),
+                    on_activate=lambda x: exec_sh("systemctl suspend"),
                 ),
                 # Widget.MenuItem(
                 #    label="Hibernate",
-                #    on_activate=lambda x: exec_sh_async("systemctl hibernate"),
+                #    on_activate=lambda x: exec_sh("systemctl hibernate"),
                 # ),
                 Widget.Separator(),
                 Widget.MenuItem(
                     label="Reboot",
-                    on_activate=lambda x: exec_sh_async("systemctl reboot"),
+                    on_activate=lambda x: exec_sh("systemctl reboot"),
                 ),
                 Widget.MenuItem(
                     label="Shutdown",
-                    on_activate=lambda x: exec_sh_async("systemctl poweroff"),
+                    on_activate=lambda x: exec_sh("systemctl poweroff"),
                 ),
                 Widget.Separator(),
                 Widget.MenuItem(
@@ -56,6 +56,6 @@ class PowerMenu(Widget.Button):
 
     def logout(self) -> None:
         if hyprland.is_available:
-            exec_sh_async("hyprctl dispatch exit 0")
+            exec_sh("hyprctl dispatch exit 0")
         elif niri.is_available:
-            exec_sh_async("niri msg action quit --skip-confirmation")
+            exec_sh("niri msg action quit --skip-confirmation")

@@ -28,6 +28,7 @@ class Popup(Widget.Box):
 
         super().__init__(
             child=[self._outer],
+            style="background-color: transparent;",
             halign="end",
         )
 
@@ -82,6 +83,6 @@ class NotificationPopup(Widget.Window):
             namespace=f"notification_popup_{monitor}",
             layer="top",
             visible=False,
-            style="background-color: transparent;",
+            style="background-color: transparent; border: unset;",
             child=PopupBox(window=self, monitor=monitor),
         )

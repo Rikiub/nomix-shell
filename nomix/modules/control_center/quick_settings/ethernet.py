@@ -1,3 +1,4 @@
+import asyncio
 from ignis.services.network import EthernetDevice, NetworkService
 
 from nomix.utils.user_options import user_options
@@ -16,9 +17,9 @@ class EthernetItem(DeviceItem):
                 "is_connected", lambda value: "Disconnect" if value else "Connect"
             ),
             active=device.bind("is_connected"),
-            on_click=lambda x: device.disconnect_from()
+            on_click=lambda _: asyncio.create_task(device.disconnect_from())
             if device.is_connected
-            else device.connect_to(),
+            else asyncio.create_task(device.connect_to()),
         )
 
 
@@ -42,8 +43,8 @@ class EthernetQS(QSButton):
         super().__init__(
             label="Wired",
             icon_name="network-wired-symbolic",
-            on_activate=lambda x: menu.toggle(),
-            on_deactivate=lambda x: menu.toggle(),
+            on_activate=lambda _: menu.toggle(),
+            on_deactivate=lambda _: menu.toggle(),
             menu=menu,
             active=network.ethernet.bind("is_connected"),
         )

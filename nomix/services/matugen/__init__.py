@@ -1,4 +1,5 @@
 from pathlib import Path
+import asyncio
 from typing import Literal
 from ignis.utils.file_monitor import FileMonitor
 from nomix.services.color_scheme.service import ColorSchemeService
@@ -6,8 +7,8 @@ from nomix.utils.constants import CACHE_DIR, USER_CACHE_DIR
 from nomix.utils.user_options import cache_options, user_options
 
 from ignis.base_service import BaseService
+from ignis.utils.exec_sh import exec_sh_async
 from ignis.utils.get_current_dir import get_current_dir
-from ignis.utils.exec_sh import exec_sh_async, exec_sh
 
 color_scheme = ColorSchemeService.get_default()
 
@@ -26,29 +27,28 @@ class MatugenService(BaseService):
         super().__init__()
 
         self.matugen_config = CURRENT_DIR / "config.toml"
-        self.matugen_template = CURRENT_DIR / "template.scss"
-
         self.matugen_config.write_text(MATUGEN_STRING)
-        self.matugen_template.touch(exist_ok=True)
 
-        self.swww_path = USER_CACHE_DIR / "swww"
-        self.swww_current_image = self.get_current_image()
+        self.swww_cache = USER_CACHE_DIR / "swww"
+        self.wallpaper = cache_options.last_wallpaper
 
         FileMonitor(
-            path=str(self.swww_path), recursive=True, callback=self.on_update_image
+            path=str(self.swww_cache),
+            callback=self.on_update_image,
+            recursive=True,
         )
 
         if user_options.force_dark_theme:
             cache_options.theme_dark = True
 
-            if self.swww_current_image:
-                self.generate_matugen(self.swww_current_image, "dark")
+            if self.wallpaper:
+                self.generate_matugen(self.wallpaper, "dark")
         else:
             color_scheme.connect(
                 "notify::is-dark",
-                lambda *_: self.swww_current_image
+                lambda *_: self.wallpaper
                 and self.generate_matugen(
-                    self.swww_current_image,
+                    self.wallpaper,
                     "dark"
                     if cache_options.theme_dark or color_scheme.is_dark
                     else "light",
@@ -63,25 +63,18 @@ class MatugenService(BaseService):
 
         with file.open() as f:
             image = f.readline().strip()
-            self.swww_current_image = Path(image)
+
+            cache_options.last_wallpaper = image
+            self.wallpaper = Path(image)
 
         self.generate_matugen(
             image,
             "dark" if cache_options.theme_dark or color_scheme.is_dark else "light",
         )
 
-    def get_current_image(self) -> Path | None:
-        output = exec_sh("swww query").stdout
-        output = str(output)
-        output = output.split("image:", 1)
-
-        if output:
-            image = output[1].strip()
-            return Path(image)
-
-        return None
-
     def generate_matugen(self, image: Path | str, mode: Literal["light", "dark"]):
-        exec_sh_async(
-            f"matugen --config {self.matugen_config} --mode {mode} image {image}"
+        asyncio.create_task(
+            exec_sh_async(
+                f"matugen --config {self.matugen_config} --mode {mode} image {image}"
+            )
         )

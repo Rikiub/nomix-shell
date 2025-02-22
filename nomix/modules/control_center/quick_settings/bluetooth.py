@@ -1,3 +1,4 @@
+import asyncio
 from ignis.services.bluetooth import BluetoothDevice, BluetoothService
 from ignis.widgets import Widget
 
@@ -16,9 +17,9 @@ class BluetoothItem(DeviceItem):
             icon_name=device.bind("icon_name", lambda v: v + "-symbolic"),
             label=device.alias,
             active=device.bind("connected"),
-            on_click=lambda _: device.disconnect_from()
+            on_click=lambda _: asyncio.create_task(device.disconnect_from())
             if device.connected
-            else device.connect_to(),
+            else asyncio.create_task(device.connect_to()),
             extra_widget=Widget.Icon(
                 image="bluetooth-active-symbolic",
                 tooltip_text="Paired",

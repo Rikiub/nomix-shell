@@ -6,6 +6,7 @@ from nomix.utils.constants import CACHE_DIR, IGNIS_DIR
 class CacheOptions(OptionsManager):
     theme_dark = False
     night_light = False
+    last_wallpaper = ""
 
 
 class UserOptions(OptionsManager):

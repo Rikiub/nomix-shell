@@ -18,10 +18,10 @@ class DNDQS(QSButton):
                 if value
                 else "notification-symbolic",
             ),
-            on_activate=lambda _: self._activate(True),
-            on_deactivate=lambda _: self._activate(False),
+            on_activate=lambda _: self._toggle(True),
+            on_deactivate=lambda _: self._toggle(False),
             active=options.notifications.bind("dnd"),
         )
 
-    def _activate(self, state: bool) -> None:
+    def _toggle(self, state: bool) -> None:
         options.notifications.dnd = state

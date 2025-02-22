@@ -1,3 +1,4 @@
+import asyncio
 import re
 
 from gi.repository import Gio  # type: ignore
@@ -143,7 +144,7 @@ class SearchWebButton(Widget.Button):
         return re.match(regex, url) is not None
 
     def launch(self) -> None:
-        exec_sh_async(f"xdg-open {self._url}")
+        asyncio.create_task(exec_sh_async(f"xdg-open {self._url}"))
         app.close_window(ModuleWindow.launcher)
 
 

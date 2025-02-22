@@ -15,7 +15,7 @@ class OSD(Widget.Window):
             anchor=anchor,
             visible=False,
             layer="overlay",
-            style="background-color: transparent;",
+            style="background-color: transparent; border: unset;",
             child=Widget.Box(
                 css_classes=["osd"],
                 child=[StreamVolume(stream=audio.speaker, sensitive=False)],

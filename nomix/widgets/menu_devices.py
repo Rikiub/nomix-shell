@@ -1,3 +1,4 @@
+import asyncio
 from typing import Callable
 
 from ignis.base_widget import BaseWidget
@@ -108,7 +109,9 @@ class DeviceMenu(Menu):
                         Widget.Separator(),
                         Widget.Button(
                             css_classes=["device-item", "settings"],
-                            on_click=lambda _: exec_sh_async(settings_command),
+                            on_click=lambda _: asyncio.create_task(
+                                exec_sh_async(settings_command)
+                            ),
                             child=Widget.Box(
                                 child=[
                                     Widget.Icon(

@@ -1,6 +1,10 @@
 /* Defaults */
 :root {
+    background-color: var(--color-background);
     color: var(--color-on-surface);
+
+    border: var(--border);
+    box-shadow: var(--shadow);
 }
 
 button {
@@ -39,4 +43,13 @@ switch {
         outline: var(--outline);
         outline-offset: var(--outline-offset);
     }
+}
+
+check:checked {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+}
+
+entry {
+    background-color: var(--color-surface);
 }

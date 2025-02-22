@@ -1,3 +1,4 @@
+import asyncio
 from ignis.services.network import NetworkService, WifiAccessPoint, WifiDevice
 from ignis.widgets import Widget
 
@@ -21,7 +22,7 @@ class WifiItem(DeviceItem):
             on_click=lambda _: self.toggle(access_point),
             extra_widget=Widget.Button(
                 tooltip_text="Click to Forget",
-                on_click=lambda _: access_point.forget(),
+                on_click=lambda _: asyncio.create_task(access_point.forget()),
                 child=Widget.Icon(image="dialog-password-symbolic"),
                 visible=access_point.bind("psk", lambda v: bool(v)),
             ),
@@ -29,9 +30,9 @@ class WifiItem(DeviceItem):
 
     def toggle(self, access_point: WifiAccessPoint):
         if access_point.is_connected:
-            access_point.disconnect_from()
+            asyncio.create_task(access_point.disconnect_from())
         else:
-            access_point.connect_to_graphical()
+            asyncio.create_task(access_point.connect_to_graphical())
 
 
 class WifiMenu(DeviceMenu):
@@ -56,8 +57,8 @@ class WifiQS(QSButton):
     def __init__(self, device: WifiDevice):
         menu = WifiMenu(device)
 
-        def toggle_list(x) -> None:
-            device.scan()
+        def toggle_list(_) -> None:
+            asyncio.create_task(device.scan())
             menu.toggle()
 
         super().__init__(

@@ -56,12 +56,7 @@ class ColorSchemeService(BaseService):
         self._sync()
 
     def toggle(self) -> None:
-        if self._is_dark:
-            self._color_scheme = "prefer-light"
-        else:
-            self._color_scheme = "prefer-dark"
-
-        self._sync()
+        self.is_dark = not self.is_dark
 
     def _write_style(self) -> None:
         STYLE_FILE.touch(exist_ok=True)

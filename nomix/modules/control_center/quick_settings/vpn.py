@@ -1,3 +1,4 @@
+import asyncio
 from ignis.services.network import NetworkService, VpnConnection
 from ignis.widgets import Widget
 
@@ -12,7 +13,7 @@ network = NetworkService.get_default()
 class VpnItem(DeviceItem):
     def __init__(self, conn: VpnConnection):
         super().__init__(
-            on_click=lambda x: conn.toggle_connection(),
+            on_click=lambda x: asyncio.create_task(conn.toggle_connection()),
             icon_name=conn.name,
             active=conn.bind("is_connected"),
         )
@@ -56,8 +57,8 @@ class VpnQS(QSButton):
         super().__init__(
             label=network.vpn.bind("active_vpn_id", get_label),
             icon_name=network.vpn.bind("icon-name", get_icon),
-            on_activate=lambda x: menu.toggle(),
-            on_deactivate=lambda x: menu.toggle(),
+            on_activate=lambda _: menu.toggle(),
+            on_deactivate=lambda _: menu.toggle(),
             active=network.vpn.bind("is-connected"),
             menu=menu,
         )
