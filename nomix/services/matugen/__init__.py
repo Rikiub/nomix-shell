@@ -1,14 +1,15 @@
-from pathlib import Path
 import asyncio
+from pathlib import Path
 from typing import Literal
-from ignis.utils.file_monitor import FileMonitor
-from nomix.services.color_scheme.service import ColorSchemeService
-from nomix.utils.constants import CACHE_DIR, USER_CACHE_DIR
-from nomix.utils.user_options import cache_options, user_options
 
 from ignis.base_service import BaseService
 from ignis.utils.exec_sh import exec_sh_async
+from ignis.utils.file_monitor import FileMonitor
 from ignis.utils.get_current_dir import get_current_dir
+
+from nomix.services.color_scheme.service import ColorSchemeService
+from nomix.utils.constants import CACHE_DIR, USER_CACHE_DIR
+from nomix.utils.user_options import cache_options, user_options
 
 color_scheme = ColorSchemeService.get_default()
 

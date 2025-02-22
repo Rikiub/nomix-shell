@@ -1,12 +1,12 @@
 import asyncio
+
 from ignis.services.bluetooth import BluetoothDevice, BluetoothService
 from ignis.widgets import Widget
 
 from nomix.utils.user_options import user_options
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu
-from nomix.widgets.toggle_box import ToggleBox
-
 from nomix.widgets.qsbutton import QSButton
+from nomix.widgets.toggle_box import ToggleBox
 
 bluetooth = BluetoothService.get_default()
 

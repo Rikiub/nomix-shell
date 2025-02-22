@@ -1,8 +1,8 @@
 import asyncio
+
 from ignis.utils.exec_sh import exec_sh_async
 
 from nomix.utils.user_options import cache_options, user_options
-
 from nomix.widgets.qsbutton import QSButton
 
 
