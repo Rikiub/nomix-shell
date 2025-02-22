@@ -1,3 +1,4 @@
+from os import PathLike
 from typing import Literal
 
 ALIGN = Literal["start", "center", "end"]
@@ -14,3 +15,5 @@ TRANSITION_TYPE = Literal[
     "swing_up",
     "swing_down",
 ]
+
+StrPath = str | PathLike[str]

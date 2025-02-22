@@ -1,6 +1,7 @@
 from gi.repository import Gio, GObject  # type: ignore
 from ignis.base_service import BaseService
 
+from nomix.utils.constants import DARK_FILE
 from nomix.utils.user_options import cache_options
 
 from .constants import (
@@ -12,7 +13,6 @@ from .constants import (
     GTK_THEME_DARK,
     GTK_THEME_LIGHT,
     STYLE_DISCLAIMER,
-    STYLE_FILE,
     STYLE_VARIABLE_NAME,
 )
 
@@ -29,7 +29,7 @@ class ColorSchemeService(BaseService):
             "changed::color-scheme",
             lambda config, key: self.set_color_scheme(config.get_string(key)),
         )
-        cache_options.connect("notify::theme_dark", lambda *_: self._write_style())
+        cache_options.connect("notify::theme_dark", lambda *_: self._update_style())
 
         self._sync()
 
@@ -58,15 +58,13 @@ class ColorSchemeService(BaseService):
     def toggle(self) -> None:
         self.is_dark = not self.is_dark
 
-    def _write_style(self) -> None:
-        STYLE_FILE.touch(exist_ok=True)
-
+    def _update_style(self) -> None:
         boolean = "false"
-        if cache_options.theme_dark or self._is_dark:
+        if cache_options.force_dark or self._is_dark:
             boolean = "true"
 
         content = f"/* {STYLE_DISCLAIMER} */\n${STYLE_VARIABLE_NAME}: {boolean};"
-        STYLE_FILE.write_text(content)
+        DARK_FILE.write_text(content)
 
     def _sync(self):
         if self._color_scheme == "prefer-dark":
@@ -91,4 +89,4 @@ class ColorSchemeService(BaseService):
         self.notify("color_scheme")
         self.notify("is_dark")
 
-        self._write_style()
+        self._update_style()

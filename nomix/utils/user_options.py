@@ -4,9 +4,10 @@ from nomix.utils.constants import CACHE_DIR, IGNIS_DIR
 
 
 class CacheOptions(OptionsManager):
-    theme_dark = False
+    force_dark = False
     night_light = False
-    last_wallpaper = ""
+    wallpaper = ""
+    matugen_scheme = ""
 
 
 class UserOptions(OptionsManager):
@@ -35,20 +36,27 @@ class UserOptions(OptionsManager):
         activate_command = "wlsunset"
         deactivate_command = "pkill wlsunset"
 
+    class Matugen(OptionsGroup):
+        enabled = False
+        scheme = "monochrome"
+
     bar = Bar()
     clock = ClockFormat()
     launcher = Launcher()
     control_apps = ControlApps()
     night_light = NightLight()
+    matugen = Matugen()
 
 
 config_file = IGNIS_DIR / "options.json"
-cache_file = CACHE_DIR / "options.json"
+if not config_file.exists():
+    config_file.write_text("{}")
 
+cache_file = CACHE_DIR / "options.json"
 if not cache_file.exists():
     cache_file.parent.mkdir(exist_ok=True)
     cache_file.write_text("{}")
 
 user_options = UserOptions(str(config_file))
 cache_options = CacheOptions(str(cache_file))
-cache_options.theme_dark = False
+cache_options.force_dark = False

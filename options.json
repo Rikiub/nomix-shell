@@ -1,5 +1,9 @@
 {
     "force_dark_theme": true,
+    "matugen": {
+        "enabled": true,
+        "scheme": "tonal-spot"
+    },
     "bar": {
 		"battery_percent": false
 	},
