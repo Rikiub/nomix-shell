@@ -127,22 +127,39 @@ class StatusPill(Widget.EventBox):
     def __init__(self):
         self.volume_steps = 5
 
-        super().__init__(
-            child=[
-                WifiIcon(),
-                EthernetIcon(),
-                VpnIcon(),
-                BluetoothIcon(),
-                VolumeIcon(),
-                # DNDIcon(),
-                BatteriesIcons(),
-            ],
-            tooltip_text="Control Center",
+        self._button = Widget.Button(
             css_classes=["status-pill"],
+            on_click=lambda _: self._control.set_visible(
+                not self._control.is_visible()
+            ),
+            child=Widget.Box(
+                child=[
+                    WifiIcon(),
+                    EthernetIcon(),
+                    VpnIcon(),
+                    BluetoothIcon(),
+                    VolumeIcon(),
+                    # DNDIcon(),
+                    BatteriesIcons(),
+                ]
+            ),
+        )
+
+        self._control = app.get_window(ModuleWindow.control_center)
+        self._control.connect("notify::visible", lambda *_: self._toggle_active())
+
+        super().__init__(
+            child=[self._button],
+            tooltip_text="Control Center",
             on_scroll_up=lambda _: self._scroll("up"),
             on_scroll_down=lambda _: self._scroll("down"),
-            on_click=lambda _: app.toggle_window(ModuleWindow.control_center),
         )
+
+    def _toggle_active(self):
+        if self._control.is_visible():
+            self._button.add_css_class("active")
+        else:
+            self._button.remove_css_class("active")
 
     def _scroll(self, direction: Literal["up", "down"]):
         if not audio.speaker.is_muted:

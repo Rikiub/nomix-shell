@@ -17,6 +17,10 @@
             }
         }
 
+        .volume-icon:disabled {
+            filter: none;
+        }
+
         trough {
             background-color: var(--color-surface-variant);
         }
