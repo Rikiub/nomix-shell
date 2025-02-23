@@ -32,7 +32,7 @@ class ColorSchemeService(BaseService):
             and self.set_color_scheme(config.get_string(key)),
         )
         cache_options.connect(
-            "notify::force_dark", lambda *_: self._update_dark_variable()
+            "notify::theme_is_dark", lambda *_: self._update_dark_variable()
         )
 
         self._sync()
@@ -64,7 +64,7 @@ class ColorSchemeService(BaseService):
 
     def _update_dark_variable(self) -> None:
         boolean = "false"
-        if cache_options.force_dark or self._is_dark:
+        if cache_options.theme_is_dark or self._is_dark:
             boolean = "true"
 
         content = f"/* {STYLE_DISCLAIMER} */\n${STYLE_VARIABLE_NAME}: {boolean};"

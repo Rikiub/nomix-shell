@@ -4,14 +4,14 @@ from nomix.utils.constants import CACHE_DIR, IGNIS_DIR
 
 
 class CacheOptions(OptionsManager):
-    force_dark = False
+    theme_is_dark = False
     night_light = False
     wallpaper = ""
     matugen_scheme = ""
 
 
 class UserOptions(OptionsManager):
-    force_dark_theme = False
+    prefer_dark_shell = False
 
     class ClockFormat(OptionsGroup):
         full_date = False
@@ -39,7 +39,6 @@ class UserOptions(OptionsManager):
     class Matugen(OptionsGroup):
         enabled = False
         scheme = "monochrome"
-        run_user_config = True
 
     bar = Bar()
     clock = ClockFormat()
@@ -50,14 +49,13 @@ class UserOptions(OptionsManager):
 
 
 config_file = IGNIS_DIR / "options.json"
-if not config_file.exists():
-    config_file.write_text("{}")
-
 cache_file = CACHE_DIR / "options.json"
-if not cache_file.exists():
-    cache_file.parent.mkdir(exist_ok=True)
-    cache_file.write_text("{}")
+
+for config in (config_file, cache_file):
+    if not config.exists():
+        cache_file.parent.mkdir(exist_ok=True)
+        cache_file.write_text("{}")
 
 user_options = UserOptions(str(config_file))
 cache_options = CacheOptions(str(cache_file))
-cache_options.force_dark = False
+cache_options.theme_is_dark = False

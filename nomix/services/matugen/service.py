@@ -45,8 +45,8 @@ class MatugenService(BaseService):
             ),
         )
 
-        if user_options.force_dark_theme:
-            cache_options.force_dark = True
+        if user_options.prefer_dark_shell:
+            cache_options.theme_is_dark = True
             self._override_styles("dark")
         else:
             color_scheme.connect(
@@ -97,7 +97,9 @@ class MatugenService(BaseService):
         """
 
     def _get_mode(self) -> MODE:
-        return "dark" if cache_options.force_dark or color_scheme.is_dark else "light"
+        return (
+            "dark" if cache_options.theme_is_dark or color_scheme.is_dark else "light"
+        )
 
     def _override_styles(self, mode: MODE):
         target = MATUGEN_DARK if mode == "dark" else MATUGEN_LIGHT
