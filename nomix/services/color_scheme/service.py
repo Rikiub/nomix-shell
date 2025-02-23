@@ -31,8 +31,8 @@ class ColorSchemeService(BaseService):
             lambda config, key: not self._lock
             and self.set_color_scheme(config.get_string(key)),
         )
-        cache_options.connect(
-            "notify::theme_is_dark", lambda *_: self._update_dark_variable()
+        cache_options.connect_option(
+            "theme_is_dark", lambda *_: self._update_dark_variable()
         )
 
         self._sync()

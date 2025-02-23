@@ -23,12 +23,12 @@ if user_options.matugen.enabled:
 else:
     OVERRIDE_FILE.write_text("")
 
+    # auto reload in GTK4 theme changes
+    monitor_gtk4_css()
+
 # css styles
 app = IgnisApp.get_default()
 app.apply_css(str(STYLES_DIR / "index.scss"))
-
-# auto reload in GTK4 theme changes
-monitor_gtk4_css()
 
 # WINDOWS
 Launcher()

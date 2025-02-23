@@ -39,6 +39,7 @@ class UserOptions(OptionsManager):
     class Matugen(OptionsGroup):
         enabled = False
         scheme = "monochrome"
+        run_user_config = True
 
     bar = Bar()
     clock = ClockFormat()

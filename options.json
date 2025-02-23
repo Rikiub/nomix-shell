@@ -2,6 +2,7 @@
     "prefer_dark_shell": true,
     "matugen": {
         "enabled": true,
+        "run_user_config": true,
         "scheme": "tonal-spot"
     },
     "bar": {

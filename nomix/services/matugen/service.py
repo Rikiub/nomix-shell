@@ -35,7 +35,6 @@ class MatugenService(BaseService):
             send_notification(
                 "Matugen Service Disabled", text, icon_name="dialog-warning"
             )
-
             return
 
         FileMonitor(
@@ -72,19 +71,18 @@ class MatugenService(BaseService):
 
             with file.open() as f:
                 image = f.readline().strip()
-                cache_options.wallpaper = image
+
+            if image == cache_options.wallpaper:
+                return
+            cache_options.wallpaper = image
 
             self._update_and_apply_scheme(image)
-
 
     def _update_and_apply_scheme(self, image: StrPath):
         asyncio.create_task(self._gen_schemes(image)).add_done_callback(
             lambda _: self._override_styles(self._get_mode())
         )
 
-        """
-        # Disabled because loops when a wallpaper setter is used in config.
-        
         if user_options.matugen.run_user_config:
             asyncio.create_task(
                 self._run_matugen(
@@ -94,7 +92,6 @@ class MatugenService(BaseService):
                     prefer_user_config=True,
                 )
             )
-        """
 
     def _get_mode(self) -> MODE:
         return (
