@@ -12,8 +12,8 @@ from ignis.utils.exec_sh import exec_sh, exec_sh_async
 from ignis.widgets import Widget
 
 from nomix.utils.constants import ModuleWindow
-from nomix.utils.types import ALIGN
 from nomix.utils.global_options import user_options
+from nomix.utils.types import ALIGN
 from nomix.widgets.popup_window import PopupWindow
 
 app = IgnisApp.get_default()

@@ -1,6 +1,6 @@
 import asyncio
-from pathlib import Path
 import tempfile
+from pathlib import Path
 from typing import cast, get_args
 
 from ignis.base_service import BaseService
@@ -9,9 +9,9 @@ from ignis.utils.file_monitor import FileMonitor
 
 from nomix.services.color_scheme.service import ColorSchemeService
 from nomix.utils.constants import OVERRIDE_FILE
+from nomix.utils.global_options import cache_options, user_options
 from nomix.utils.helpers import send_notification
 from nomix.utils.types import StrPath
-from nomix.utils.global_options import cache_options, user_options
 
 from .constants import (
     CURRENT_DIR,

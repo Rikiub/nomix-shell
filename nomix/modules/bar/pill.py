@@ -1,4 +1,5 @@
 from typing import Literal
+
 from ignis.app import IgnisApp
 from ignis.gobject import Binding
 from ignis.options import options

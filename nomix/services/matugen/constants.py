@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Literal
 
 from ignis.utils.get_current_dir import get_current_dir
+
 from nomix.utils.constants import CACHE_DIR, USER_CACHE_DIR
 
 CURRENT_DIR = Path(get_current_dir())

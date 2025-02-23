@@ -16,6 +16,7 @@ from .constants import (
     STYLE_VARIABLE_NAME,
 )
 
+
 class ColorSchemeService(BaseService):
     def __init__(self) -> None:
         super().__init__()
