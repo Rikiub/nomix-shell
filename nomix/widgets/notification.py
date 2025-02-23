@@ -44,6 +44,7 @@ class NotificationWidget(Widget.Box):
             justify="left",
             css_classes=["notification-body"],
             visible=notification.body != "",
+            use_markup=True,
         )
 
         super().__init__(
@@ -122,7 +123,7 @@ class NotificationWidget(Widget.Box):
                     child=[
                         Widget.Button(
                             child=Widget.Label(label=action.label),
-                            on_click=lambda x, action=action: action.invoke(),
+                            on_click=lambda _, action=action: action.invoke(),
                             css_classes=["notification-action"],
                         )
                         for action in notification.actions

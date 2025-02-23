@@ -1,7 +1,7 @@
-@use "../.cache/dark";
+@import "../.cache/dark";
 
 $OPERATOR: "-";
-@if dark.$is-dark {
+@if $DARK {
 	$OPERATOR: "+";
 }
 

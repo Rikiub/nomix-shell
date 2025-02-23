@@ -140,6 +140,13 @@ class MatugenService(BaseService):
 
                 command = f"--config '{path}'"
 
-            await exec_sh_async(
-                f"matugen {command} --mode {mode} --type {type} image {image}"
-            )
+            try:
+                await exec_sh_async(
+                    f"matugen {command} --mode {mode} --type {type} image {image}"
+                )
+            except Exception:
+                if prefer_user_config:
+                    send_notification(
+                        "Invalid Matugen Config",
+                        "Check <b>~/.config/matugen/config.toml</b> and try again.",
+                    )
