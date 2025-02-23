@@ -8,7 +8,7 @@ from nomix.modules.notification_center import NotificationCenter
 from nomix.modules.notification_popup import NotificationPopup
 from nomix.modules.osd import OSD
 from nomix.services.color_scheme.service import ColorSchemeService
-from nomix.utils.user_options import user_options
+from nomix.utils.global_options import user_options
 from nomix.utils.constants import OVERRIDE_FILE, STYLES_DIR
 from nomix.utils.helpers import monitor_gtk4_css
 

@@ -2,7 +2,7 @@ from gi.repository import Gio, GObject  # type: ignore
 from ignis.base_service import BaseService
 
 from nomix.utils.constants import DARK_FILE
-from nomix.utils.user_options import cache_options
+from nomix.utils.global_options import cache_options
 
 from .constants import (
     CHANGE_ICON,

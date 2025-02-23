@@ -2,7 +2,7 @@ import asyncio
 
 from ignis.services.network import EthernetDevice, NetworkService
 
-from nomix.utils.user_options import user_options
+from nomix.utils.global_options import user_options
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu
 from nomix.widgets.qsbutton import QSButton
 

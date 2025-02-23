@@ -5,7 +5,7 @@ from typing import Literal
 from ignis.utils import Utils
 from ignis.widgets import Widget
 
-from nomix.utils.user_options import user_options
+from nomix.utils.global_options import user_options
 
 
 class Clock(Widget.Label):
