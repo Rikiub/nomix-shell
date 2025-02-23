@@ -18,7 +18,7 @@ class OSD(Widget.Window):
             style="background-color: transparent; border: unset;",
             child=Widget.Box(
                 css_classes=["osd"],
-                child=[StreamVolume(stream=audio.speaker, sensitive=False)],
+                child=[StreamVolume(stream=audio.speaker, muteable=False)],
             ),
         )
 

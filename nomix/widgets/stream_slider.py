@@ -19,7 +19,7 @@ class StreamSlider(Widget.Scale):
 
 
 class StreamVolume(Widget.Box):
-    def __init__(self, stream: Stream, step: int = 5, **kwargs):
+    def __init__(self, stream: Stream, step: int = 5, muteable: bool = True, **kwargs):
         self.step = step
 
         super().__init__(
@@ -35,14 +35,8 @@ class StreamVolume(Widget.Box):
                         else str(volume) + "%",
                     ),
                     css_classes=["volume-icon"],
-                    child=Widget.Box(
-                        child=[
-                            Widget.Icon(
-                                image=stream.bind("icon_name"),
-                                pixel_size=20,
-                            ),
-                        ],
-                    ),
+                    child=Widget.Icon(image=stream.bind("icon_name"), pixel_size=20),
+                    sensitive=muteable,
                 ),
                 StreamSlider(stream, step),
             ],

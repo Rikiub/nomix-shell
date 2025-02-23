@@ -1,5 +1,5 @@
 {
-    "prefer_dark_shell": false,
+    "prefer_dark_shell": true,
     "matugen": {
         "enabled": true,
         "run_user_config": true,

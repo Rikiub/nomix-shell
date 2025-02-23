@@ -1,3 +1,4 @@
+from typing import Literal
 from ignis.app import IgnisApp
 from ignis.gobject import Binding
 from ignis.options import options
@@ -122,21 +123,42 @@ class BatteriesIcons(Widget.Box):
         )
 
 
-class StatusPill(Widget.Button):
+class StatusPill(Widget.EventBox):
     def __init__(self):
+        self.volume_steps = 5
+
         super().__init__(
-            child=Widget.Box(
-                child=[
-                    WifiIcon(),
-                    EthernetIcon(),
-                    VpnIcon(),
-                    BluetoothIcon(),
-                    VolumeIcon(),
-                    # DNDIcon(),
-                    BatteriesIcons(),
-                ]
-            ),
+            child=[
+                WifiIcon(),
+                EthernetIcon(),
+                VpnIcon(),
+                BluetoothIcon(),
+                VolumeIcon(),
+                # DNDIcon(),
+                BatteriesIcons(),
+            ],
             tooltip_text="Control Center",
             css_classes=["status-pill"],
+            on_scroll_up=lambda _: self._scroll("up"),
+            on_scroll_down=lambda _: self._scroll("down"),
             on_click=lambda _: app.toggle_window(ModuleWindow.control_center),
         )
+
+    def _scroll(self, direction: Literal["up", "down"]):
+        if not audio.speaker.is_muted:
+            volume = audio.speaker.volume
+
+            if direction == "up":
+                volume -= self.volume_steps
+
+                if volume < 0:
+                    volume = 0
+            elif direction == "down":
+                volume += self.volume_steps
+
+                if volume > 100:
+                    volume = 100
+
+            audio.speaker.set_volume(volume)
+
+            app.open_window(ModuleWindow.osd)

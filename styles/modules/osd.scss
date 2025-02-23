@@ -1,12 +1,24 @@
 .osd {
-    min-width: 200px;
+    min-width: 300px;
 
     background-color: var(--color-surface);
-    color: var(--color-on-surface);
 
     border: var(--border);
     border-radius: var(--border-radius-lg);
 
     padding: 15px 20px;
     margin: 50px;
+
+    .volume-slider {
+        button {
+            &:hover,
+            &:focus-visible {
+                background-color: var(--color-surface-variant);
+            }
+        }
+
+        trough {
+            background-color: var(--color-surface-variant);
+        }
+    }
 }
