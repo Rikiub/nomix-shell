@@ -23,7 +23,6 @@ from .constants import (
 )
 
 color_scheme = ColorSchemeService.get_default()
-
 schemes = get_args(MATUGEN_SCHEME)
 
 
@@ -39,12 +38,15 @@ class MatugenService(BaseService):
 
             return
 
-        FileMonitor(path=str(SWWW_CACHE), callback=self._on_update_wallpaper)
+        FileMonitor(
+            path=str(SWWW_CACHE),
+            callback=lambda monitor, path, event: self._on_update_wallpaper(
+                monitor, path, event
+            ),
+        )
 
         if user_options.force_dark_theme:
             cache_options.force_dark = True
-            color_scheme._update_style()
-
             self._override_styles("dark")
         else:
             color_scheme.connect(
@@ -56,35 +58,52 @@ class MatugenService(BaseService):
 
         if (
             cache_options.wallpaper
-            and cache_options.matugen_scheme != user_options.matugen.scheme
+            and user_options.matugen.scheme != cache_options.matugen_scheme
         ):
             self._update_and_apply_scheme(cache_options.wallpaper)
             cache_options.matugen_scheme = user_options.matugen.scheme
+
+    def _on_update_wallpaper(self, monitor: FileMonitor, path: str, event: str):
+        if event == "changes_done_hint":
+            file = Path(path)
+
+            if not file.is_file():
+                return
+
+            with file.open() as f:
+                image = f.readline().strip()
+                cache_options.wallpaper = image
+
+            self._update_and_apply_scheme(image)
+
+
+    def _update_and_apply_scheme(self, image: StrPath):
+        asyncio.create_task(self._gen_schemes(image)).add_done_callback(
+            lambda _: self._override_styles(self._get_mode())
+        )
+
+        """
+        # Disabled because loops when a wallpaper setter is used in config.
+        
+        if user_options.matugen.run_user_config:
+            asyncio.create_task(
+                self._run_matugen(
+                    image=image,
+                    mode=self._get_mode(),
+                    scheme=user_options.matugen.scheme,  # type: ignore
+                    prefer_user_config=True,
+                )
+            )
+        """
+
+    def _get_mode(self) -> MODE:
+        return "dark" if cache_options.force_dark or color_scheme.is_dark else "light"
 
     def _override_styles(self, mode: MODE):
         target = MATUGEN_DARK if mode == "dark" else MATUGEN_LIGHT
         content = target.read_text()
 
         OVERRIDE_FILE.write_text(content)
-
-    def _on_update_wallpaper(self, event: FileMonitor, path: str, _):
-        file = Path(path)
-
-        if not file.is_file():
-            return
-
-        with file.open() as f:
-            image = f.readline().strip()
-            cache_options.wallpaper = image
-
-        self._update_and_apply_scheme(image)
-
-    def _update_and_apply_scheme(self, image: StrPath):
-        asyncio.create_task(self._gen_schemes(image)).add_done_callback(
-            lambda _: self._override_styles(
-                "dark" if cache_options.force_dark or color_scheme.is_dark else "light"
-            )
-        )
 
     async def _gen_schemes(self, image: StrPath):
         scheme = cast(MATUGEN_SCHEME, user_options.matugen.scheme)
@@ -96,20 +115,32 @@ class MatugenService(BaseService):
         await light
         await dark
 
-    async def _run_matugen(self, image: StrPath, mode: MODE, scheme: MATUGEN_SCHEME):
-        config = f"""
-        [config]
-
-        [templates.ignis]
-        input_path = '{CURRENT_DIR}/template.scss'
-        output_path = '{MATUGEN_DARK if mode == "dark" else MATUGEN_LIGHT}'
-        """
-
+    async def _run_matugen(
+        self,
+        image: StrPath,
+        mode: MODE,
+        scheme: MATUGEN_SCHEME,
+        prefer_user_config: bool = False,
+    ):
         type = "scheme-" + scheme
 
         with tempfile.NamedTemporaryFile() as f:
-            Path(f.name).write_text(config)
+            command = ""
+
+            if not prefer_user_config:
+                template = f"""
+                [config]
+
+                [templates.ignis]
+                input_path = '{CURRENT_DIR}/template.scss'
+                output_path = '{MATUGEN_DARK if mode == "dark" else MATUGEN_LIGHT}'
+                """
+
+                path = Path(f.name)
+                path.write_text(template)
+
+                command = f"--config '{path}'"
 
             await exec_sh_async(
-                f"matugen --config {f.name} --mode {mode} --type {type} image {image}"
+                f"matugen {command} --mode {mode} --type {type} image {image}"
             )

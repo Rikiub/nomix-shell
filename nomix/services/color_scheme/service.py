@@ -16,7 +16,6 @@ from .constants import (
     STYLE_VARIABLE_NAME,
 )
 
-
 class ColorSchemeService(BaseService):
     def __init__(self) -> None:
         super().__init__()
@@ -25,11 +24,16 @@ class ColorSchemeService(BaseService):
         self._color_scheme: COLOR_SCHEME = self._settings.get_string("color-scheme")  # type: ignore
         self._is_dark: bool = False
 
+        self._lock = False
+
         self._settings.connect(
             "changed::color-scheme",
-            lambda config, key: self.set_color_scheme(config.get_string(key)),
+            lambda config, key: not self._lock
+            and self.set_color_scheme(config.get_string(key)),
         )
-        cache_options.connect("notify::theme_dark", lambda *_: self._update_style())
+        cache_options.connect(
+            "notify::force_dark", lambda *_: self._update_dark_variable()
+        )
 
         self._sync()
 
@@ -58,7 +62,7 @@ class ColorSchemeService(BaseService):
     def toggle(self) -> None:
         self.is_dark = not self.is_dark
 
-    def _update_style(self) -> None:
+    def _update_dark_variable(self) -> None:
         boolean = "false"
         if cache_options.force_dark or self._is_dark:
             boolean = "true"
@@ -67,6 +71,8 @@ class ColorSchemeService(BaseService):
         DARK_FILE.write_text(content)
 
     def _sync(self):
+        self._lock = True
+
         if self._color_scheme == "prefer-dark":
             if CHANGE_THEME:
                 self._settings.set_string("gtk-theme", GTK_THEME_DARK)
@@ -89,4 +95,6 @@ class ColorSchemeService(BaseService):
         self.notify("color_scheme")
         self.notify("is_dark")
 
-        self._update_style()
+        self._update_dark_variable()
+
+        self._lock = False

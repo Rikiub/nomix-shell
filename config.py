@@ -14,14 +14,14 @@ from nomix.utils.helpers import monitor_gtk4_css
 
 # SETUP
 # services
+ColorSchemeService.get_default()
+
 if user_options.matugen.enabled:
     from nomix.services.matugen import MatugenService
 
     MatugenService.get_default()
 else:
     OVERRIDE_FILE.write_text("")
-
-ColorSchemeService.get_default()
 
 # css styles
 app = IgnisApp.get_default()

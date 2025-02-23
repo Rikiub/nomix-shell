@@ -2,6 +2,7 @@
     "force_dark_theme": true,
     "matugen": {
         "enabled": true,
+        "run_user_config": true,
         "scheme": "tonal-spot"
     },
     "bar": {
