@@ -1,3 +1,4 @@
+
 from nomix.modules.notification_center.panel import NotificationPanel
 from nomix.utils.constants import ModuleWindow
 from nomix.utils.types import ALIGN
@@ -11,5 +12,5 @@ class NotificationCenter(PopupWindow):
             css_classes=["notification-center"],
             valign=valign,
             halign=halign,
-            child=[NotificationPanel()],
+            child=[NotificationPanel(header_reverse=True)],
         )

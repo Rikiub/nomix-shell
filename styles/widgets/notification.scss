@@ -69,3 +69,31 @@
 .notification-popup {
 	min-width: 400px;
 }
+
+.player {
+	padding-bottom: 10px;
+
+	.player-controls button {
+		background-color: unset;
+		margin: 0 5px;
+	}
+
+	.player-image {
+		border-radius: var(--border-radius-sm);
+	}
+
+	.player-metadata {
+		margin: 0 10px;
+
+		.player-title {
+			font-weight: bold;
+			font-size: large;
+		}
+	}
+
+	.player-progress {
+		label {
+			margin: 0 10px;
+		}
+	}
+}

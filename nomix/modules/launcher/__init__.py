@@ -199,7 +199,7 @@ class Launcher(PopupWindow):
                     ],
                 ),
                 Widget.Scroll(
-                    height_request=430,
+                    height_request=450,
                     child=Widget.EventBox(
                         css_classes=["launcher-app-list"],
                         on_scroll_up=lambda _: self._entry.grab_focus(),

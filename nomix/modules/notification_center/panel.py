@@ -4,6 +4,7 @@ from ignis.services.notifications import Notification, NotificationService
 from ignis.utils import Utils
 from ignis.widgets import Widget
 
+from nomix.modules.notification_center.media import MediaPlayer
 from nomix.widgets.notification import NotificationWidget
 
 notifications = NotificationService.get_default()
@@ -70,7 +71,7 @@ class NotificationList(Widget.Box):
 
 
 class NotificationPanel(Widget.Box):
-    def __init__(self):
+    def __init__(self, header_reverse: bool = False):
         header = Widget.Box(
             css_classes=["header"],
             child=[
@@ -102,10 +103,13 @@ class NotificationPanel(Widget.Box):
             vexpand=True,
             css_classes=["notification-center"],
             child=[
-                header,
+                header if not header_reverse else Widget.Box(),
                 Widget.Scroll(
-                    child=NotificationList(),
+                    child=Widget.Box(
+                        vertical=True, child=[MediaPlayer(), NotificationList()]
+                    ),
                     vexpand=True,
                 ),
+                header if header_reverse else Widget.Box(),
             ],
         )

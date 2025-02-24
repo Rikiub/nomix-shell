@@ -1,12 +1,13 @@
 from ignis.app import IgnisApp
 from ignis.options import options
+from ignis.services.mpris import MprisService
 from ignis.services.notifications import NotificationService
 from ignis.widgets import Widget
 
 from nomix.utils.constants import ModuleWindow
 
 notification = NotificationService.get_default()
-
+mpris = MprisService.get_default()
 app = IgnisApp.get_default()
 
 
@@ -23,6 +24,10 @@ class NotificationIcon(Widget.Button):
             tooltip_text="Notification Center",
             child=Widget.Box(
                 child=[
+                    Widget.Icon(
+                        image="multimedia-player-symbolic",
+                        visible=mpris.bind("players", lambda v: bool(v)),
+                    ),
                     Widget.Icon(
                         image=options.notifications.bind(
                             "dnd",
