@@ -1,6 +1,6 @@
-from ignis.widgets import Widget
+from ignis.services.mpris import MprisPlayer, MprisService
 from ignis.utils import Utils
-from ignis.services.mpris import MprisService, MprisPlayer
+from ignis.widgets import Widget
 
 mpris = MprisService.get_default()
 
