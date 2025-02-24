@@ -18,6 +18,7 @@ class DeviceItem(Widget.EventBox):
         label: str | Binding = "Device",
         active: bool | Binding = False,
         extra_widget: BaseWidget | None = None,
+        tooltip_text: str | Binding | None = None,
     ):
         start = Widget.Box(
             css_classes=["device-icons"],
@@ -65,6 +66,7 @@ class DeviceItem(Widget.EventBox):
                     hexpand=True,
                     on_click=on_click,
                     child=Widget.Box(child=[start, center, check]),
+                    tooltip_text=tooltip_text,
                 ),
                 end,
             ],

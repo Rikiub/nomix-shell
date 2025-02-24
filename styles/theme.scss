@@ -12,7 +12,7 @@ $OPERATOR: "-";
 			from
 			var(#{$property})
 			calc(l #{$OPERATOR} $scale)
-			c
+			calc(c + 3%)
 			h
 		);
 	}
