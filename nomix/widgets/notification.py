@@ -55,7 +55,8 @@ class NotificationWidget(Widget.Box):
                 Widget.Box(
                     css_classes=["notification-header"],
                     child=[
-                        Widget.Box(
+                        Widget.EventBox(
+                            on_click=lambda _: notification.close(),
                             child=[
                                 Widget.Label(
                                     label=notification.app_name,
@@ -69,7 +70,7 @@ class NotificationWidget(Widget.Box):
                                     ).bind("output"),
                                     css_classes=["notification-time"],
                                 ),
-                            ]
+                            ],
                         ),
                         Widget.Box(
                             halign="end",
@@ -92,7 +93,8 @@ class NotificationWidget(Widget.Box):
                         ),
                     ],
                 ),
-                Widget.Box(
+                Widget.EventBox(
+                    on_click=lambda _: notification.close(),
                     child=[
                         Widget.Icon(
                             image=notification.icon
