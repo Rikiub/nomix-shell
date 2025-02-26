@@ -13,76 +13,60 @@ notifications = NotificationService.get_default()
 
 
 class Popup(Widget.Box):
-    def __init__(
-        self, box: PopupBox, window: NotificationPopup, notification: Notification
-    ):
-        self._box = box
+    def __init__(self, window: NotificationPopup, notification: Notification):
         self._window = window
-        self.hover = False
 
-        widget = NotificationWidget(notification)
-        widget.css_classes = ["notification", "notification-popup"]
+        widget = NotificationWidget(notification, css_classes=["notification-popup"])
 
-        self._inner = Widget.Revealer(transition_type="crossfade", child=widget)
-        self._outer = Widget.Revealer(transition_type="crossfade", child=self._inner)
+        self.inner = Widget.Revealer(transition_type="slide_down", child=widget)
+        self.outer = Widget.Revealer(transition_type="slide_up", child=self.inner)
 
-        super().__init__(
-            child=[self._outer],
-            style="background-color: transparent;",
-            halign="end",
-        )
+        super().__init__(child=[self.outer], style="background-color: transparent;")
 
-        notification.connect("dismissed", lambda x: self.destroy())
+        notification.connect("dismissed", lambda _: self.destroy())
 
     def destroy(self):
-        def box_destroy():
+        def popup_destroy():
             self.unparent()
             if len(notifications.popups) == 0:
                 self._window.visible = False
 
         def outer_close():
-            self._outer.reveal_child = False
-            Utils.Timeout(self._outer.transition_duration, box_destroy)
+            self.outer.reveal_child = False
+            Utils.Timeout(self.outer.transition_duration, popup_destroy)
 
-        self._inner.transition_type = "crossfade"
-        self._inner.reveal_child = False
-        Utils.Timeout(self._outer.transition_duration, outer_close)
+        self.inner.transition_type = "crossfade"
+        self.inner.reveal_child = False
 
-
-class PopupBox(Widget.Box):
-    def __init__(self, window: NotificationPopup, monitor: int):
-        self._window = window
-        self._monitor = monitor
-
-        super().__init__(
-            valign="start",
-            vertical=True,
-            setup=lambda self: notifications.connect(
-                "new_popup",
-                lambda _, notification: self._on_notified(notification),
-            ),
-        )
-
-    def _on_notified(self, notification: Notification) -> None:
-        self._window.visible = True
-        popup = Popup(box=self, window=self._window, notification=notification)
-
-        self.prepend(popup)
-        popup._outer.reveal_child = True
-
-        Utils.Timeout(
-            popup._outer.transition_duration, popup._inner.set_reveal_child, True
-        )
+        Utils.Timeout(self.outer.transition_duration, outer_close)
 
 
 class NotificationPopup(Widget.Window):
     def __init__(self, monitor: int = 0, anchor: list[ANCHOR] = ["top", "right"]):
+        self.box = Widget.Box(
+            vertical=True,
+            setup=lambda _: notifications.connect(
+                "new_popup", lambda _, notification: self._on_notified(notification)
+            ),
+        )
+
         super().__init__(
-            anchor=anchor,  # type: ignore
-            monitor=monitor,
             namespace=f"notification_popup_{monitor}",
             layer="top",
+            anchor=anchor,  # type: ignore
+            monitor=monitor,
             visible=False,
+            child=self.box,
             style="background-color: transparent; border: unset;",
-            child=PopupBox(window=self, monitor=monitor),
+        )
+
+    def _on_notified(self, notification: Notification) -> None:
+        self.visible = True
+
+        popup = Popup(window=self, notification=notification)
+        self.box.prepend(popup)
+        popup.outer.reveal_child = True
+
+        Utils.Timeout(
+            popup.outer.transition_duration, popup.inner.set_reveal_child, True
         )

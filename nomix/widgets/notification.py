@@ -33,7 +33,7 @@ def _format_time(notification: Notification) -> str:
 
 
 class NotificationWidget(Widget.Box):
-    def __init__(self, notification: Notification) -> None:
+    def __init__(self, notification: Notification, css_classes: list[str] = []) -> None:
         self.ellipsize = Variable(False)
 
         self.body = Widget.Label(
@@ -50,7 +50,7 @@ class NotificationWidget(Widget.Box):
         super().__init__(
             vertical=True,
             hexpand=True,
-            css_classes=["notification"],
+            css_classes=["notification"] + css_classes,
             child=[
                 Widget.Box(
                     css_classes=["notification-header"],
