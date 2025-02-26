@@ -10,7 +10,7 @@ class StreamSlider(Widget.Scale):
             step=step,
             value=stream.bind_many(
                 ["is_muted", "volume"],
-                lambda is_muted, volume: 0 if is_muted else volume,
+                lambda is_muted, volume: 0 if is_muted else volume or 0,
             ),
             on_change=lambda x: stream.set_volume(x.value),
             sensitive=stream.bind("is_muted", lambda value: not value),
