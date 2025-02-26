@@ -2,7 +2,6 @@ import datetime
 
 from ignis.services.notifications import Notification
 from ignis.utils import Utils
-from ignis.variable import Variable
 from ignis.widgets import Widget
 
 
@@ -32,25 +31,30 @@ def _format_time(notification: Notification) -> str:
         return "Just now"
 
 
-class NotificationWidget(Widget.Box):
-    def __init__(self, notification: Notification, css_classes: list[str] = []) -> None:
-        self.ellipsize = Variable(False)
-
+class NotificationWidget(Widget.EventBox):
+    def __init__(
+        self,
+        notification: Notification,
+        expand_on_hover: bool = False,
+        css_classes: list[str] = [],
+    ) -> None:
         self.body = Widget.Label(
             label=notification.body,
+            use_markup=True,
             ellipsize="end",
             halign="start",
             wrap="word",
             justify="left",
             css_classes=["notification-body"],
             visible=notification.body != "",
-            use_markup=True,
         )
 
         super().__init__(
             vertical=True,
             hexpand=True,
             css_classes=["notification"] + css_classes,
+            on_hover=lambda _: expand_on_hover and self._expand_body(True),
+            on_hover_lost=lambda _: expand_on_hover and self._expand_body(False),
             child=[
                 Widget.Box(
                     css_classes=["notification-header"],
@@ -81,7 +85,10 @@ class NotificationWidget(Widget.Box):
                                     on_click=lambda _: self._toggle_body(),
                                     child=Widget.Arrow(
                                         pixel_size=20,
-                                        rotated=self.ellipsize.bind("value"),
+                                        rotated=self.body.bind(
+                                            "ellipsize",
+                                            lambda v: True if v == "none" else False,
+                                        ),
                                     ),
                                 ),
                                 Widget.Button(
@@ -131,17 +138,21 @@ class NotificationWidget(Widget.Box):
                         )
                         for action in notification.actions
                     ],
+                    spacing=10,
                     homogeneous=True,
                     style="margin-top: 0.75rem;" if notification.actions else "",
-                    spacing=10,
                 ),
             ],
         )
 
-    def _toggle_body(self):
-        if self.ellipsize.value:
-            self.body.set_ellipsize("end")  # type: ignore
-        else:
+    def _expand_body(self, value: bool):
+        if value:
             self.body.set_ellipsize("none")  # type: ignore
+        else:
+            self.body.set_ellipsize("end")  # type: ignore
 
-        self.ellipsize.value = not self.ellipsize.value
+    def _toggle_body(self):
+        if self.body.get_ellipsize() == "none":
+            self._expand_body(False)
+        else:
+            self._expand_body(True)
