@@ -46,10 +46,10 @@
 
             background-color: color-mix(
                 in srgb,
-                var(--color-secondary) 40%,
+                var(--color-primary) 40%,
                 var(--color-surface)
             );
-            color: var(--color-on-secondary);
+            color: var(--color-on-surface);
 
             padding: 0 0.6rem;
             border-radius: 100%;
@@ -58,7 +58,7 @@
 
             &:hover {
                 background-color: color-mix(in srgb,
-                    var(--color-secondary) 50%,
+                    var(--color-primary) 50%,
                     var(--color-surface)
                 );
 
