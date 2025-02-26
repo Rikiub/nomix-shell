@@ -10,14 +10,26 @@ audio = AudioService.get_default()
 
 class OSD(Widget.Window):
     def __init__(self, anchor: list["str"] = ["bottom"]):
+        self._persist = False
+
+        def on_hover():
+            self._persist = True
+            self.__update_visible()
+
+        def on_hover_lost():
+            self._persist = False
+            self.__update_visible()
+
         super().__init__(
             namespace=ModuleWindow.osd,
             anchor=anchor,
             visible=False,
             layer="overlay",
             style="background-color: transparent; border: unset;",
-            child=Widget.Box(
+            child=Widget.EventBox(
                 css_classes=["osd"],
+                on_hover=lambda _: on_hover(),
+                on_hover_lost=lambda _: on_hover_lost(),
                 child=[StreamVolume(stream=audio.speaker, muteable=False)],
             ),
         )
@@ -30,4 +42,5 @@ class OSD(Widget.Window):
 
     @debounce(3000)
     def __update_visible(self) -> None:
-        super().set_property("visible", False)
+        if not self._persist:
+            super().set_property("visible", False)
