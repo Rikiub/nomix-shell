@@ -4,7 +4,6 @@ from typing import Literal
 COLOR_SCHEME = Literal["default", "prefer-light", "prefer-dark"]
 
 # Template for generated file
-STYLE_DISCLAIMER = "DON'T MODIFY THIS FILE, WILL BE OVERWRITED"
 STYLE_VARIABLE_NAME = "DARK"
 
 # Only adw-gtk3 supported because styles bugs

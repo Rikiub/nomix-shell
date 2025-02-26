@@ -12,7 +12,6 @@ from .constants import (
     GTK_ICON_LIGHT,
     GTK_THEME_DARK,
     GTK_THEME_LIGHT,
-    STYLE_DISCLAIMER,
     STYLE_VARIABLE_NAME,
 )
 
@@ -68,7 +67,7 @@ class ColorSchemeService(BaseService):
         if cache_options.theme_is_dark or self._is_dark:
             boolean = "true"
 
-        content = f"/* {STYLE_DISCLAIMER} */\n${STYLE_VARIABLE_NAME}: {boolean};"
+        content = f"${STYLE_VARIABLE_NAME}: {boolean};"
         DARK_FILE.write_text(content)
 
     def _sync(self):
