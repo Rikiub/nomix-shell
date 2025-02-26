@@ -1,0 +1,35 @@
+/// Base implementation of hover, focus and outline focus.
+///
+/// @param {string} $property
+/// 	Must be a color property name defined in `theme.scss` ignoring its `PREFIX`.
+/// 	For example: `--color-surface` must be written as `surface`.
+@mixin state($property) {
+	$on: "--color-on-#{$property}";
+	$background: "--color-#{$property}";
+
+	background-color: var(#{$background});
+	color: var(#{$on});
+
+	&:hover,
+	&:focus-visible {
+		background-color: color-mix(
+			in srgb,
+			var(#{$on}) var(--opacity-hover),
+			var(#{$background})
+		);
+	}
+
+	&:focus-visible {
+		outline: var(--outline);
+		outline-offset: var(--outline-offset);
+	}
+
+	&:active,
+	.active {
+		background-color: color-mix(
+			in srgb,
+			var(#{$on}) var(--opacity-press),
+			var(#{$background})
+		);
+	}
+}

@@ -6,7 +6,7 @@ from ignis.variable import Variable
 from ignis.widgets import Widget
 
 
-def get_past_time(timestamp: float) -> tuple[int, int, int]:
+def _get_past_time(timestamp: float) -> tuple[int, int, int]:
     current = datetime.datetime.now()
     past = datetime.datetime.fromtimestamp(timestamp)
     delta = current - past
@@ -19,8 +19,8 @@ def get_past_time(timestamp: float) -> tuple[int, int, int]:
     return delta.days, hours, minutes
 
 
-def format_time(notification: Notification) -> str:
-    days, hours, minutes = get_past_time(notification.time)
+def _format_time(notification: Notification) -> str:
+    days, hours, minutes = _get_past_time(notification.time)
 
     if days:
         return f"{days} days ago"
@@ -57,6 +57,7 @@ class NotificationWidget(Widget.Box):
                     child=[
                         Widget.EventBox(
                             on_click=lambda _: notification.close(),
+                            hexpand=True,
                             child=[
                                 Widget.Label(
                                     label=notification.app_name,
@@ -66,7 +67,7 @@ class NotificationWidget(Widget.Box):
                                 ),
                                 Widget.Label(
                                     label=Utils.Poll(
-                                        1000, lambda _: format_time(notification)
+                                        1000, lambda _: _format_time(notification)
                                     ).bind("output"),
                                     css_classes=["notification-time"],
                                 ),

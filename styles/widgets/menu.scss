@@ -1,16 +1,11 @@
+@use "../mixin";
+
 .accordion-menu {
     background-color: var(--color-surface);
+    border-radius: var(--border-radius-md);
+    
     padding: 10px 20px;
     margin: 10px;
-    border-radius: var(--border-radius-md);
-
-    button {
-        background-color: inherit;
-    }
-
-    button:hover {
-        background-color: var(--color-surface-hover);
-    }
 
     separator {
         margin: 10px 0;
@@ -27,16 +22,14 @@
         &.settings, 
         button {
             all: unset;
+
             font-weight: normal;
             border-radius: var(--border-radius-sm);
-            padding: 8px;
 
+            padding: 8px;
             margin: 1px 0;
 
-            &:hover,
-            &:focus-visible {
-                background-color: var(--color-surface-hover);
-            }
+            @include mixin.state("surface");
         }
 
         .device-icons .icon {
@@ -55,4 +48,8 @@
             }
         }
     }
+}
+
+.power-menu .device-item .indicators {
+    margin-right: 0px;
 }

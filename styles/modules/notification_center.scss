@@ -1,29 +1,29 @@
 .notification-center {
-  min-width: 450px;
-  min-height: 500px;
+	min-width: 450px;
+	min-height: 500px;
 
-  .header {
-    font-weight: bold;
-    margin: 10px 0;
-  }
+	.header {
+		font-weight: bold;
+		margin: 10px 0;
+	}
 
-  .clear-all {
-    padding: 7px 15px;
-  }
+	.clear-all {
+		padding: 7px 15px;
+	}
 
-  .dnd {
-    padding: 5px;
+	.dnd {
+		padding: 5px;
 
-    label {
-      margin: 0 7px;
-    }
-  }
+		label {
+			margin: 0 7px;
+		}
+	}
 
-  .notification {
-    margin: 6px 0;
-    margin-right: 20px;
-    /* reserve space for scrollbar */
-    border: unset;
-    box-shadow: unset;
-  }
+	.notification {
+		margin: 6px 0;
+		margin-right: 20px;
+		/* reserve space for scrollbar */
+		border: unset;
+		box-shadow: unset;
+	}
 }

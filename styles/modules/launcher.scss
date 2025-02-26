@@ -1,3 +1,5 @@
+@use "../mixin";
+
 .launcher {
     min-width: 30rem;
 
@@ -32,9 +34,9 @@
         &:focus-visible {
             background-color: var(--color-surface);
         }
-
+        
         &:hover {
-            background-color: var(--color-surface-hover);
+            @include mixin.state("surface");
         }
 
         .launcher-app-label {

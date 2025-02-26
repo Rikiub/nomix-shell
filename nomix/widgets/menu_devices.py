@@ -3,7 +3,7 @@ from typing import Callable
 
 from ignis.base_widget import BaseWidget
 from ignis.gobject import Binding
-from ignis.utils.exec_sh import exec_sh_async
+from ignis.utils.shell import exec_sh_async
 from ignis.widgets import Widget
 
 from nomix.widgets.menu import Menu

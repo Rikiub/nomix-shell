@@ -17,7 +17,7 @@ app = IgnisApp.get_default()
 
 
 class BaseWorkspaces(Widget.EventBox):
-    def __init__(self, service: BaseService, enumerated: bool = False) -> None:
+    def __init__(self, service: BaseService, enumerated: bool) -> None:
         self.service = service
         self.enumerated = enumerated
 
@@ -66,8 +66,8 @@ class BaseWorkspaces(Widget.EventBox):
 
 
 class HyprlandWorkspace(BaseWorkspaces):
-    def __init__(self) -> None:
-        super().__init__(hyprland)
+    def __init__(self, enumerated: bool) -> None:
+        super().__init__(hyprland, enumerated)
 
     def button_generator(self) -> Binding:
         return self.service.bind(
@@ -84,9 +84,9 @@ class HyprlandWorkspace(BaseWorkspaces):
 
 
 class NiriWorkspaces(BaseWorkspaces):
-    def __init__(self, monitor: int) -> None:
+    def __init__(self, monitor: int, enumerated: bool) -> None:
         self.monitor = Utils.get_monitor(monitor).get_connector()  # type: ignore
-        super().__init__(niri)
+        super().__init__(niri, enumerated)
 
     def button_generator(self) -> Binding:
         return self.service.bind(
@@ -113,11 +113,11 @@ class NiriWorkspaces(BaseWorkspaces):
         return False
 
 
-def Workspaces(monitor: int) -> Widget.EventBox:
+def Workspaces(monitor: int, enumerated: bool = False) -> Widget.EventBox:
     if hyprland.is_available:
-        workspace = HyprlandWorkspace()
+        workspace = HyprlandWorkspace(enumerated)
     elif niri.is_available:
-        workspace = NiriWorkspaces(monitor)
+        workspace = NiriWorkspaces(monitor, enumerated)
     else:
         return Widget.EventBox()
 

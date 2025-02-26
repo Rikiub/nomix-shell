@@ -1,7 +1,9 @@
-.notification {
-	background-color: var(--color-surface);
-	box-shadow: var(--shadow);
+@use "../mixin.scss";
 
+.notification {
+	@include mixin.state("surface");
+
+	box-shadow: var(--shadow);
 	border: var(--border);
 	border-radius: var(--border-radius-md);
 
@@ -13,12 +15,9 @@
 
 	transition: 0.3s;
 
-	&:hover {
-		background-color: var(--color-surface-hover);
-	}
-
 	.notification-header {
-		--text-muted: oklch(from var(--color-on-surface) l c h / 0.5);
+		--text-color: var(--color-on-surface);
+		--text-muted: oklch(from var(--text-color) l c h / 0.5);
 		
 		margin-bottom: 5px;
 
@@ -34,13 +33,10 @@
 		}
 
 		button {
-			background-color: var(--color-surface-variant);
+			@include mixin.state("surface-variant");
+			
 			padding: 2px;
 			margin: 0 3px;
-
-			&:hover {
-				background-color: var(--color-surface-variant-hover);
-			}
 		}
 	}
 
@@ -55,14 +51,10 @@
 	*/
 
 	.notification-action {
-		background-color: var(--color-surface-variant);
-		border-radius: var(--border-radius-sm);
+		@include mixin.state("surface-variant");
 
 		margin-top: 5px;
-
-		&:hover {
-			background-color: var(--color-surface-variant-hover);
-		}
+		border-radius: var(--border-radius-sm);
 	}
 }
 
@@ -71,8 +63,18 @@
 }
 
 .player {
+	@include mixin.state("secondary-container");
+	
+	.notification-header {
+		margin-bottom: 10px;
+		
+		.notification-app-name {
+			--text-color: var(--color-on-secondary-container);
+		}
+	}
+
 	.player-controls button {
-		background-color: unset;
+		@include mixin.state("secondary");
 		margin: 0 5px;
 	}
 
@@ -92,6 +94,14 @@
 	.player-progress {
 		label {
 			margin: 0 10px;
+		}
+
+		scale trough {
+			background-color: color-mix(
+				in srgb,
+				var(--color-on-secondary-container) 25%,
+				var(--color-secondary-container)
+			);
 		}
 	}
 }

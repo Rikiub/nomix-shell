@@ -1,6 +1,6 @@
 from ignis.services.hyprland import HyprlandService
 from ignis.services.niri import NiriService
-from ignis.utils.exec_sh import exec_sh
+from ignis.utils.shell import exec_sh
 from ignis.widgets import Widget
 
 hyprland = HyprlandService.get_default()

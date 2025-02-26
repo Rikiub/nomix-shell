@@ -21,8 +21,9 @@ class Player(Widget.Revealer):
         self._player = player
         self._player.connect("closed", lambda _: self._destroy())
 
-        header = Widget.Box(
+        header = Widget.EventBox(
             css_classes=["notification-header"],
+            on_click=lambda _: self._player.play_pause(),
             child=[
                 Widget.Label(
                     css_classes=["notification-app-name"],
@@ -32,17 +33,24 @@ class Player(Widget.Revealer):
         )
 
         picture_size = 50
-        picture = Widget.Picture(
-            image=self._player.bind("art_url"),
-            width=picture_size,
-            height=picture_size,
-            content_fit="contain",
-            css_classes=["player-image"],
+        picture = Widget.EventBox(
+            on_click=lambda _: self._player.play_pause(),
+            child=[
+                Widget.Picture(
+                    image=self._player.bind("art_url"),
+                    width=picture_size,
+                    height=picture_size,
+                    content_fit="contain",
+                    css_classes=["player-image"],
+                )
+            ],
         )
 
         text_limit = 50
-        metadata = Widget.Box(
+        metadata = Widget.EventBox(
             vertical=True,
+            hexpand=True,
+            on_click=lambda _: self._player.play_pause(),
             css_classes=["player-metadata"],
             child=[
                 Widget.Label(
@@ -104,8 +112,9 @@ class Player(Widget.Revealer):
             remaining_seconds = seconds % 60
             return f"{minutes}:{remaining_seconds:02}"
 
-        progress = Widget.Box(
+        progress = Widget.EventBox(
             css_classes=["player-progress"],
+            on_click=lambda _: self._player.play_pause(),
             visible=player.bind("position", lambda value: value != -1),
             child=[
                 Widget.Label(label=self._player.bind("position", lambda v: minutes(v))),

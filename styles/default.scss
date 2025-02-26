@@ -1,0 +1,53 @@
+@use "mixin";
+
+/* Defaults */
+:root {
+    background-color: var(--color-background);
+    color: var(--color-on-surface);
+}
+
+button {
+    @include mixin.state("surface");
+    transition: background-color 200ms;
+    border-radius: var(--border-radius-sm);
+}
+
+popover contents {
+    background-color: var(--color-surface);
+    border: var(--border);
+    border-radius: var(--border-radius-md);
+
+    modelbutton {
+        @include mixin.state("surface");
+    }
+}
+
+switch {
+    @include mixin.state("surface-variant");
+    transition: background-color 300ms;
+
+    &:checked {
+        @include mixin.state("primary");
+    }
+}
+
+scale trough {
+    background-color: color-mix(
+        in srgb,
+        var(--color-on-surface) 15%,
+        var(--color-surface)
+    );
+
+    highlight {
+        background-color: var(--color-primary);
+    }
+}
+
+check:checked {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+}
+
+entry {
+    @include mixin.state("surface");
+}

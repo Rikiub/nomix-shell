@@ -1,5 +1,7 @@
+@use "../mixin.scss";
+
 .qs-button {
-    background-color: var(--color-surface);
+    @include mixin.state("surface");
     border-radius: var(--border-radius-md);
 
     padding: 15px;
@@ -9,18 +11,7 @@
         margin-left: 7px;
     }
 
-    &:hover,
-    &:focus-visible {
-        background-color: var(--color-surface-hover);
-    }
-
     &.active {
-        background-color: var(--color-primary);
-        color: var(--color-on-primary);
-
-        &:hover,
-        &:focus-visible {
-            background-color: var(--color-primary-hover);
-        }
+        @include mixin.state("primary");
     }
 }

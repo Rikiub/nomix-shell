@@ -1,53 +1,34 @@
 @import "../.cache/dark";
 
-$OPERATOR: "-";
-@if $DARK {
-	$OPERATOR: "+";
-}
-
-@mixin hover_variant($scale, $prefix, $properties...) {
-	@each $name in $properties {
-		$property: "--#{$prefix}-#{$name}";
-		#{$property}-hover: oklch(
-			from
-			var(#{$property})
-			calc(l #{$OPERATOR} $scale)
-			calc(c + 3%)
-			h
-		);
-	}
-}
-
 :root {
 	/* COLORS */
-	--color-primary: var(--accent-bg-color, hsl(240, 82%, 87%));
-	--color-on-primary: var(--accent-fg-color, white);
+	--color-primary: var(--accent-bg-color);
+	--color-on-primary: var(--accent-fg-color);
 
-	--color-background: var(--window-bg-color, hsl(255, 6%, 27%));
-	--color-on-background: var(--window-fg-color, white);
+	--color-secondary: var(--color-surface-variant);
+	--color-on-secondary: var(--color-on-surface);
+
+	--color-secondary-container: var(--color-surface);
+	--color-on-secondary-container: var(--color-on-surface);
+
+	--color-background: var(--window-bg-color);
+	--color-on-background: var(--window-fg-color);
 
 	--color-surface: var(--sidebar-bg-color);
+	--color-on-surface: var(--headerbar-fg-color);
+	
 	--color-surface-variant: oklch(
 		from
 		var(--color-surface)
-		calc(l #{$OPERATOR} 8%)
+		calc(l #{if($DARK, "+", "-")} 10%)
 		c
 		h
 	);
-	--color-on-surface: var(--headerbar-fg-color, white);
+	--color-on-surface-variant: var(--color-on-surface);
 
-	--color-shadow: var(--headerbar-shade-color, rgb(60, 60, 60));
+	--color-shadow: var(--headerbar-shade-color);
 	--color-border: var(--color-shadow);
 	--color-outline: var(--color-primary);
-
-	@include hover_variant(
-		5%,
-		"color",
-		"primary",
-		"background",
-		"surface",
-		"surface-variant",
-	);
 
 	/* MODIFIERS */
 	--border: 1px solid var(--color-border);
@@ -60,6 +41,9 @@ $OPERATOR: "-";
 	--border-radius-lg: 30px;
 
 	--shadow: 0 0 4px 2px var(--color-shadow);
+
+	--opacity-hover: 8%;
+	--opacity-press: 12%;
 }
 
 @import "../.cache/override.scss";

@@ -8,7 +8,7 @@ from ignis.services.applications import (
     ApplicationAction,
     ApplicationsService,
 )
-from ignis.utils.exec_sh import exec_sh, exec_sh_async
+from ignis.utils.shell import exec_sh, exec_sh_async
 from ignis.widgets import Widget
 
 from nomix.utils.constants import ModuleWindow
