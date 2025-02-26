@@ -48,11 +48,11 @@ class LauncherAppItem(Widget.Button):
 
     def launch(self) -> None:
         self._application.launch()
-        app.close_window(ModuleWindow.launcher)
+        app.close_window(ModuleWindow.LAUNCHER)
 
     def launch_action(self, action: ApplicationAction) -> None:
         action.launch()
-        app.close_window(ModuleWindow.launcher)
+        app.close_window(ModuleWindow.LAUNCHER)
 
     def _sync_menu(self) -> None:
         pin = (
@@ -145,7 +145,7 @@ class SearchWebButton(Widget.Button):
 
     def launch(self) -> None:
         asyncio.create_task(exec_sh_async(f"xdg-open {self._url}"))
-        app.close_window(ModuleWindow.launcher)
+        app.close_window(ModuleWindow.LAUNCHER)
 
 
 class Launcher(PopupWindow):
@@ -215,7 +215,7 @@ class Launcher(PopupWindow):
             main_box.add_css_class("launcher-grid")
 
         super().__init__(
-            namespace=ModuleWindow.launcher,
+            namespace=ModuleWindow.LAUNCHER,
             setup=lambda self: self.connect("notify::visible", self._on_open),
             child=[main_box],
         )

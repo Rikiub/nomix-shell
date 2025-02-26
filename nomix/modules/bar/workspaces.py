@@ -8,8 +8,6 @@ from ignis.services.niri import NiriService
 from ignis.utils import Utils
 from ignis.widgets import Widget
 
-from nomix.utils.constants import ModuleWindow
-
 hyprland = HyprlandService.get_default()
 niri = NiriService.get_default()
 
@@ -24,7 +22,6 @@ class BaseWorkspaces(Widget.EventBox):
         super().__init__(
             on_scroll_up=lambda _: self.scroll("up"),
             on_scroll_down=lambda _: self.scroll("down"),
-            on_right_click=lambda _: app.toggle_window(ModuleWindow.launcher),
             css_classes=["workspaces"],
             spacing=5,
             child=self.button_generator(),

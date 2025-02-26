@@ -12,7 +12,7 @@
     }
 
     button {
-        @include mixin.state("surface");
+        @include mixin.interactive("surface");
     }
 
     trough {

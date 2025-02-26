@@ -37,7 +37,7 @@ class NotificationList(Widget.Box):
             vexpand=True,
             setup=lambda self: notifications.connect(
                 "notified",
-                lambda x, notification: self._on_notified(notification),
+                lambda _, notification: self._on_notified(notification),
             ),
         )
 
@@ -81,7 +81,7 @@ class NotificationPanel(Widget.Box):
                     child=[
                         Widget.Switch(
                             active=options.notifications.bind("dnd"),
-                            on_change=lambda x, active: options.notifications.set_dnd(
+                            on_change=lambda _, active: options.notifications.set_dnd(
                                 active
                             ),
                         ),
@@ -90,7 +90,7 @@ class NotificationPanel(Widget.Box):
                 ),
                 Widget.Button(
                     label="Clear",
-                    on_click=lambda x: notifications.clear_all(),
+                    on_click=lambda _: notifications.clear_all(),
                     halign="end",
                     hexpand=True,
                     css_classes=["clear-all"],

@@ -19,7 +19,7 @@ DARK_FILE.touch(exist_ok=True)
 
 
 class ModuleWindow(str, Enum):
-    notification_center = "notification-center"
-    control_center = "control-center"
-    launcher = "launcher"
-    osd = "osd"
+    NOTIFICATION_CENTER = "notification-center"
+    CONTROL_CENTER = "control-center"
+    LAUNCHER = "launcher"
+    OSD = "osd"

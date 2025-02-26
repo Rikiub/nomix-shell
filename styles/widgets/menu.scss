@@ -19,6 +19,8 @@
     }
 
     .device-item {
+        margin: 2px;
+
         &.settings, 
         button {
             all: unset;
@@ -29,7 +31,7 @@
             padding: 8px;
             margin: 1px 0;
 
-            @include mixin.state("surface");
+            @include mixin.interactive("surface");
         }
 
         .device-icons .icon {

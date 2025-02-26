@@ -7,32 +7,32 @@
     /* border-radius: var(--border-radius-sm); */
 
     margin: 0 0rem;
-    padding: 0.4rem .7rem;
+    padding: 0.4rem .5rem;
 
     button {
         padding: 0px 0.6rem;
     }
 
+    .notification-center-button {
+        &.active {
+            @include mixin.interactive("primary");
+        }
+    }
+
     .status-pill {
-        background-color: var(--color-primary);
         transition: all 300ms;
         
         padding: 0 10px;
         border-radius: var(--border-radius-md);
 
-        .indicator-icon {
-            color: var(--color-on-primary);
-        }
-
         &:hover,
         &.active {
-            background-color: color-mix(in srgb, var(--color-on-primary) var(--opacity-hover), var(--color-primary));
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         &.active {
-            background-color: color-mix(in srgb, var(--color-on-primary) var(--opacity-press), var(--color-primary));
-            transform: scale(1.15);
+            @include mixin.interactive("primary");
+            transform: scale(1.1);
         }
     }
 
@@ -72,7 +72,7 @@
                 padding: 0 1rem;
                 border-radius: 20px;
 
-                @include mixin.state("primary");
+                @include mixin.interactive("primary");
 
                 &:hover {
                     transform: scale(1.07);
@@ -90,14 +90,32 @@
         }
     }
 
-    .clock {
-        background-color: var(--color-surface);
+    .launcher-button {
+        &.active {
+            @include mixin.interactive("primary");
+        }
+    }
 
+    .clock {
         font-size: 1.1rem;
         font-weight: bold;
 
-        padding: 0 20px;
+        padding: 0 3px;
         border-radius: var(--border-radius-lg);
+    }
+
+    .kb-layout {
+        background-color: unset;
+        min-width: 20px;
+        padding: 0 7px;
+
+        &:hover {
+            @include mixin.interactive(background);
+        }
+
+        label {
+            font-size: large;
+        }
     }
 
     .volume {
@@ -106,13 +124,15 @@
     }
 
     .tray {
-        background-color: var(--color-surface);
         border-radius: var(--border-radius-sm);
-        
-        padding: 0 10px;
 
         .tray-item {
-            padding: 0 3px;
+            background-color: unset;
+            padding: 0;
+
+            &:hover {
+                @include mixin.interactive(background);
+            }
         }
     }
 }

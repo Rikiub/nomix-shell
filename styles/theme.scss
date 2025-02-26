@@ -29,6 +29,7 @@
 	--color-shadow: var(--headerbar-shade-color);
 	--color-border: var(--color-shadow);
 	--color-outline: var(--color-primary);
+	--color-outline-variant: var(--color-shadow);
 
 	/* MODIFIERS */
 	--border: 1px solid var(--color-border);
@@ -42,6 +43,7 @@
 
 	--shadow: 0 0 4px 2px var(--color-shadow);
 
+	/* STATE */
 	--opacity-hover: 8%;
 	--opacity-press: 12%;
 }

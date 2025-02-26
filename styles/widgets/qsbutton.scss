@@ -1,7 +1,7 @@
 @use "../mixin.scss";
 
 .qs-button {
-    @include mixin.state("surface");
+    @include mixin.interactive("surface");
     border-radius: var(--border-radius-md);
 
     padding: 15px;
@@ -12,6 +12,6 @@
     }
 
     &.active {
-        @include mixin.state("primary");
+        @include mixin.interactive("primary");
     }
 }

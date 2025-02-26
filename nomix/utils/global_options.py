@@ -15,7 +15,7 @@ class UserOptions(OptionsManager):
 
     class ClockFormat(OptionsGroup):
         full_date = False
-        week_day = True
+        week_day = False
 
         military_time = True
         seconds = False

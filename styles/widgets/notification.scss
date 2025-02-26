@@ -1,7 +1,7 @@
 @use "../mixin.scss";
 
 .notification {
-	@include mixin.state("surface");
+	@include mixin.interactive("surface");
 
 	box-shadow: var(--shadow);
 	border: var(--border);
@@ -33,7 +33,7 @@
 		}
 
 		button {
-			@include mixin.state("surface-variant");
+			@include mixin.interactive("surface-variant");
 			
 			padding: 2px;
 			margin: 0 3px;
@@ -51,7 +51,7 @@
 	*/
 
 	.notification-action {
-		@include mixin.state("surface-variant");
+		@include mixin.interactive("surface-variant");
 
 		margin-top: 5px;
 		border-radius: var(--border-radius-sm);
@@ -63,7 +63,7 @@
 }
 
 .player {
-	@include mixin.state("secondary-container");
+	@include mixin.interactive("secondary-container");
 	
 	.notification-header {
 		margin-bottom: 10px;
@@ -74,7 +74,7 @@
 	}
 
 	.player-controls button {
-		@include mixin.state("secondary");
+		@include mixin.interactive("secondary");
 		margin: 0 5px;
 	}
 

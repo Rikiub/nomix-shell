@@ -21,7 +21,7 @@ class OSD(Widget.Window):
             self.__update_visible()
 
         super().__init__(
-            namespace=ModuleWindow.osd,
+            namespace=ModuleWindow.OSD,
             anchor=anchor,
             visible=False,
             layer="overlay",

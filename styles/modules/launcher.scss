@@ -36,7 +36,7 @@
         }
         
         &:hover {
-            @include mixin.state("surface");
+            @include mixin.interactive("surface");
         }
 
         .launcher-app-label {

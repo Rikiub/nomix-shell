@@ -3,7 +3,7 @@
 /// @param {string} $property
 /// 	Must be a color property name defined in `theme.scss` ignoring its `PREFIX`.
 /// 	For example: `--color-surface` must be written as `surface`.
-@mixin state($property) {
+@mixin interactive($property) {
 	$on: "--color-on-#{$property}";
 	$background: "--color-#{$property}";
 

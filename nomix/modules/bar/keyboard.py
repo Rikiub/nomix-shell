@@ -15,18 +15,20 @@ class KeyboardLayout(Widget.Button):
         else:
             service = None
 
+        def tooltip(text: str) -> str:
+            return "Keyboard Layout:\n" + text
+
         super().__init__(
             css_classes=["kb-layout"],
-            tooltip_text="Keyboard Layout",
+            tooltip_text=service.bind("kb_layout", tooltip) if service else "",
             on_click=lambda _: service and service.switch_kb_layout(),
             child=Widget.Box(
                 child=[
-                    Widget.Icon(
-                        image="input-keyboard-symbolic", style="margin-right: 5px;"
-                    ),
                     Widget.Label(
-                        label=service and service.bind("kb_layout"),
+                        label=service.bind("kb_layout", lambda v: v[:2].lower())
                     ),
                 ]
-            ),
+            )
+            if service
+            else Widget.Box(),
         )

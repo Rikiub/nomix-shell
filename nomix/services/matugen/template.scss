@@ -1,6 +1,5 @@
 :root {
-	/* Color palette */
-
+	/* Accent Colors */
 	/* primary */
 	--color-primary: {{colors.primary.default.hex}};
 	--color-on-primary: {{colors.on_primary.default.hex}};
@@ -35,4 +34,5 @@
 	/* Decorations */
 	--color-shadow: {{colors.surface_dim.default.hex}};
 	--color-outline: {{colors.outline.default.hex}};
+	--color-outline-variant: {{colors.outline_variant.default.hex}};
 }

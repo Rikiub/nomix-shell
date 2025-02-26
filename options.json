@@ -11,7 +11,7 @@
 	"clock": {
 		"full_date": false,
 		"week_day": true,
-		"military_time": true,
+		"military_time": false,
 		"seconds": false
 	},
 	"launcher": {

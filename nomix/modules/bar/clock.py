@@ -36,10 +36,11 @@ class Clock(Widget.Label):
         options = user_options.clock
 
         # Time
-        time_format = f"%H:%M{':%S' if options.seconds else ''}"
+        time_format = "%H:%M" if options.military_time else "%I:%M"
+        time_format + ":%S" if options.seconds else ""
 
         if not options.military_time:
-            time_format = time_format + " %p"
+            time_format = time_format + " %P"
 
         # Date
         week = ""

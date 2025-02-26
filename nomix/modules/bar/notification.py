@@ -11,7 +11,7 @@ mpris = MprisService.get_default()
 app = IgnisApp.get_default()
 
 
-class NotificationIcon(Widget.Button):
+class NotificationCenterButton(Widget.Button):
     def __init__(self, **kwargs):
         self.counter = 0
         self._label = Widget.Label(label="")
@@ -22,6 +22,7 @@ class NotificationIcon(Widget.Button):
                 "new-popup", lambda *_: self._on_new()
             ),
             tooltip_text="Notification Center",
+            css_classes=["notification-center-button"],
             child=Widget.Box(
                 child=[
                     Widget.Icon(
@@ -43,8 +44,17 @@ class NotificationIcon(Widget.Button):
             **kwargs,
         )
 
+        self._center = app.get_window(ModuleWindow.NOTIFICATION_CENTER)
+        self._center.connect("notify::visible", lambda *_: self._toggle_active())
+
+    def _toggle_active(self):
+        if self._center.is_visible():
+            self.add_css_class("active")
+        else:
+            self.remove_css_class("active")
+
     def _on_open(self):
-        app.toggle_window(ModuleWindow.notification_center)
+        app.toggle_window(ModuleWindow.NOTIFICATION_CENTER)
 
         self.counter = 0
         self._label.set_label("")

@@ -38,7 +38,7 @@ class ControlCenter(PopupWindow):
         )
 
         super().__init__(
-            namespace=ModuleWindow.control_center,
+            namespace=ModuleWindow.CONTROL_CENTER,
             on_close=lambda: OPENED_MENU.set_value(""),
             css_classes=["control-center"],
             valign=valign,

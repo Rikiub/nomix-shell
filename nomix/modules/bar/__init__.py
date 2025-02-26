@@ -2,7 +2,8 @@ from ignis.widgets import Widget
 
 from nomix.modules.bar.clock import Clock
 from nomix.modules.bar.keyboard import KeyboardLayout
-from nomix.modules.bar.notification import NotificationIcon
+from nomix.modules.bar.launcher import LauncherButton
+from nomix.modules.bar.notification import NotificationCenterButton
 from nomix.modules.bar.pill import StatusPill
 from nomix.modules.bar.systemtray import SystemTray
 from nomix.modules.bar.workspaces import Workspaces
@@ -35,7 +36,7 @@ class Bar(Widget.Window):
 
     def center(self) -> Widget.Box:
         return Widget.Box(
-            child=[Clock()],
+            child=[Clock(), LauncherButton()],
             spacing=10,
         )
 
@@ -45,7 +46,7 @@ class Bar(Widget.Window):
                 SystemTray(),
                 Widget.Separator(),
                 KeyboardLayout(),
-                NotificationIcon(),
+                NotificationCenterButton(),
                 StatusPill(),
             ],
             spacing=15,

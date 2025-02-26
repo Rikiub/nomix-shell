@@ -146,7 +146,7 @@ class StatusPill(Widget.EventBox):
             ),
         )
 
-        self._control = app.get_window(ModuleWindow.control_center)
+        self._control = app.get_window(ModuleWindow.CONTROL_CENTER)
         self._control.connect("notify::visible", lambda *_: self._toggle_active())
 
         super().__init__(
@@ -179,4 +179,4 @@ class StatusPill(Widget.EventBox):
 
             audio.speaker.set_volume(volume)
 
-            app.open_window(ModuleWindow.osd)
+            app.open_window(ModuleWindow.OSD)

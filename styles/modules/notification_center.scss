@@ -7,6 +7,10 @@
 		margin: 10px 0;
 	}
 
+	.info-label {
+		color: oklch(from var(--color-on-surface) l c h / 0.6);
+	}
+
 	.clear-all {
 		padding: 7px 15px;
 	}
@@ -20,9 +24,10 @@
 	}
 
 	.notification {
+		/* reserve space for scrollbar */
 		margin: 6px 0;
 		margin-right: 20px;
-		/* reserve space for scrollbar */
+		
 		border: unset;
 		box-shadow: unset;
 	}
