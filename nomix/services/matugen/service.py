@@ -4,8 +4,8 @@ from pathlib import Path
 from typing import cast, get_args
 
 from ignis.base_service import BaseService
-from ignis.utils.shell import exec_sh_async
 from ignis.utils.file_monitor import FileMonitor
+from ignis.utils.shell import exec_sh_async
 
 from nomix.services.color_scheme.service import ColorSchemeService
 from nomix.utils.constants import OVERRIDE_FILE

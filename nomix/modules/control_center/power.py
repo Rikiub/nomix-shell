@@ -76,6 +76,7 @@ class PowerButton(Widget.Button):
         self.menu = PowerMenu()
 
         super().__init__(
+            css_classes=["power-menu-button"],
             child=Widget.Box(
                 child=[
                     Widget.Icon(image="system-shutdown-symbolic"),
