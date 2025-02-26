@@ -1,4 +1,4 @@
-/// Base implementation of hover, focus and outline focus.
+/// Implementation of states: hover, press, focus, keyboard focus and active.
 ///
 /// @param {string} $property
 /// 	Must be a color property name defined in `theme.scss` ignoring its `PREFIX`.
@@ -9,6 +9,8 @@
 
 	background-color: var(#{$background});
 	color: var(#{$on});
+
+	transition: background-color 200ms, color 400ms;
 
 	&:hover,
 	&:focus-visible {
