@@ -5,32 +5,6 @@ from ignis.utils import Utils
 from ignis.widgets import Widget
 
 
-def _get_past_time(timestamp: float) -> tuple[int, int, int]:
-    current = datetime.datetime.now()
-    past = datetime.datetime.fromtimestamp(timestamp)
-    delta = current - past
-
-    hours, remainder = divmod(delta.total_seconds(), 3600)
-
-    hours = round(hours)
-    minutes = round(remainder // 60)
-
-    return delta.days, hours, minutes
-
-
-def _format_time(notification: Notification) -> str:
-    days, hours, minutes = _get_past_time(notification.time)
-
-    if days:
-        return f"{days} days ago"
-    elif hours:
-        return f"{hours} hours ago"
-    elif minutes:
-        return f"{minutes} minutes ago"
-    else:
-        return "Just now"
-
-
 class NotificationWidget(Widget.EventBox):
     def __init__(
         self,
@@ -48,6 +22,30 @@ class NotificationWidget(Widget.EventBox):
             css_classes=["notification-body"],
             visible=notification.body != "",
         )
+
+        def _get_past_time(timestamp: float) -> tuple[int, int, int]:
+            current = datetime.datetime.now()
+            past = datetime.datetime.fromtimestamp(timestamp)
+            delta = current - past
+
+            hours, remainder = divmod(delta.total_seconds(), 3600)
+
+            hours = round(hours)
+            minutes = round(remainder // 60)
+
+            return delta.days, hours, minutes
+
+        def _format_time() -> str:
+            days, hours, minutes = _get_past_time(notification.time)
+
+            if days:
+                return f"{days} days ago"
+            elif hours:
+                return f"{hours} hours ago"
+            elif minutes:
+                return f"{minutes} minutes ago"
+            else:
+                return "Just now"
 
         super().__init__(
             vertical=True,
@@ -71,7 +69,7 @@ class NotificationWidget(Widget.EventBox):
                                 ),
                                 Widget.Label(
                                     label=Utils.Poll(
-                                        1000, lambda _: _format_time(notification)
+                                        1000, lambda _: _format_time()
                                     ).bind("output"),
                                     css_classes=["notification-time"],
                                 ),
