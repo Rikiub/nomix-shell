@@ -1,7 +1,6 @@
 from typing import Callable
 
-from gi.repository import GObject  # type: ignore
-from ignis.gobject import Binding
+from ignis.gobject import Binding, IgnisProperty
 from ignis.widgets import Widget
 
 from nomix.widgets.menu import Menu
@@ -48,7 +47,7 @@ class QSButton(Widget.Button):
             **kwargs,
         )
 
-    def _callback(self, *args) -> None:
+    def _callback(self, *_) -> None:
         if self.active:
             if self.on_deactivate:
                 self.on_deactivate(self)
@@ -56,7 +55,7 @@ class QSButton(Widget.Button):
             if self.on_activate:
                 self.on_activate(self)
 
-    @GObject.Property
+    @IgnisProperty
     def active(self) -> bool:  # type: ignore
         return self._active
 
@@ -68,6 +67,6 @@ class QSButton(Widget.Button):
         else:
             self.remove_css_class("active")
 
-    @GObject.Property
+    @IgnisProperty
     def menu(self) -> Menu | None:
         return self._menu

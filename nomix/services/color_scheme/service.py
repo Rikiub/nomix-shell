@@ -1,5 +1,6 @@
-from gi.repository import Gio, GObject  # type: ignore
+from gi.repository import Gio  # type: ignore
 from ignis.base_service import BaseService
+from ignis.gobject import IgnisProperty
 
 from nomix.utils.constants import DARK_FILE
 from nomix.utils.global_options import cache_options
@@ -37,7 +38,7 @@ class ColorSchemeService(BaseService):
 
         self._sync()
 
-    @GObject.Property
+    @IgnisProperty
     def color_scheme(self) -> COLOR_SCHEME:  # type: ignore
         return self._color_scheme
 
@@ -46,7 +47,7 @@ class ColorSchemeService(BaseService):
         self._color_scheme = value
         self._sync()
 
-    @GObject.Property
+    @IgnisProperty
     def is_dark(self) -> bool:  # type: ignore
         return self._is_dark
 
