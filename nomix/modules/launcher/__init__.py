@@ -29,6 +29,7 @@ class LauncherAppItem(Widget.Button):
         super().__init__(
             on_click=lambda _: self.launch(),
             on_right_click=lambda _: self._menu.popup(),
+            tooltip_text=application.name,
             css_classes=["launcher-app"],
             child=Widget.Box(
                 vertical=vertical,
@@ -156,22 +157,21 @@ class Launcher(PopupWindow):
         grid: bool = user_options.launcher.grid,
         grid_columns: int = user_options.launcher.grid_columns,
     ):
-        self.all_apps: list[LauncherAppItem] = []
         self.grid = grid
-
-        self.update_apps()
-        applications.connect("notify::apps", lambda x, y: self.update_apps())
+        self.apps: list[LauncherAppItem] = self._gen_apps()
 
         if self.grid:
             self._app_list = Widget.Grid(
                 column_num=grid_columns,
-                child=self.all_apps,
+                child=self.apps,
             )
         else:
             self._app_list = Widget.Box(
                 vertical=True,
-                child=self.all_apps,
+                child=self.apps,
             )
+
+        applications.connect("notify::apps", lambda *_: self._sync())
 
         self._entry = Widget.Entry(
             hexpand=True,
@@ -220,8 +220,25 @@ class Launcher(PopupWindow):
             child=[main_box],
         )
 
-    def update_apps(self):
-        self.all_apps = [LauncherAppItem(i, self.grid) for i in applications.apps]
+    def _search(self, *_) -> None:
+        query = self._entry.text
+
+        if not query:
+            self._app_list.child = self.apps
+        else:
+            apps = applications.search(applications.apps, query)
+
+            if not apps:
+                self._app_list.child = [SearchWebButton(query)]
+            else:
+                self._app_list.child = [LauncherAppItem(i, self.grid) for i in apps]
+
+    def _gen_apps(self) -> list[LauncherAppItem]:
+        return [LauncherAppItem(i, self.grid) for i in applications.apps]
+
+    def _sync(self):
+        self.apps = self._gen_apps()
+        self._app_list.child = self.apps
 
     def _on_open(self, *_) -> None:
         if not self.visible:
@@ -233,16 +250,3 @@ class Launcher(PopupWindow):
     def _on_accept(self, *_) -> None:
         if len(self._app_list.child) > 0:
             self._app_list.child[0].launch()
-
-    def _search(self, *_) -> None:
-        query = self._entry.text
-
-        if not query:
-            self._app_list.child = self.all_apps
-        else:
-            apps = applications.search(applications.apps, query)[:10]
-
-            if not apps:
-                self._app_list.child = [SearchWebButton(query)]
-            else:
-                self._app_list.child = [LauncherAppItem(i, self.grid) for i in apps]
