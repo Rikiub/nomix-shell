@@ -197,6 +197,7 @@ class Launcher(PopupWindow):
                         self._entry,
                     ],
                 ),
+                Widget.Box(style="margin: 5px 0;"),
                 Widget.Scroll(
                     height_request=450,
                     child=Widget.EventBox(
