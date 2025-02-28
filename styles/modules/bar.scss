@@ -55,6 +55,7 @@
 
             transition: transform 50ms ease-in-out;
 
+            &.hover,
             &:hover {
                 background-color: color-mix(in srgb,
                     var(--color-primary) 50%,
