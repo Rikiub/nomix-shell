@@ -29,7 +29,7 @@ class LauncherAppItem(Widget.Button):
         super().__init__(
             on_click=lambda _: self.launch(),
             on_right_click=lambda _: self._menu.popup(),
-            tooltip_text=application.name,
+            tooltip_text=application.name if vertical else None,
             css_classes=["launcher-app"],
             child=Widget.Box(
                 vertical=vertical,
