@@ -1,12 +1,18 @@
 from typing import Callable
 
+from ignis.app import IgnisApp
 from ignis.base_widget import BaseWidget
 from ignis.variable import Variable
 from ignis.widgets import Widget
 
 from nomix.utils.types import ALIGN, TRANSITION_TYPE
 
+app = IgnisApp.get_default()
 OPENED_POPUP = Variable("")
+
+
+def is_popup_opened() -> bool:
+    return bool([i for i in app.windows if i.popup and i.visible])
 
 
 class PopupWindow(Widget.RevealerWindow):
@@ -67,5 +73,5 @@ class PopupWindow(Widget.RevealerWindow):
     def _toggle(self):
         if self.visible and self.namespace != OPENED_POPUP.value:
             OPENED_POPUP.value = self.namespace
-        elif self._on_close:
+        elif not self.visible and self._on_close:
             self._on_close()

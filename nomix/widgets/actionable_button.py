@@ -4,6 +4,7 @@ from ignis.base_widget import BaseWidget
 from ignis.gobject import Binding
 from ignis.widgets import Widget
 
+from nomix.widgets.popup_window import is_popup_opened
 from nomix.utils.constants import ModuleWindow
 
 app = IgnisApp.get_default()
@@ -51,6 +52,9 @@ class ActionableButton(Widget.EventBox):
 
         if self.__on_hover:
             self.__on_hover(value)
+
+        if self.__toggle_window and is_popup_opened():
+            app.open_window(self.__toggle_window)
 
     def _proxy_on_hover_lost(self, value):
         self._button.remove_css_class("hover")
