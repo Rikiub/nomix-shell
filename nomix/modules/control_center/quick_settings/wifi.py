@@ -4,9 +4,9 @@ from ignis.services.network import NetworkService, WifiAccessPoint, WifiDevice
 from ignis.widgets import Widget
 
 from nomix.utils.global_options import user_options
+from nomix.widgets.header_label import HeaderLabel
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu
 from nomix.widgets.qsbutton import QSButton
-from nomix.widgets.toggle_box import ToggleBox
 
 network = NetworkService.get_default()
 
@@ -40,11 +40,7 @@ class WifiMenu(DeviceMenu):
     def __init__(self, device: WifiDevice):
         super().__init__(
             name="wifi",
-            header=ToggleBox(
-                label="Wi-Fi",
-                active=network.wifi.enabled,
-                on_change=lambda x, state: network.wifi.set_enabled(state),
-            ),
+            header=HeaderLabel(icon_name="network-wireless-symbolic", label="Wi-Fi"),
             devices=device.bind(
                 "access_points",
                 transform=lambda value: [WifiItem(i) for i in value],
@@ -56,19 +52,14 @@ class WifiMenu(DeviceMenu):
 
 class WifiQS(QSButton):
     def __init__(self, device: WifiDevice):
-        menu = WifiMenu(device)
-
-        def toggle_list(_) -> None:
-            asyncio.create_task(device.scan())
-            menu.toggle()
-
         super().__init__(
-            label=device.ap.bind("ssid", lambda v: v or "Wi-Fi"),
+            title="Wi-Fi",
+            subtitle=device.ap.bind("ssid"),
             icon_name=device.ap.bind("icon-name", lambda v: v),
-            on_activate=toggle_list,
-            on_deactivate=toggle_list,
+            on_activate=lambda _: network.wifi.set_enabled(True),
+            on_deactivate=lambda _: network.wifi.set_enabled(False),
             active=network.wifi.bind("enabled"),
-            menu=menu,
+            menu=WifiMenu(device),
         )
 
 

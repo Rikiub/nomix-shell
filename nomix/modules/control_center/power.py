@@ -5,6 +5,7 @@ from ignis.services.niri import NiriService
 from ignis.utils.shell import exec_sh
 from ignis.widgets import Widget
 
+from nomix.widgets.header_label import HeaderLabel
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu
 
 hyprland = HyprlandService.get_default()
@@ -46,21 +47,11 @@ class PowerMenu(DeviceMenu):
         super().__init__(
             name="power",
             css_classes=["power-menu"],
-            height_request=210,
+            height_request=170,
             settings_visible=False,
             devices=menu,
-            header=Widget.Box(
-                child=[
-                    Widget.Icon(
-                        image="system-shutdown-symbolic",
-                        pixel_size=24,
-                        style="margin-right: 5px;",
-                    ),
-                    Widget.Label(
-                        label="Power Menu",
-                        halign="start",
-                    ),
-                ],
+            header=HeaderLabel(
+                icon_name="system-shutdown-symbolic", label="Power Menu"
             ),
         )
 

@@ -4,6 +4,7 @@ from ignis.services.audio import AudioService, Stream
 from ignis.widgets import Widget
 
 from nomix.utils.global_options import user_options
+from nomix.widgets.header_label import HeaderLabel
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu
 from nomix.widgets.stream_slider import StreamVolume
 
@@ -37,19 +38,7 @@ class StreamMenu(DeviceMenu):
 
         super().__init__(
             name=f"volume-{stream_type}",
-            header=Widget.Box(
-                child=[
-                    Widget.Icon(
-                        image=data["menu_icon"],
-                        pixel_size=24,
-                        style="margin-right: 5px;",
-                    ),
-                    Widget.Label(
-                        label=data["menu_label"],
-                        halign="start",
-                    ),
-                ],
-            ),
+            header=HeaderLabel(icon_name=data["menu_icon"], label=data["menu_label"]),
             devices=audio.bind(
                 stream_type + "s",
                 lambda value: [StreamItem(i, stream_type) for i in value],

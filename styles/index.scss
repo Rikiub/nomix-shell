@@ -1,6 +1,7 @@
 @use "theme";
 @use "default";
 
+@use "widgets/header_icon.scss";
 @use "widgets/menu.scss";
 @use "widgets/notification";
 @use "widgets/qsbutton.scss";
@@ -12,3 +13,4 @@
 @use "modules/launcher";
 @use "modules/control_center";
 @use "modules/notification_center";
+

@@ -9,7 +9,7 @@ notifications = NotificationService.get_default()
 class DNDQS(QSButton):
     def __init__(self):
         super().__init__(
-            label=options.notifications.bind(
+            title=options.notifications.bind(
                 "dnd", lambda value: "Silent" if value else "Noisy"
             ),
             icon_name=options.notifications.bind(

@@ -38,15 +38,11 @@ class EthernetMenu(DeviceMenu):
 
 class EthernetQS(QSButton):
     def __init__(self):
-        menu = EthernetMenu()
-
         super().__init__(
-            label="Wired",
+            title="Wired",
             icon_name="network-wired-symbolic",
-            on_activate=lambda _: menu.toggle(),
-            on_deactivate=lambda _: menu.toggle(),
-            menu=menu,
             active=network.ethernet.bind("is_connected"),
+            menu=EthernetMenu(),
         )
 
 

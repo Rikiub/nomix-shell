@@ -9,7 +9,7 @@ from nomix.widgets.qsbutton import QSButton
 class NightLightQS(QSButton):
     def __init__(self):
         super().__init__(
-            label="Night Light",
+            title="Night Light",
             icon_name="night-light-symbolic",
             on_activate=lambda _: self.toggle(),
             on_deactivate=lambda _: self.toggle(),

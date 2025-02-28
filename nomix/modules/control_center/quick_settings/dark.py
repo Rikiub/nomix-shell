@@ -7,7 +7,7 @@ color_scheme = ColorSchemeService.get_default()
 class DarkModeQS(QSButton):
     def __init__(self):
         super().__init__(
-            label="Dark Style",
+            title="Dark Style",
             icon_name="display-brightness-symbolic",
             on_activate=lambda _: color_scheme.toggle(),
             on_deactivate=lambda _: color_scheme.toggle(),

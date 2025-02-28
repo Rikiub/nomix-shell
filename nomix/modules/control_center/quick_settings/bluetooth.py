@@ -4,9 +4,9 @@ from ignis.services.bluetooth import BluetoothDevice, BluetoothService
 from ignis.widgets import Widget
 
 from nomix.utils.global_options import user_options
+from nomix.widgets.header_label import HeaderLabel
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu
 from nomix.widgets.qsbutton import QSButton
-from nomix.widgets.toggle_box import ToggleBox
 
 bluetooth = BluetoothService.get_default()
 
@@ -33,11 +33,8 @@ class BluetoothMenu(DeviceMenu):
     def __init__(self):
         super().__init__(
             name="bluetooth",
-            header=ToggleBox(
-                label="Bluetooth",
-                active=bluetooth.bind("powered"),
-                on_change=lambda _, state: bluetooth.set_powered(state),
-                css_classes=["network-header-box"],
+            header=HeaderLabel(
+                icon_name="bluetooth-active-symbolic", label="Bluetooth"
             ),
             devices=bluetooth.bind(
                 "devices", lambda value: [BluetoothItem(i) for i in value]
@@ -49,27 +46,22 @@ class BluetoothMenu(DeviceMenu):
 
 class BluetoothQS(QSButton):
     def __init__(self):
-        menu = BluetoothMenu()
-
-        def get_label(devices: list[BluetoothDevice]) -> str:
+        def get_label(devices: list[BluetoothDevice]) -> str | None:
             if len(devices) == 0:
-                return "Bluetooth"
+                return None
             elif len(devices) == 1:
                 return devices[0].alias
             else:
                 return f"{len(devices)} pairs"
 
-        def toggle_menu(_):
-            bluetooth.setup_mode = True
-            menu.toggle()
-
         super().__init__(
-            label=bluetooth.bind("connected_devices", get_label),
+            title="Bluetooth",
+            subtitle=bluetooth.bind("connected_devices", get_label),
             icon_name="bluetooth-active-symbolic",
-            on_activate=toggle_menu,
-            on_deactivate=toggle_menu,
+            on_activate=lambda _: bluetooth.set_powered(True),
+            on_deactivate=lambda _: bluetooth.set_powered(False),
             active=bluetooth.bind("powered"),
-            menu=menu,
+            menu=BluetoothMenu(),
         )
         bluetooth.notify("connected_devices")
 

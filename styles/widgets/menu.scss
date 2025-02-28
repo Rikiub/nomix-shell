@@ -6,20 +6,16 @@
     
     padding: 10px 20px;
     margin: 10px;
-
-    separator {
-        margin: 10px 0;
-    }
 }
 
 .device-menu {
     .header {
         font-weight: bold;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
     }
 
     .device-item {
-        margin: 3px;
+        margin: 2px 3px;
 
         &.settings, 
         button {
@@ -32,6 +28,10 @@
             margin: 1px 0;
 
             @include mixin.interactive("surface");
+        }
+
+        &.settings {
+            margin: 5px 0;
         }
 
         .device-icons .icon {

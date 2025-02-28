@@ -40,14 +40,6 @@ class VpnMenu(DeviceMenu):
 
 class VpnQS(QSButton):
     def __init__(self):
-        menu = VpnMenu()
-
-        def get_label(id: str) -> str:
-            if id:
-                return id
-            else:
-                return "VPN"
-
         def get_icon(icon_name: str) -> str:
             if network.vpn.is_connected:
                 return icon_name
@@ -55,12 +47,11 @@ class VpnQS(QSButton):
                 return "network-vpn-symbolic"
 
         super().__init__(
-            label=network.vpn.bind("active_vpn_id", get_label),
+            title="VPN",
+            subtitle=network.vpn.bind("active_vpn_id"),
             icon_name=network.vpn.bind("icon-name", get_icon),
-            on_activate=lambda _: menu.toggle(),
-            on_deactivate=lambda _: menu.toggle(),
             active=network.vpn.bind("is-connected"),
-            menu=menu,
+            menu=VpnMenu(),
         )
 
 
