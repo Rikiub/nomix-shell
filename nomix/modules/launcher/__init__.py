@@ -175,7 +175,6 @@ class Launcher(PopupWindow):
 
         self._entry = Widget.Entry(
             hexpand=True,
-            css_classes=["launcher-search"],
             placeholder_text="Search...",
             on_change=self._search,
             on_accept=self._on_accept,
@@ -188,7 +187,7 @@ class Launcher(PopupWindow):
             css_classes=["launcher"],
             child=[
                 Widget.Box(
-                    css_classes=["launcher-search-box"],
+                    css_classes=["launcher-search"],
                     child=[
                         Widget.Icon(
                             icon_name="system-search-symbolic",

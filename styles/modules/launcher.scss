@@ -3,14 +3,21 @@
 .launcher {
     min-width: 30rem;
 
-    .launcher-search-box {
+    .launcher-search {
         background-color: var(--color-surface);
 
         padding: 0.50rem 1rem;
         margin-bottom: 10px;
         border-radius: var(--border-radius-md);
 
+        entry {
+            background-color: unset;
+            outline: unset;
+        }
+
         &:focus-within {
+            @include mixin.interactive(surface);
+
             outline: var(--outline);
             outline-offset: var(--outline-offset);
         }
@@ -48,6 +55,10 @@
 
 .launcher-grid {
     min-width: 800px;
+
+    .launcher-search {
+        margin: 0 200px;
+    }
 
     .launcher-app {
         margin: 10px;
