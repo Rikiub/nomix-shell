@@ -50,9 +50,7 @@ class MatugenService(BaseService):
         else:
             color_scheme.connect(
                 "notify::is-dark",
-                lambda *_: self._override_styles(
-                    "dark" if color_scheme.is_dark else "light"
-                ),
+                lambda *_: self._override_styles(self._get_mode()),
             )
 
         if (
