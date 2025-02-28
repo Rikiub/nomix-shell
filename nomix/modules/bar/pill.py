@@ -11,8 +11,7 @@ from ignis.widgets import Widget
 
 from nomix.utils.constants import ModuleWindow
 from nomix.utils.global_options import user_options
-
-__all__ = ["StatusPill"]
+from nomix.widgets.actionable_button import ActionableButton
 
 app = IgnisApp.get_default()
 
@@ -124,15 +123,16 @@ class BatteriesIcons(Widget.Box):
         )
 
 
-class StatusPill(Widget.EventBox):
+class StatusPill(ActionableButton):
     def __init__(self):
         self.volume_steps = 5
 
-        self._button = Widget.Button(
+        super().__init__(
             css_classes=["status-pill"],
-            on_click=lambda _: self._control.set_visible(
-                not self._control.is_visible()
-            ),
+            tooltip_text="Control Center",
+            on_scroll_up=lambda _: self._scroll("up"),
+            on_scroll_down=lambda _: self._scroll("down"),
+            toggle_window=ModuleWindow.CONTROL_CENTER,
             child=Widget.Box(
                 child=[
                     WifiIcon(),
@@ -146,21 +146,6 @@ class StatusPill(Widget.EventBox):
             ),
         )
 
-        self._control = app.get_window(ModuleWindow.CONTROL_CENTER)
-        self._control.connect("notify::visible", lambda *_: self._toggle_active())
-
-        super().__init__(
-            child=[self._button],
-            tooltip_text="Control Center",
-            on_scroll_up=lambda _: self._scroll("up"),
-            on_scroll_down=lambda _: self._scroll("down"),
-        )
-
-    def _toggle_active(self):
-        if self._control.is_visible():
-            self._button.add_css_class("active")
-        else:
-            self._button.remove_css_class("active")
 
     def _scroll(self, direction: Literal["up", "down"]):
         if not audio.speaker.is_muted:

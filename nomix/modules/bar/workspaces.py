@@ -8,6 +8,8 @@ from ignis.services.niri import NiriService
 from ignis.utils import Utils
 from ignis.widgets import Widget
 
+from nomix.widgets.actionable_button import ActionableButton
+
 hyprland = HyprlandService.get_default()
 niri = NiriService.get_default()
 
@@ -33,7 +35,7 @@ class BaseWorkspaces(Widget.EventBox):
 
     def is_workspace_active(self, workspace: dict) -> bool: ...
 
-    def button(self, workspace: dict) -> Widget.Button:
+    def button(self, workspace: dict) -> ActionableButton:
         css_classes = ["workspace-item"]
 
         if self.is_workspace_active(workspace):
@@ -43,7 +45,7 @@ class BaseWorkspaces(Widget.EventBox):
             css_classes.append("enumerated")
 
         idx = workspace["idx"]
-        widget = Widget.Button(
+        widget = ActionableButton(
             css_classes=css_classes,
             on_click=lambda _, id=idx: self.service.switch_to_workspace(id),
             child=Widget.Label(label=str(idx) if self.enumerated else ""),
