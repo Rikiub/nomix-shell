@@ -36,10 +36,12 @@ class QSButton(Widget.Box):
         self._subtitle.notify("label")
 
         def on_click_arrow():
+            css_class = "hover"
+
             if self._arrow.rotated:
-                self._button_arrow.add_css_class("hover")
+                self._button_arrow.add_css_class(css_class)
             else:
-                self._button_arrow.remove_css_class("hover")
+                self._button_arrow.remove_css_class(css_class)
 
         self._arrow = Widget.Arrow(
             pixel_size=20, rotated=menu and menu.bind("reveal_child")

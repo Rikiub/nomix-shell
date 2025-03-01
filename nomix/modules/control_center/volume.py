@@ -35,13 +35,17 @@ class StreamItem(DeviceItem):
 class StreamMenu(DeviceMenu):
     def __init__(self, stream_type: Literal["speaker", "microphone"]):
         data = AUDIO_TYPES[stream_type]
+        devices = stream_type + "s"
 
         super().__init__(
             name=f"volume-{stream_type}",
-            header=HeaderLabel(icon_name=data["menu_icon"], label=data["menu_label"]),
+            header=HeaderLabel(
+                icon_name=data["menu_icon"],
+                label=data["menu_label"],
+                active=audio.bind(devices, lambda value: bool(value)),
+            ),
             devices=audio.bind(
-                stream_type + "s",
-                lambda value: [StreamItem(i, stream_type) for i in value],
+                devices, lambda value: [StreamItem(i, stream_type) for i in value]
             ),
             settings_label="Sound Settings",
             settings_command=user_options.control_apps.sound,
