@@ -38,6 +38,12 @@ class BluetoothMenu(DeviceMenu):
                 label="Bluetooth",
                 active=bluetooth.bind("powered"),
             ),
+            placeholder=bluetooth.bind(
+                "powered",
+                lambda enabled: "No Bluetooth devices found"
+                if enabled
+                else "Turn on Bluetooth to discover devices",
+            ),
             devices=bluetooth.bind(
                 "devices", lambda value: [BluetoothItem(i) for i in value]
             ),

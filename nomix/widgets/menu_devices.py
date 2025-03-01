@@ -2,7 +2,7 @@ import asyncio
 from typing import Callable
 
 from ignis.base_widget import BaseWidget
-from ignis.gobject import Binding
+from ignis.gobject import Binding, IgnisProperty
 from ignis.utils.shell import exec_sh_async
 from ignis.widgets import Widget
 
@@ -79,6 +79,7 @@ class DeviceMenu(Menu):
         name: str,
         height_request: int = 150,
         header: BaseWidget | None = None,
+        placeholder: str | Binding = "No devices found",
         devices: list[DeviceItem] | Binding = [],
         settings_visible: bool = True,
         settings_label: str = "Settings",
@@ -86,6 +87,13 @@ class DeviceMenu(Menu):
         css_classes: list["str"] = [],
         **kwargs,
     ):
+        self._placeholder = ""
+        self._device_items: list[DeviceItem] = []
+
+        self._devices_widget = Widget.Box(
+            css_classes=["devices"], vertical=True, child=devices
+        )
+
         super().__init__(
             name=name,
             css_classes=["device-menu"] + css_classes,
@@ -98,11 +106,7 @@ class DeviceMenu(Menu):
                 Widget.Scroll(
                     height_request=height_request,
                     vexpand=True,
-                    child=Widget.Box(
-                        css_classes=["devices"],
-                        vertical=True,
-                        child=devices,
-                    ),
+                    child=self._devices_widget,
                 ),
                 Widget.Box(
                     vertical=True,
@@ -132,3 +136,57 @@ class DeviceMenu(Menu):
             ],
             **kwargs,
         )
+
+        if isinstance(devices, Binding):
+            self.bind_property2(
+                "device_items",
+                devices.target,
+                devices.target_properties,
+                devices.transform,
+            )
+        else:
+            self._device_items = devices
+
+        if isinstance(placeholder, Binding):
+            self.bind_property2(
+                "placeholder",
+                placeholder.target,
+                placeholder.target_properties,
+                placeholder.transform,
+            )
+        else:
+            self._placeholder = placeholder
+
+    @IgnisProperty
+    def placeholder(self) -> str:  # type: ignore
+        return self._placeholder
+
+    @placeholder.setter
+    def placeholder(self, value: str):
+        self._placeholder = value
+        self._sync()
+
+    @IgnisProperty
+    def device_items(self) -> list[DeviceItem]:  # type: ignore
+        return self._device_items
+
+    @device_items.setter
+    def device_items(self, value: list[DeviceItem]):
+        self._device_items = value
+        self._sync()
+
+    def _get_placeholder(self) -> Widget.Label:
+        return Widget.Label(
+            label=self._placeholder,
+            wrap="word",
+            justify="center",
+            valign="center",
+            vexpand=True,
+            css_classes=["placeholder-label"],
+        )
+
+    def _sync(self):
+        if self.device_items:
+            self._devices_widget.child = self.device_items
+        else:
+            self._devices_widget.child = [self._get_placeholder()]

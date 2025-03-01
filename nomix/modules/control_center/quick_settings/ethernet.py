@@ -41,6 +41,12 @@ class EthernetMenu(DeviceMenu):
                 label="Wired",
                 active=network.ethernet.bind("is_connected"),
             ),
+            placeholder=network.ethernet.bind(
+                "is_connected",
+                lambda enabled: "No wired connection found"
+                if enabled
+                else "Turn on wired to view available connections",
+            ),
             devices=network.ethernet.bind(
                 "devices",
                 lambda value: [EthernetItem(i) for i in value],

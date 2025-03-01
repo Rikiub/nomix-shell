@@ -35,25 +35,6 @@ class QSButton(Widget.Box):
         )
         self._subtitle.notify("label")
 
-        def on_click_arrow():
-            css_class = "hover"
-
-            if self._arrow.rotated:
-                self._button_arrow.add_css_class(css_class)
-            else:
-                self._button_arrow.remove_css_class(css_class)
-
-        self._arrow = Widget.Arrow(
-            pixel_size=20, rotated=menu and menu.bind("reveal_child")
-        )
-        self._arrow.connect("notify::rotated", lambda *_: on_click_arrow())
-
-        self._button_arrow = Widget.Button(
-            on_click=lambda _: menu and menu.toggle(),
-            css_classes=["qs-button-menu"],
-            child=self._arrow,
-        )
-
         super().__init__(
             child=[
                 Widget.Button(
@@ -83,7 +64,15 @@ class QSButton(Widget.Box):
                     ),
                 ),
                 Widget.Separator() if menu else None,
-                self._button_arrow if menu else None,
+                Widget.Button(
+                    on_click=lambda _: menu and menu.toggle(),
+                    css_classes=["qs-button-menu"],
+                    child=Widget.Arrow(
+                        pixel_size=20, rotated=menu and menu.bind("reveal_child")
+                    ),
+                )
+                if menu
+                else None,
             ],
             css_classes=["qs-box"],
             **kwargs,
