@@ -11,7 +11,7 @@ class HeaderLabel(Widget.Box):
         self._icon = Widget.Icon(
             css_classes=["header-icon"],
             image=icon_name,
-            pixel_size=20,
+            pixel_size=17,
         )
 
         super().__init__(

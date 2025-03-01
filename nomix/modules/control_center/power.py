@@ -47,7 +47,7 @@ class PowerMenu(DeviceMenu):
         super().__init__(
             name="power",
             css_classes=["power-menu"],
-            height_request=170,
+            height_request=180,
             settings_visible=False,
             devices=menu,
             header=HeaderLabel(
