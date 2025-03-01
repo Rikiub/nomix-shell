@@ -36,7 +36,11 @@ class EthernetMenu(DeviceMenu):
     def __init__(self):
         super().__init__(
             name="ethernet",
-            header=HeaderLabel(icon_name="network-wired-symbolic", label="Wired"),
+            header=HeaderLabel(
+                icon_name="network-wired-symbolic",
+                label="Wired",
+                active=network.ethernet.bind("is_connected"),
+            ),
             devices=network.ethernet.bind(
                 "devices",
                 lambda value: [EthernetItem(i) for i in value],

@@ -1,9 +1,9 @@
 import asyncio
 
 from ignis.services.network import NetworkService, VpnConnection
-from ignis.widgets import Widget
 
 from nomix.utils.global_options import user_options
+from nomix.widgets.header_label import HeaderLabel
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu
 from nomix.widgets.qsbutton import QSButton
 
@@ -23,11 +23,10 @@ class VpnMenu(DeviceMenu):
     def __init__(self):
         super().__init__(
             name="vpn",
-            header=Widget.Box(
-                child=[
-                    Widget.Icon(icon_name="network-vpn-symbolic", pixel_size=28),
-                    Widget.Label(label="VPN connections"),
-                ],
+            header=HeaderLabel(
+                icon_name="network-vpn-symbolic",
+                label="VPN Connections",
+                active=network.vpn.bind("is-connected"),
             ),
             devices=network.vpn.bind(
                 "connections",

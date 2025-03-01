@@ -34,7 +34,9 @@ class BluetoothMenu(DeviceMenu):
         super().__init__(
             name="bluetooth",
             header=HeaderLabel(
-                icon_name="bluetooth-active-symbolic", label="Bluetooth"
+                icon_name="bluetooth-active-symbolic",
+                label="Bluetooth",
+                active=bluetooth.bind("powered"),
             ),
             devices=bluetooth.bind(
                 "devices", lambda value: [BluetoothItem(i) for i in value]

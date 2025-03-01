@@ -40,7 +40,11 @@ class WifiMenu(DeviceMenu):
     def __init__(self, device: WifiDevice):
         super().__init__(
             name="wifi",
-            header=HeaderLabel(icon_name="network-wireless-symbolic", label="Wi-Fi"),
+            header=HeaderLabel(
+                icon_name="network-wireless-symbolic",
+                label="Wi-Fi",
+                active=network.wifi.bind("enabled"),
+            ),
             devices=device.bind(
                 "access_points",
                 transform=lambda value: [WifiItem(i) for i in value],
