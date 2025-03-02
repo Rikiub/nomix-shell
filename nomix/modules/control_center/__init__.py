@@ -43,5 +43,9 @@ class ControlCenter(PopupWindow):
             css_classes=["control-center"],
             valign=valign,
             halign=halign,
-            child=[actions, sliders, QuickSettings()],
+            child=[
+                actions,
+                sliders,
+                QuickSettings(),
+            ],
         )

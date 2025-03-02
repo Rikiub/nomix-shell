@@ -56,6 +56,7 @@ class StreamMenu(DeviceMenu):
 class Volume(Widget.Box):
     def __init__(self, stream_type: Literal["speaker", "microphone"]):
         stream = getattr(audio, stream_type)
+        devices = stream_type + "s"
 
         device_menu = StreamMenu(stream_type=stream_type)
         scale = StreamVolume(stream=stream)
@@ -63,9 +64,11 @@ class Volume(Widget.Box):
             child=Widget.Arrow(pixel_size=20, rotated=device_menu.bind("reveal_child")),
             on_click=lambda _: device_menu.toggle(),
             css_classes=["volume-arrow"],
+            visible=audio.bind(devices, lambda v: len(v) > 1),
         )
 
         super().__init__(
+            visible=audio.bind(devices, lambda v: len(v) > 0),
             vertical=True,
             child=[
                 Widget.Box(

@@ -25,7 +25,6 @@ class PowerMenu(DeviceMenu):
                 icon_name="system-suspend-symbolic",
                 on_click=lambda _: exec_sh("systemctl suspend"),
             ),
-            Widget.Separator(),
             PowerItem(
                 label="Reboot",
                 icon_name="system-reboot-symbolic",
@@ -47,7 +46,7 @@ class PowerMenu(DeviceMenu):
         super().__init__(
             name="power",
             css_classes=["power-menu"],
-            height_request=180,
+            height_request=170,
             settings_visible=False,
             devices=menu,
             header=HeaderLabel(
