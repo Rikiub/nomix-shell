@@ -1,9 +1,11 @@
 from ignis.app import IgnisApp
 from ignis.widgets import Widget
+
 from nomix.utils.constants import ModuleWindow
 from nomix.widgets.actionable_button import ActionableButton
 
 app = IgnisApp.get_default()
+
 
 class LauncherButton(ActionableButton):
     def __init__(self):

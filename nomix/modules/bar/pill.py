@@ -146,7 +146,6 @@ class StatusPill(ActionableButton):
             ),
         )
 
-
     def _scroll(self, direction: Literal["up", "down"]):
         if not audio.speaker.is_muted:
             volume = audio.speaker.volume

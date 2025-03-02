@@ -17,6 +17,7 @@ def monitor_gtk4_css():
         callback=lambda *_: app.reload(),
     )
 
+
 def send_notification(title: str, message: str, icon_name: str = ""):
     asyncio.create_task(
         exec_sh_async(

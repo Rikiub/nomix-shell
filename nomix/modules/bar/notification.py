@@ -3,8 +3,8 @@ from ignis.services.mpris import MprisService
 from ignis.services.notifications import NotificationService
 from ignis.widgets import Widget
 
-from nomix.widgets.actionable_button import ActionableButton
 from nomix.utils.constants import ModuleWindow
+from nomix.widgets.actionable_button import ActionableButton
 
 notification = NotificationService.get_default()
 mpris = MprisService.get_default()

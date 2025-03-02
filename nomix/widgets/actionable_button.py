@@ -1,11 +1,12 @@
 from typing import Callable
+
 from ignis.app import IgnisApp
 from ignis.base_widget import BaseWidget
 from ignis.gobject import Binding
 from ignis.widgets import Widget
 
-from nomix.widgets.popup_window import is_popup_opened
 from nomix.utils.constants import ModuleWindow
+from nomix.widgets.popup_window import is_popup_opened
 
 app = IgnisApp.get_default()
 

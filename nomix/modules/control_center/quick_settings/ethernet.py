@@ -2,9 +2,8 @@ import asyncio
 
 from ignis.services.network import EthernetDevice, NetworkService
 
-from nomix.utils.global_options import cache_options
+from nomix.utils.global_options import cache_options, user_options
 from nomix.widgets.header_label import HeaderLabel
-from nomix.utils.global_options import user_options
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu
 from nomix.widgets.qsbutton import QSButton
 
