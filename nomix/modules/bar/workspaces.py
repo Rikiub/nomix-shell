@@ -64,7 +64,7 @@ class BaseWorkspaces(Widget.EventBox):
         self.service.switch_to_workspace(current)
 
 
-class HyprlandWorkspace(BaseWorkspaces):
+class HyprlandWorkspaces(BaseWorkspaces):
     def __init__(self, enumerated: bool) -> None:
         super().__init__(hyprland, enumerated)
 
@@ -82,7 +82,7 @@ class HyprlandWorkspace(BaseWorkspaces):
         return False
 
 
-class NiriWorkspace(BaseWorkspaces):
+class NiriWorkspaces(BaseWorkspaces):
     def __init__(self, monitor: int, enumerated: bool) -> None:
         self.monitor = Utils.get_monitor(monitor).get_connector()  # type: ignore
         super().__init__(niri, enumerated)
@@ -114,9 +114,9 @@ class NiriWorkspace(BaseWorkspaces):
 
 def Workspaces(monitor: int, enumerated: bool = False) -> Widget.EventBox:
     if hyprland.is_available:
-        workspace = HyprlandWorkspace(enumerated)
+        workspace = HyprlandWorkspaces(enumerated)
     elif niri.is_available:
-        workspace = NiriWorkspace(monitor, enumerated)
+        workspace = NiriWorkspaces(monitor, enumerated)
     else:
         return Widget.EventBox()
 
