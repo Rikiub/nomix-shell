@@ -74,7 +74,7 @@ class HyprlandWorkspace(BaseWorkspaces):
         )
 
     def active_workspace_id(self) -> int:
-        return hyprland.active_workspace["id"]  # type: ignore
+        return hyprland.active_workspace.id
 
     def is_workspace_active(self, workspace: dict) -> bool:
         if workspace["id"] == self.active_workspace_id():
