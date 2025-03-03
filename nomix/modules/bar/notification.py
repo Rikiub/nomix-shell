@@ -1,6 +1,6 @@
 from ignis.options import options
 from ignis.services.mpris import MprisService
-from ignis.services.notifications import NotificationService
+from ignis.services.notifications import Notification, NotificationService
 from ignis.widgets import Widget
 
 from nomix.utils.constants import ModuleWindow
@@ -12,15 +12,12 @@ mpris = MprisService.get_default()
 
 class NotificationCenterButton(ActionableButton):
     def __init__(self):
-        self.counter = 0
+        self._counter = 0
         self._label = Widget.Label(label="")
 
         super().__init__(
-            on_click=lambda _: self._on_open(),
             toggle_window=ModuleWindow.NOTIFICATION_CENTER,
-            setup=lambda *_: notification.connect(
-                "new-popup", lambda *_: self._on_new()
-            ),
+            on_click=lambda _: self._reset(),
             tooltip_text="Notification Center",
             css_classes=["notification-center-button"],
             child=Widget.Box(
@@ -43,10 +40,27 @@ class NotificationCenterButton(ActionableButton):
             ),
         )
 
-    def _on_open(self):
-        self.counter = 0
-        self._label.set_label("")
+        notification.connect("new-popup", lambda _, v: self._on_notify(v))
 
-    def _on_new(self):
-        self.counter += 1
-        self._label.set_label(str(self.counter))
+    def _on_notify(self, notify: Notification):
+        self._increment()
+        notify.connect("closed", lambda *_: self._decrement())
+
+    def _increment(self):
+        self._counter += 1
+        self._sync()
+
+    def _decrement(self):
+        if self._counter > 0:
+            self._counter -= 1
+            self._sync()
+
+    def _reset(self):
+        self._counter = 0
+        self._sync()
+
+    def _sync(self):
+        text = "" if self._counter == 0 else self._counter
+        text = str(text)
+
+        self._label.set_label(text)
