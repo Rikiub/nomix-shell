@@ -1,13 +1,13 @@
 import asyncio
 import re
 
-from gi.repository import Gio  # type: ignore
 from ignis.app import IgnisApp
 from ignis.services.applications import (
     Application,
     ApplicationAction,
     ApplicationsService,
 )
+from ignis.utils.icon import get_app_icon_name
 from ignis.utils.shell import exec_sh, exec_sh_async
 from ignis.widgets import Widget
 
@@ -88,13 +88,10 @@ class LauncherAppItem(Widget.Button):
 
 
 def _get_default_browser_icon() -> str:
-    browser_desktop_file = exec_sh(
-        "xdg-settings get default-web-browser"
-    ).stdout.strip()
+    desktop = exec_sh("xdg-settings get default-web-browser").stdout.strip()
+    desktop = str(desktop).strip(".desktop")
 
-    app = Gio.DesktopAppInfo.new(desktop_id=browser_desktop_file)
-
-    if icon := app and app.get_string("Icon"):
+    if icon := get_app_icon_name(desktop):
         return icon
     else:
         return ""
