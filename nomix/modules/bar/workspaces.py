@@ -82,7 +82,7 @@ class HyprlandWorkspace(BaseWorkspaces):
         return False
 
 
-class NiriWorkspaces(BaseWorkspaces):
+class NiriWorkspace(BaseWorkspaces):
     def __init__(self, monitor: int, enumerated: bool) -> None:
         self.monitor = Utils.get_monitor(monitor).get_connector()  # type: ignore
         super().__init__(niri, enumerated)
@@ -116,7 +116,7 @@ def Workspaces(monitor: int, enumerated: bool = False) -> Widget.EventBox:
     if hyprland.is_available:
         workspace = HyprlandWorkspace(enumerated)
     elif niri.is_available:
-        workspace = NiriWorkspaces(monitor, enumerated)
+        workspace = NiriWorkspace(monitor, enumerated)
     else:
         return Widget.EventBox()
 
