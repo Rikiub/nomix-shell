@@ -1,8 +1,10 @@
 import datetime
 
+from gi.repository import Gio  # type: ignore
 from ignis.services.notifications import Notification
 from ignis.utils import Utils
 from ignis.widgets import Widget
+
 
 
 class NotificationWidget(Widget.EventBox):
@@ -22,6 +24,18 @@ class NotificationWidget(Widget.EventBox):
             css_classes=["notification-body"],
             visible=notification.body != "",
         )
+
+        app_name = notification.app_name
+        app_icon = ""
+
+        try:
+            if desktop := Gio.DesktopAppInfo.new(f"{notification.app_name}.desktop"):
+                app_name = desktop.get_name()
+
+                if icon := desktop.get_string("Icon"):
+                    app_icon = icon + "-symbolic"
+        except TypeError:
+            pass
 
         def _get_past_time(timestamp: float) -> tuple[int, int, int]:
             current = datetime.datetime.now()
@@ -61,8 +75,16 @@ class NotificationWidget(Widget.EventBox):
                             on_click=lambda _: notification.close(),
                             hexpand=True,
                             child=[
+                                Widget.Icon(
+                                    image=app_icon,
+                                    pixel_size=15,
+                                    visible=bool(app_icon),
+                                    style="margin-right: 6px;",
+                                    css_classes=["notification-app-icon"],
+                                ),
                                 Widget.Label(
-                                    label=notification.app_name,
+                                    label=app_name,
+                                    visible=bool(app_name),
                                     halign="start",
                                     style="margin-right: 8px;",
                                     css_classes=["notification-app-name"],
@@ -82,6 +104,8 @@ class NotificationWidget(Widget.EventBox):
                                 Widget.Button(
                                     on_click=lambda _: self._toggle_body(),
                                     child=Widget.Arrow(
+                                        direction="up",
+                                        degree=180,
                                         pixel_size=20,
                                         rotated=self.body.bind(
                                             "ellipsize",

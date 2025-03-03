@@ -21,6 +21,10 @@
 		
 		margin-bottom: 5px;
 
+		.notification-app-icon {
+			filter: grayscale(100%);
+		}
+
 		.notification-app-name {
 			font-size: 1.1em;
 			font-weight: bold;
