@@ -62,9 +62,17 @@ class WifiMenu(DeviceMenu):
 
 class WifiQS(QSButton):
     def __init__(self, device: WifiDevice):
+        def subtitle(is_connected: bool, ssid: str | None) -> str | None:
+            if is_connected and ssid:
+                return device.ap.ssid
+            else:
+                return None
+
         super().__init__(
             title="Wi-Fi",
-            subtitle=device.ap.bind("ssid"),
+            subtitle=device.ap.bind_many(
+                ["is_connected", "ssid"], lambda a, b: subtitle(a, b)
+            ),
             icon_name=device.ap.bind("icon-name", lambda v: v),
             on_activate=lambda _: network.wifi.set_enabled(True),
             on_deactivate=lambda _: network.wifi.set_enabled(False),
