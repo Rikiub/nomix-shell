@@ -44,7 +44,7 @@ class VpnQS(QSButton):
             if network.vpn.is_connected:
                 return icon_name
             else:
-                return "network-vpn-symbolic"
+                return "network-vpn-disconnected-symbolic"
 
         super().__init__(
             title="VPN",

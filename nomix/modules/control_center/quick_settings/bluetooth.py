@@ -65,7 +65,12 @@ class BluetoothQS(QSButton):
         super().__init__(
             title="Bluetooth",
             subtitle=bluetooth.bind("connected_devices", get_label),
-            icon_name="bluetooth-active-symbolic",
+            icon_name=bluetooth.bind(
+                "powered",
+                lambda v: "bluetooth-active-symbolic"
+                if v
+                else "bluetooth-disabled-symbolic",
+            ),
             on_activate=lambda _: bluetooth.set_powered(True),
             on_deactivate=lambda _: bluetooth.set_powered(False),
             active=bluetooth.bind("powered"),
