@@ -1,5 +1,4 @@
 from ignis.base_widget import BaseWidget
-from ignis.gobject import IgnisProperty
 from ignis.variable import Variable
 from ignis.widgets import Widget
 
@@ -34,7 +33,3 @@ class Menu(Widget.Revealer):
             OPENED_MENU.value = ""
         else:
             OPENED_MENU.value = self._name
-
-    @IgnisProperty
-    def box(self) -> Widget.Box:
-        return self._box

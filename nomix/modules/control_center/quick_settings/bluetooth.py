@@ -80,5 +80,5 @@ class BluetoothQS(QSButton):
 
 
 def bluetooth_control() -> list[QSButton]:
-    # return [] if bluetooth.state == "absent" else [BluetoothButton()]
+    # return [] if bluetooth.state == "absent" else [BluetoothQS()]
     return [BluetoothQS()]

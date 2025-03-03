@@ -1,6 +1,7 @@
 import asyncio
 
 from ignis.services.network import NetworkService, WifiAccessPoint, WifiDevice
+from ignis.utils import Utils
 from ignis.widgets import Widget
 
 from nomix.utils.global_options import user_options
@@ -62,11 +63,20 @@ class WifiMenu(DeviceMenu):
 
 class WifiQS(QSButton):
     def __init__(self, device: WifiDevice):
+        self._auto_scan = False
+        self._device = device
+
         def subtitle(is_connected: bool, ssid: str | None) -> str | None:
             if is_connected and ssid:
                 return device.ap.ssid
             else:
                 return None
+
+        def on_opened(opened: bool):
+            self._auto_scan = opened
+
+            if self._auto_scan:
+                self.scan()
 
         super().__init__(
             title="Wi-Fi",
@@ -79,6 +89,15 @@ class WifiQS(QSButton):
             active=network.wifi.bind("enabled"),
             menu=WifiMenu(device),
         )
+        self.menu.connect(
+            "notify::reveal-child", lambda v, _: on_opened(v.reveal_child)
+        )
+
+        Utils.Poll(2000, lambda _: self._auto_scan and self.scan())
+
+    def scan(self):
+        if network.wifi.enabled:
+            asyncio.create_task(self._device.scan())
 
 
 def wifi_control() -> list[QSButton]:
