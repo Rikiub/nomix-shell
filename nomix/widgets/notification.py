@@ -6,7 +6,6 @@ from ignis.utils import Utils
 from ignis.widgets import Widget
 
 
-
 class NotificationWidget(Widget.EventBox):
     def __init__(
         self,
