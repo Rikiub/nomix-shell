@@ -45,7 +45,7 @@ class WifiMenu(DeviceMenu):
                 label="Wi-Fi",
                 active=network.wifi.bind("enabled"),
             ),
-            placeholder=network.wifi.bind(
+            placeholder_text=network.wifi.bind(
                 "enabled",
                 lambda enabled: "No Wi-Fi networks found"
                 if enabled

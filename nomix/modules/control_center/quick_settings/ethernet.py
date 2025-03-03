@@ -40,7 +40,7 @@ class EthernetMenu(DeviceMenu):
                 label="Wired",
                 active=network.ethernet.bind("is_connected"),
             ),
-            placeholder=network.ethernet.bind(
+            placeholder_text=network.ethernet.bind(
                 "is_connected",
                 lambda enabled: "No wired connection found"
                 if enabled

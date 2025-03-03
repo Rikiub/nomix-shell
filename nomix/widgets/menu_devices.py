@@ -79,7 +79,7 @@ class DeviceMenu(Menu):
         name: str,
         height_request: int = 150,
         header: BaseWidget | None = None,
-        placeholder: str | Binding = "No devices found",
+        placeholder_text: str | Binding = "No devices found",
         devices: list[DeviceItem] | Binding = [],
         settings_visible: bool = True,
         settings_label: str = "Settings",
@@ -87,7 +87,7 @@ class DeviceMenu(Menu):
         css_classes: list["str"] = [],
         **kwargs,
     ):
-        self._placeholder = ""
+        self._placeholder_text = ""
         self._device_items: list[DeviceItem] = []
 
         self._devices_widget = Widget.Box(
@@ -147,23 +147,23 @@ class DeviceMenu(Menu):
         else:
             self._device_items = devices
 
-        if isinstance(placeholder, Binding):
+        if isinstance(placeholder_text, Binding):
             self.bind_property2(
-                "placeholder",
-                placeholder.target,
-                placeholder.target_properties,
-                placeholder.transform,
+                "placeholder_text",
+                placeholder_text.target,
+                placeholder_text.target_properties,
+                placeholder_text.transform,
             )
         else:
-            self._placeholder = placeholder
+            self._placeholder_text = placeholder_text
 
     @IgnisProperty
-    def placeholder(self) -> str:  # type: ignore
-        return self._placeholder
+    def placeholder_text(self) -> str:  # type: ignore
+        return self._placeholder_text
 
-    @placeholder.setter
-    def placeholder(self, value: str):
-        self._placeholder = value
+    @placeholder_text.setter
+    def placeholder_text(self, value: str):
+        self._placeholder_text = value
         self._sync()
 
     @IgnisProperty
@@ -175,9 +175,9 @@ class DeviceMenu(Menu):
         self._device_items = value
         self._sync()
 
-    def _get_placeholder(self) -> Widget.Label:
+    def _get_placeholder_text(self) -> Widget.Label:
         return Widget.Label(
-            label=self._placeholder,
+            label=self._placeholder_text,
             wrap="word",
             justify="center",
             valign="center",
@@ -189,4 +189,4 @@ class DeviceMenu(Menu):
         if self.device_items:
             self._devices_widget.child = self.device_items
         else:
-            self._devices_widget.child = [self._get_placeholder()]
+            self._devices_widget.child = [self._get_placeholder_text()]

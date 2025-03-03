@@ -28,7 +28,7 @@ class VpnMenu(DeviceMenu):
                 label="VPN Connections",
                 active=network.vpn.bind("is-connected"),
             ),
-            placeholder="No VPN connection found",
+            placeholder_text="No VPN connection found",
             devices=network.vpn.bind(
                 "connections",
                 transform=lambda value: [VpnItem(i) for i in value],

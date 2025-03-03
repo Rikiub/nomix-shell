@@ -44,7 +44,6 @@ class StreamMenu(DeviceMenu):
                 label=data["menu_label"],
                 active=audio.bind(devices, lambda value: bool(value)),
             ),
-            placeholder="No devices found",
             devices=audio.bind(
                 devices, lambda value: [StreamItem(i, stream_type) for i in value]
             ),

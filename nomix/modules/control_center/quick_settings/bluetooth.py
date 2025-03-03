@@ -38,7 +38,7 @@ class BluetoothMenu(DeviceMenu):
                 label="Bluetooth",
                 active=bluetooth.bind("powered"),
             ),
-            placeholder=bluetooth.bind(
+            placeholder_text=bluetooth.bind(
                 "powered",
                 lambda enabled: "No Bluetooth devices found"
                 if enabled
