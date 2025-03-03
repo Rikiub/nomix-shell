@@ -26,7 +26,7 @@ class QSButton(Widget.Box):
             label=subtitle,
             halign="start",
             ellipsize="end",
-            max_width_chars=15,
+            max_width_chars=13,
             css_classes=["qs-button-subtitle"],
         )
         self._subtitle.connect(

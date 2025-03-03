@@ -41,6 +41,7 @@ class ControlCenter(PopupWindow):
             namespace=ModuleWindow.CONTROL_CENTER,
             on_close=lambda: OPENED_MENU.set_value(""),
             css_classes=["control-center"],
+            width_request=450,
             valign=valign,
             halign=halign,
             child=[
