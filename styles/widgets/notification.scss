@@ -21,17 +21,19 @@
 		
 		margin-bottom: 5px;
 
-		.notification-app-icon {
+		.app-icon {
 			filter: grayscale(100%);
+			margin-right: 5px;
 		}
 
-		.notification-app-name {
+		.app-name {
 			font-size: 1.1em;
 			font-weight: bold;
 			color: var(--text-muted);
+			margin-right: 8px;
 		}
 
-		.notification-time {
+		.time {
 			font-size: 0.9em;
 			color: var(--text-muted);
 		}
@@ -44,17 +46,17 @@
 		}
 	}
 
-	.notification-summary {
+	.summary {
 		margin-bottom: 3px;
 		font-weight: bold;
 	}
 
 	/*
-	.notification-body {
+	.body {
 	}
 	*/
 
-	.notification-action {
+	.action-button {
 		@include mixin.interactive("surface-variant");
 
 		margin-top: 5px;
@@ -72,30 +74,30 @@
 	.notification-header {
 		margin-bottom: 10px;
 		
-		.notification-app-name {
+		.app-name {
 			--text-color: var(--color-on-secondary-container);
 		}
 	}
 
-	.player-controls button {
+	.controls button {
 		@include mixin.interactive("secondary");
 		margin: 0 5px;
 	}
 
-	.player-image {
+	.art {
 		border-radius: var(--border-radius-sm);
 	}
 
-	.player-metadata {
+	.metadata {
 		margin: 0 10px;
 
-		.player-title {
+		.label-title {
 			font-weight: bold;
 			font-size: large;
 		}
 	}
 
-	.player-progress {
+	.progress-bar {
 		label {
 			margin: 0 10px;
 		}

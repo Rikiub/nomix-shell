@@ -1,5 +1,9 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
 import asyncio
 
+from gi.repository import Gio  # type: ignore
 from ignis.app import IgnisApp
 from ignis.utils import Utils
 from ignis.utils.shell import exec_sh_async
@@ -24,3 +28,38 @@ def send_notification(title: str, message: str, icon_name: str = ""):
             f"notify-send --app-name 'Ignis' --icon '{icon_name}' '{title}' '{message}'"
         )
     )
+
+
+@dataclass
+class AppInfo:
+    name: str
+    icon: str
+    description: str
+
+    @property
+    def symbolic_icon(self):
+        if self.icon:
+            return self.icon + "-symbolic"
+        else:
+            return None
+
+    @classmethod
+    def from_app_name(cls, app_name: str) -> AppInfo | None:
+        if desktop := cls._get_desktop_info(app_name):
+            return cls(
+                desktop.get_name(),
+                desktop.get_string("Icon") or "",
+                desktop.get_description() or "",
+            )
+
+    @classmethod
+    def _get_desktop_info(cls, name: str) -> Gio.DesktopAppInfo | None:
+        try:
+            desktop = Gio.DesktopAppInfo.new(f"{name}.desktop")
+        except TypeError:
+            return None
+
+        if not desktop:
+            return None
+
+        return desktop

@@ -2,18 +2,9 @@ from ignis.services.mpris import MprisPlayer, MprisService
 from ignis.utils import Utils
 from ignis.widgets import Widget
 
+from nomix.utils.helpers import AppInfo
+
 mpris = MprisService.get_default()
-
-
-def _parse_app_name(entry: str) -> str:
-    # Format flatpak apps name
-    parts = entry.split(".")
-
-    if len(parts) >= 2:
-        entry = parts[-1]
-
-    # Else return direct entry
-    return entry.capitalize()
 
 
 class Player(Widget.Revealer):
@@ -21,14 +12,19 @@ class Player(Widget.Revealer):
         self._player = player
         self._player.connect("closed", lambda _: self._destroy())
 
+        app_name = ""
+        app_icon = ""
+
+        if desktop := AppInfo.from_app_name(player.desktop_entry or ""):
+            app_name = desktop.name
+            app_icon = desktop.symbolic_icon
+
         header = Widget.EventBox(
             css_classes=["notification-header"],
             on_click=lambda _: self._player.play_pause(),
             child=[
-                Widget.Label(
-                    css_classes=["notification-app-name"],
-                    label=self._player.bind("desktop_entry", _parse_app_name),
-                )
+                Widget.Icon(image=app_icon, css_classes=["app-icon"]),
+                Widget.Label(label=app_name, css_classes=["app-name"]),
             ],
         )
 
@@ -41,7 +37,7 @@ class Player(Widget.Revealer):
                     width=picture_size,
                     height=picture_size,
                     content_fit="contain",
-                    css_classes=["player-image"],
+                    css_classes=["art"],
                 )
             ],
         )
@@ -51,7 +47,7 @@ class Player(Widget.Revealer):
             vertical=True,
             hexpand=True,
             on_click=lambda _: self._player.play_pause(),
-            css_classes=["player-metadata"],
+            css_classes=["metadata"],
             child=[
                 Widget.Label(
                     label=self._player.bind("title"),
@@ -59,7 +55,7 @@ class Player(Widget.Revealer):
                     justify="left",
                     ellipsize="end",
                     max_width_chars=text_limit,
-                    css_classes=["player-title"],
+                    css_classes=["label-title"],
                     halign="start",
                 ),
                 Widget.Label(
@@ -68,7 +64,7 @@ class Player(Widget.Revealer):
                     justify="left",
                     ellipsize="end",
                     max_width_chars=text_limit,
-                    css_classes=["player-artist"],
+                    css_classes=["label-artist"],
                     halign="start",
                 ),
             ],
@@ -78,15 +74,15 @@ class Player(Widget.Revealer):
             valign="start",
             halign="end",
             hexpand=True,
-            css_classes=["player-controls"],
+            css_classes=["controls"],
             child=[
                 Widget.Button(
-                    css_classes=["notification-action"],
+                    css_classes=["action-button"],
                     on_click=lambda _: self._player.previous(),
                     child=Widget.Icon(image="media-skip-backward-symbolic"),
                 ),
                 Widget.Button(
-                    css_classes=["notification-action"],
+                    css_classes=["action-button"],
                     on_click=lambda _: self._player.play_pause(),
                     visible=self._player.bind("can_play"),
                     child=Widget.Icon(
@@ -99,7 +95,7 @@ class Player(Widget.Revealer):
                     ),
                 ),
                 Widget.Button(
-                    css_classes=["notification-action"],
+                    css_classes=["action-button"],
                     on_click=lambda _: self._player.next(),
                     visible=self._player.bind("can_go_next"),
                     child=Widget.Icon(image="media-skip-forward-symbolic"),
@@ -113,7 +109,7 @@ class Player(Widget.Revealer):
             return f"{minutes}:{remaining_seconds:02}"
 
         progress = Widget.EventBox(
-            css_classes=["player-progress"],
+            css_classes=["progress-bar"],
             on_click=lambda _: self._player.play_pause(),
             visible=player.bind("position", lambda value: value != -1),
             child=[

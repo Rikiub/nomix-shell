@@ -1,9 +1,10 @@
 import datetime
 
-from gi.repository import Gio  # type: ignore
 from ignis.services.notifications import Notification
 from ignis.utils import Utils
 from ignis.widgets import Widget
+
+from nomix.utils.helpers import AppInfo
 
 
 class NotificationWidget(Widget.EventBox):
@@ -20,21 +21,18 @@ class NotificationWidget(Widget.EventBox):
             halign="start",
             wrap="word",
             justify="left",
-            css_classes=["notification-body"],
+            css_classes=["body"],
             visible=notification.body != "",
         )
 
         app_name = notification.app_name
         app_icon = ""
 
-        try:
-            if desktop := Gio.DesktopAppInfo.new(f"{notification.app_name}.desktop"):
-                app_name = desktop.get_name()
+        if desktop := AppInfo.from_app_name(notification.app_name):
+            app_name = desktop.name
 
-                if icon := desktop.get_string("Icon"):
-                    app_icon = icon + "-symbolic"
-        except TypeError:
-            pass
+            if desktop.symbolic_icon:
+                app_icon = desktop.symbolic_icon
 
         def _get_past_time(timestamp: float) -> tuple[int, int, int]:
             current = datetime.datetime.now()
@@ -78,21 +76,19 @@ class NotificationWidget(Widget.EventBox):
                                     image=app_icon,
                                     pixel_size=15,
                                     visible=bool(app_icon),
-                                    style="margin-right: 6px;",
-                                    css_classes=["notification-app-icon"],
+                                    css_classes=["app-icon"],
                                 ),
                                 Widget.Label(
                                     label=app_name,
                                     visible=bool(app_name),
                                     halign="start",
-                                    style="margin-right: 8px;",
-                                    css_classes=["notification-app-name"],
+                                    css_classes=["app-name"],
                                 ),
                                 Widget.Label(
                                     label=Utils.Poll(
                                         1000, lambda _: _format_time()
                                     ).bind("output"),
-                                    css_classes=["notification-time"],
+                                    css_classes=["time"],
                                 ),
                             ],
                         ),
@@ -143,7 +139,7 @@ class NotificationWidget(Widget.EventBox):
                                     visible=notification.summary != "",
                                     ellipsize="end",
                                     halign="start",
-                                    css_classes=["notification-summary"],
+                                    css_classes=["summary"],
                                 ),
                                 self.body,
                             ],
@@ -155,7 +151,7 @@ class NotificationWidget(Widget.EventBox):
                         Widget.Button(
                             child=Widget.Label(label=action.label),
                             on_click=lambda _, action=action: action.invoke(),
-                            css_classes=["notification-action"],
+                            css_classes=["action-button"],
                         )
                         for action in notification.actions
                     ],
