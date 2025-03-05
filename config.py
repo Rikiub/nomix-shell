@@ -1,7 +1,7 @@
 from ignis.app import IgnisApp
 from ignis.utils.monitor import get_n_monitors
 
-from nomix.utils.global_options import user_options
+from nomix.utils.options import USER_OPTIONS
 
 from nomix.modules.bar import Bar
 from nomix.modules.control_center import ControlCenter
@@ -17,7 +17,7 @@ from nomix.utils.helpers import monitor_gtk4_css
 # services
 ColorSchemeService.get_default()
 
-if user_options.matugen.enabled:
+if USER_OPTIONS.matugen.enabled:
     from nomix.services.matugen import MatugenService
 
     MatugenService.get_default()

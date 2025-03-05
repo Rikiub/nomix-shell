@@ -5,7 +5,7 @@ from typing import Literal
 from ignis.utils import Utils
 from ignis.widgets import Widget
 
-from nomix.utils.global_options import user_options
+from nomix.utils.options import USER_OPTIONS
 
 
 class Clock(Widget.Label):
@@ -33,7 +33,7 @@ class Clock(Widget.Label):
             return "24"
 
     def _update_format(self) -> str:
-        options = user_options.bar.clock_format
+        options = USER_OPTIONS.bar.clock_format
 
         # Time
         time_format = "%H:%M" if options.military_time else "%I:%M"

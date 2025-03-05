@@ -2,7 +2,7 @@ import asyncio
 
 from ignis.services.network import EthernetDevice, NetworkService
 
-from nomix.utils.global_options import cache_options, user_options
+from nomix.utils.options import CACHE_OPTIONS, USER_OPTIONS
 from nomix.widgets.header_label import HeaderLabel
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu
 from nomix.widgets.qsbutton import QSButton
@@ -13,7 +13,7 @@ network = NetworkService.get_default()
 class EthernetItem(DeviceItem):
     def __init__(self, device: EthernetDevice):
         def active_and_save():
-            cache_options.last_ethernet = device.name
+            CACHE_OPTIONS.last_ethernet = device.name
             return device.is_connected
 
         super().__init__(
@@ -51,7 +51,7 @@ class EthernetMenu(DeviceMenu):
                 lambda value: [EthernetItem(i) for i in value],
             ),
             settings_label="Network Settings",
-            settings_command=user_options.control_center.settings_apps.network,
+            settings_command=USER_OPTIONS.control_center.settings_apps.network,
         )
 
 
@@ -59,7 +59,7 @@ class EthernetQS(QSButton):
     def __init__(self):
         def get_last_wired() -> EthernetDevice | None:
             for n in network.ethernet.devices:
-                if n.name == cache_options.last_ethernet:
+                if n.name == CACHE_OPTIONS.last_ethernet:
                     return n
 
         def get_connected() -> EthernetDevice | None:

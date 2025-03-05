@@ -71,6 +71,6 @@ for config in (config_file, cache_file):
         config.parent.mkdir(exist_ok=True)
         config.write_text("{}")
 
-user_options = UserOptions(str(config_file))
-cache_options = CacheOptions(str(cache_file))
-cache_options.theme_is_dark = False
+USER_OPTIONS = UserOptions(str(config_file))
+CACHE_OPTIONS = CacheOptions(str(cache_file))
+CACHE_OPTIONS.theme_is_dark = False

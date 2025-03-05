@@ -3,7 +3,7 @@ from typing import Literal
 from ignis.services.audio import AudioService, Stream
 from ignis.widgets import Widget
 
-from nomix.utils.global_options import user_options
+from nomix.utils.options import USER_OPTIONS
 from nomix.widgets.header_label import HeaderLabel
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu
 from nomix.widgets.stream_slider import StreamVolume
@@ -48,7 +48,7 @@ class StreamMenu(DeviceMenu):
                 devices, lambda value: [StreamItem(i, stream_type) for i in value]
             ),
             settings_label="Sound Settings",
-            settings_command=user_options.control_center.settings_apps.sound,
+            settings_command=USER_OPTIONS.control_center.settings_apps.sound,
         )
 
 

@@ -9,7 +9,7 @@ from ignis.utils.shell import exec_sh_async
 
 from nomix.services.color_scheme.service import ColorSchemeService
 from nomix.utils.constants import OVERRIDE_FILE
-from nomix.utils.global_options import cache_options, user_options
+from nomix.utils.options import CACHE_OPTIONS, USER_OPTIONS
 from nomix.utils.helpers import send_notification
 from nomix.utils.types import StrPath
 
@@ -30,8 +30,8 @@ class MatugenService(BaseService):
     def __init__(self) -> None:
         super().__init__()
 
-        if user_options.matugen.scheme not in schemes:
-            text = f"{user_options.matugen.scheme} is not a valid matugen scheme, please check your config and restart Ignis again"
+        if USER_OPTIONS.matugen.scheme not in schemes:
+            text = f"{USER_OPTIONS.matugen.scheme} is not a valid matugen scheme, please check your config and restart Ignis again"
             send_notification(
                 "Matugen Service Disabled", text, icon_name="dialog-warning"
             )
@@ -44,8 +44,8 @@ class MatugenService(BaseService):
             ),
         )
 
-        if user_options.prefer_dark_shell:
-            cache_options.theme_is_dark = True
+        if USER_OPTIONS.prefer_dark_shell:
+            CACHE_OPTIONS.theme_is_dark = True
             self._override_styles("dark")
         else:
             color_scheme.connect(
@@ -54,11 +54,11 @@ class MatugenService(BaseService):
             )
 
         if (
-            cache_options.wallpaper
-            and user_options.matugen.scheme != cache_options.matugen_scheme
+            CACHE_OPTIONS.wallpaper
+            and USER_OPTIONS.matugen.scheme != CACHE_OPTIONS.matugen_scheme
         ):
-            self._update_and_apply_scheme(cache_options.wallpaper)
-            cache_options.matugen_scheme = user_options.matugen.scheme
+            self._update_and_apply_scheme(CACHE_OPTIONS.wallpaper)
+            CACHE_OPTIONS.matugen_scheme = USER_OPTIONS.matugen.scheme
 
     def _on_update_wallpaper(self, monitor: FileMonitor, path: str, event: str):
         if event == "changes_done_hint":
@@ -70,9 +70,9 @@ class MatugenService(BaseService):
             with file.open() as f:
                 image = f.readline().strip()
 
-            if image == cache_options.wallpaper:
+            if image == CACHE_OPTIONS.wallpaper:
                 return
-            cache_options.wallpaper = image
+            CACHE_OPTIONS.wallpaper = image
 
             self._update_and_apply_scheme(image)
 
@@ -81,19 +81,19 @@ class MatugenService(BaseService):
             lambda _: self._override_styles(self._get_mode())
         )
 
-        if user_options.matugen.run_user_config:
+        if USER_OPTIONS.matugen.run_user_config:
             asyncio.create_task(
                 self._run_matugen(
                     image=image,
                     mode=self._get_mode(),
-                    scheme=user_options.matugen.scheme,  # type: ignore
+                    scheme=USER_OPTIONS.matugen.scheme,  # type: ignore
                     prefer_user_config=True,
                 )
             )
 
     def _get_mode(self) -> MODE:
         return (
-            "dark" if cache_options.theme_is_dark or color_scheme.is_dark else "light"
+            "dark" if CACHE_OPTIONS.theme_is_dark or color_scheme.is_dark else "light"
         )
 
     def _override_styles(self, mode: MODE):
@@ -103,8 +103,8 @@ class MatugenService(BaseService):
         OVERRIDE_FILE.write_text(content)
 
     async def _gen_schemes(self, image: StrPath):
-        scheme = cast(MATUGEN_SCHEME, user_options.matugen.scheme)
-        cache_options.matugen_scheme = scheme
+        scheme = cast(MATUGEN_SCHEME, USER_OPTIONS.matugen.scheme)
+        CACHE_OPTIONS.matugen_scheme = scheme
 
         light = self._run_matugen(image, "light", scheme)
         dark = self._run_matugen(image, "dark", scheme)

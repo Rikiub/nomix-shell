@@ -3,7 +3,7 @@ from ignis.base_service import BaseService
 from ignis.gobject import IgnisProperty
 
 from nomix.utils.constants import DARK_FILE
-from nomix.utils.global_options import cache_options
+from nomix.utils.options import CACHE_OPTIONS
 
 from .constants import (
     CHANGE_ICON,
@@ -32,7 +32,7 @@ class ColorSchemeService(BaseService):
             lambda config, key: not self._lock
             and self.set_color_scheme(config.get_string(key)),
         )
-        cache_options.connect_option(
+        CACHE_OPTIONS.connect_option(
             "theme_is_dark", lambda *_: self._update_dark_variable()
         )
 
@@ -65,7 +65,7 @@ class ColorSchemeService(BaseService):
 
     def _update_dark_variable(self) -> None:
         boolean = "false"
-        if cache_options.theme_is_dark or self._is_dark:
+        if CACHE_OPTIONS.theme_is_dark or self._is_dark:
             boolean = "true"
 
         content = f"${STYLE_VARIABLE_NAME}: {boolean};"

@@ -3,7 +3,7 @@ import asyncio
 from ignis.services.bluetooth import BluetoothDevice, BluetoothService
 from ignis.widgets import Widget
 
-from nomix.utils.global_options import user_options
+from nomix.utils.options import USER_OPTIONS
 from nomix.widgets.header_label import HeaderLabel
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu
 from nomix.widgets.qsbutton import QSButton
@@ -48,7 +48,7 @@ class BluetoothMenu(DeviceMenu):
                 "devices", lambda value: [BluetoothItem(i) for i in value]
             ),
             settings_label="Bluetooth Settings",
-            settings_command=user_options.control_center.settings_apps.bluetooth,
+            settings_command=USER_OPTIONS.control_center.settings_apps.bluetooth,
         )
 
 
@@ -80,7 +80,7 @@ class BluetoothQS(QSButton):
 
 
 def bluetooth_control() -> list[QSButton]:
-    if not user_options.debug.bluetooth_forced and bluetooth.state == "absent":
+    if not USER_OPTIONS.debug.bluetooth_forced and bluetooth.state == "absent":
         return []
 
     return [BluetoothQS()]

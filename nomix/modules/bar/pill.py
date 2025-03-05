@@ -10,7 +10,7 @@ from ignis.services.upower import UPowerDevice, UPowerService
 from ignis.widgets import Widget
 
 from nomix.utils.constants import ModuleWindow
-from nomix.utils.global_options import user_options
+from nomix.utils.options import USER_OPTIONS
 from nomix.widgets.actionable_button import ActionableButton
 
 app = IgnisApp.get_default()
@@ -107,7 +107,7 @@ class BatteryItem(IndicatorIcon):
         super().__init__(
             icon_name=device.bind("icon_name", lambda v: v + "-symbolic"),
             label=device.bind("percent", lambda v: f"{round(v)}%")
-            if user_options.bar.status_pill.battery_percent
+            if USER_OPTIONS.bar.status_pill.battery_percent
             else "",
             setup=lambda self: device.connect("removed", lambda _: self.unparent()),
         )
@@ -141,7 +141,7 @@ class StatusPill(ActionableButton):
                     BluetoothIcon(),
                     VolumeIcon(),
                     # DNDIcon(),
-                    BatteriesIcons() if not user_options.debug.battery_hidden else None,
+                    BatteriesIcons() if not USER_OPTIONS.debug.battery_hidden else None,
                 ]
             ),
         )

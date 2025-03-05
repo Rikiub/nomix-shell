@@ -1,4 +1,4 @@
-from nomix.utils.global_options import user_options
+from nomix.utils.options import USER_OPTIONS
 
 from ignis.services.upower import UPowerDevice, UPowerService
 from ignis.widgets import Widget
@@ -29,7 +29,7 @@ class BatteryStatus(Widget.Box):
                 "battery-added", lambda _, device: self.append(BatteryItem(device))
             ),
             visible=upower.bind(
-                "batteries", lambda v: not user_options.debug.battery_hidden and bool(v)
+                "batteries", lambda v: not USER_OPTIONS.debug.battery_hidden and bool(v)
             ),
             **kwargs,
         )

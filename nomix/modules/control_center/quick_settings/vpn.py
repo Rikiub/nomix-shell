@@ -2,7 +2,7 @@ import asyncio
 
 from ignis.services.network import NetworkService, VpnConnection
 
-from nomix.utils.global_options import user_options
+from nomix.utils.options import USER_OPTIONS
 from nomix.widgets.header_label import HeaderLabel
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu
 from nomix.widgets.qsbutton import QSButton
@@ -34,7 +34,7 @@ class VpnMenu(DeviceMenu):
                 transform=lambda value: [VpnItem(i) for i in value],
             ),
             settings_label="Network Settings",
-            settings_command=user_options.control_center.settings_apps.network,
+            settings_command=USER_OPTIONS.control_center.settings_apps.network,
         )
 
 

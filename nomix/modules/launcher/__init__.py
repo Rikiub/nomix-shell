@@ -12,7 +12,7 @@ from ignis.utils.shell import exec_sh, exec_sh_async
 from ignis.widgets import Widget
 
 from nomix.utils.constants import ModuleWindow
-from nomix.utils.global_options import user_options
+from nomix.utils.options import USER_OPTIONS
 from nomix.utils.types import ALIGN
 from nomix.widgets.popup_window import PopupWindow
 
@@ -151,8 +151,8 @@ class Launcher(PopupWindow):
         self,
         valign: ALIGN = "start",
         halign: ALIGN = "center",
-        grid: bool = user_options.launcher.grid,
-        grid_columns: int = user_options.launcher.grid_columns,
+        grid: bool = USER_OPTIONS.launcher.grid,
+        grid_columns: int = USER_OPTIONS.launcher.grid_columns,
     ):
         self.grid = grid
         self.apps: list[LauncherAppItem] = self._gen_apps()
