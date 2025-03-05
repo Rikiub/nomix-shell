@@ -33,7 +33,7 @@ class Clock(Widget.Label):
             return "24"
 
     def _update_format(self) -> str:
-        options = user_options.clock
+        options = user_options.bar.clock_format
 
         # Time
         time_format = "%H:%M" if options.military_time else "%I:%M"

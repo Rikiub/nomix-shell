@@ -51,7 +51,7 @@ class EthernetMenu(DeviceMenu):
                 lambda value: [EthernetItem(i) for i in value],
             ),
             settings_label="Network Settings",
-            settings_command=user_options.control_apps.network,
+            settings_command=user_options.control_center.settings_apps.network,
         )
 
 

@@ -48,7 +48,7 @@ class StreamMenu(DeviceMenu):
                 devices, lambda value: [StreamItem(i, stream_type) for i in value]
             ),
             settings_label="Sound Settings",
-            settings_command=user_options.control_apps.sound,
+            settings_command=user_options.control_center.settings_apps.sound,
         )
 
 

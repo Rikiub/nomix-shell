@@ -41,3 +41,9 @@ class NightLightQS(QSButton):
             await exec_sh_async(command)
         except Exception:
             pass
+
+def night_light_control():
+    if user_options.night_light.enabled:
+        return [NightLightQS()]
+
+    return []

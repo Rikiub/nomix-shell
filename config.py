@@ -1,5 +1,7 @@
 from ignis.app import IgnisApp
-from ignis.utils import Utils
+from ignis.utils.monitor import get_n_monitors
+
+from nomix.utils.global_options import user_options
 
 from nomix.modules.bar import Bar
 from nomix.modules.control_center import ControlCenter
@@ -9,7 +11,6 @@ from nomix.modules.notification_popup import NotificationPopup
 from nomix.modules.osd import OSD
 from nomix.services.color_scheme.service import ColorSchemeService
 from nomix.utils.constants import OVERRIDE_FILE, STYLES_DIR
-from nomix.utils.global_options import user_options
 from nomix.utils.helpers import monitor_gtk4_css
 
 # SETUP
@@ -37,6 +38,6 @@ NotificationCenter(halign="end")
 OSD()
 
 # Show in all monitors
-for m in range(Utils.get_n_monitors()):
+for m in range(get_n_monitors()):
     Bar(m)
     NotificationPopup(m, anchor=["top", "right"])

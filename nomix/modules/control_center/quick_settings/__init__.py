@@ -1,7 +1,7 @@
 from ignis.services.network import NetworkService
 from ignis.widgets import Widget
 
-from nomix.modules.control_center.quick_settings.night import NightLightQS
+from nomix.modules.control_center.quick_settings.night import night_light_control
 from nomix.modules.control_center.quick_settings.vpn import vpn_control
 from nomix.widgets.qsbutton import QSButton
 
@@ -30,7 +30,7 @@ class QuickSettings(Widget.Box):
             *vpn_control(),
             *bluetooth_control(),
             DarkModeQS(),
-            NightLightQS(),
+            *night_light_control(),
         ]
 
     def _refresh(self) -> None:

@@ -107,7 +107,7 @@ class BatteryItem(IndicatorIcon):
         super().__init__(
             icon_name=device.bind("icon_name", lambda v: v + "-symbolic"),
             label=device.bind("percent", lambda v: f"{round(v)}%")
-            if user_options.bar.battery_percent
+            if user_options.bar.status_pill.battery_percent
             else "",
             setup=lambda self: device.connect("removed", lambda _: self.unparent()),
         )
@@ -141,7 +141,7 @@ class StatusPill(ActionableButton):
                     BluetoothIcon(),
                     VolumeIcon(),
                     # DNDIcon(),
-                    BatteriesIcons(),
+                    BatteriesIcons() if not user_options.debug.battery_hidden else None,
                 ]
             ),
         )
