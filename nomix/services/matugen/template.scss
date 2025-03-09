@@ -32,7 +32,7 @@
 	--color-on-surface-variant: {{colors.on_surface.default.hex}};
 
 	/* Decorations */
-	--color-shadow: {{colors.shadow.default.rgba | set_alpha: 0.5 }};
+	--color-shadow: {{colors.shadow.default.rgba | set_alpha: 0.3 }};
 	--color-outline: {{colors.outline.default.hex}};
 	--color-outline-variant: {{colors.outline_variant.default.hex}};
 }
