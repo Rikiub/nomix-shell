@@ -3,6 +3,7 @@ from ignis.base_service import BaseService
 from ignis.gobject import IgnisProperty
 
 from nomix.utils.constants import DARK_FILE
+from nomix.utils.helpers import do_niri_transition
 from nomix.utils.options import CACHE_OPTIONS
 
 from .constants import (
@@ -73,6 +74,8 @@ class ColorSchemeService(BaseService):
 
     def _sync(self):
         self._lock = True
+
+        do_niri_transition()
 
         if self._color_scheme == "prefer-dark":
             if CHANGE_THEME:

@@ -10,7 +10,7 @@ from ignis.utils.shell import exec_sh_async
 from nomix.services.color_scheme.service import ColorSchemeService
 from nomix.utils.constants import OVERRIDE_FILE
 from nomix.utils.options import CACHE_OPTIONS, USER_OPTIONS
-from nomix.utils.helpers import send_notification
+from nomix.utils.helpers import do_niri_transition, send_notification
 from nomix.utils.types import StrPath
 
 from .constants import (
@@ -77,8 +77,12 @@ class MatugenService(BaseService):
             self._update_and_apply_scheme(image)
 
     def _update_and_apply_scheme(self, image: StrPath):
+        def callback():
+            do_niri_transition()
+            self._override_styles(self._get_mode())
+
         asyncio.create_task(self._gen_schemes(image)).add_done_callback(
-            lambda _: self._override_styles(self._get_mode())
+            lambda _: callback()
         )
 
         if USER_OPTIONS.matugen.run_user_config:

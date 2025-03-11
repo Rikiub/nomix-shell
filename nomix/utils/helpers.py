@@ -5,12 +5,14 @@ import asyncio
 
 from gi.repository import Gio  # type: ignore
 from ignis.app import IgnisApp
+from ignis.services.niri import NiriService
 from ignis.utils import Utils
 from ignis.utils.shell import exec_sh_async
 
 from nomix.utils.constants import USER_CONFIG_DIR
 
 app = IgnisApp.get_default()
+niri = NiriService.get_default()
 
 
 def monitor_gtk4_css():
@@ -28,6 +30,11 @@ def send_notification(title: str, message: str, icon_name: str = ""):
             f"notify-send --app-name 'Ignis' --icon '{icon_name}' '{title}' '{message}'"
         )
     )
+
+
+def do_niri_transition():
+    if niri.is_available:
+        asyncio.create_task(exec_sh_async("niri msg action do-screen-transition"))
 
 
 @dataclass
