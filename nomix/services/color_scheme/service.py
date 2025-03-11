@@ -75,6 +75,8 @@ class ColorSchemeService(BaseService):
     def _sync(self):
         self._lock = True
 
+        do_niri_transition()
+
         if self._color_scheme == "prefer-dark":
             if CHANGE_THEME:
                 self._settings.set_string("gtk-theme", GTK_THEME_DARK)
@@ -93,8 +95,6 @@ class ColorSchemeService(BaseService):
             self._is_dark = False
         else:
             return
-
-        do_niri_transition()
 
         self.notify("color_scheme")
         self.notify("is_dark")
