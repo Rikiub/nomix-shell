@@ -64,13 +64,19 @@ class UserOptions(OptionsManager):
     debug = Debug()
 
 
-config_file = IGNIS_DIR / "options.json"
-cache_file = CACHE_DIR / "options.json"
+json_schema = """{
+    "$schema": "./schema.json"
+}"""
 
-for config in (config_file, cache_file):
-    if not config.exists():
-        config.parent.mkdir(exist_ok=True)
-        config.write_text("{}")
+config_file = IGNIS_DIR / "options.json"
+if not config_file.exists():
+    config_file.parent.mkdir(exist_ok=True)
+    config_file.write_text(json_schema)
+
+cache_file = CACHE_DIR / "options.json"
+if not cache_file.exists():
+    cache_file.parent.mkdir(exist_ok=True)
+    cache_file.write_text("{}")
 
 USER_OPTIONS = UserOptions(str(config_file))
 CACHE_OPTIONS = CacheOptions(str(cache_file))

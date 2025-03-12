@@ -1,0 +1,101 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"type": "object",
+	"properties": {
+		"prefer_dark_shell": {
+			"type": "boolean"
+		},
+		"bar": {
+			"type": "object",
+			"properties": {
+				"clock_format": {
+					"type": "object",
+					"properties": {
+						"full_date": {
+							"type": "boolean"
+						},
+						"week_day": {
+							"type": "boolean"
+						},
+						"military_time": {
+							"type": "boolean"
+						},
+						"seconds": {
+							"type": "boolean"
+						}
+					}
+				}
+			}
+		},
+		"control_center": {
+			"type": "object",
+			"properties": {
+				"settings_apps": {
+					"type": "object",
+					"properties": {
+						"network": {
+							"type": "string"
+						},
+						"sound": {
+							"type": "string"
+						},
+						"bluetooth": {
+							"type": "string"
+						}
+					}
+				}
+			}
+		},
+		"launcher": {
+			"type": "object",
+			"properties": {
+				"grid": {
+					"type": "boolean"
+				},
+				"grid_columns": {
+					"type": "integer"
+				}
+			}
+		},
+		"matugen": {
+			"type": "object",
+			"properties": {
+				"enabled": {
+					"type": "boolean"
+				},
+				"scheme": {
+					"type": "string"
+				},
+				"run_user_config": {
+					"type": "boolean"
+				}
+			}
+		},
+		"night_light": {
+			"type": "object",
+			"properties": {
+				"enabled": {
+					"type": "boolean"
+				},
+				"activate_command": {
+					"type": "string"
+				},
+				"deactivate_command": {
+					"type": "string"
+				}
+			}
+		},
+		"debug": {
+			"type": "object",
+			"description": "Only for debuggins purpouses (Or quick fixes).",
+			"properties": {
+				"bluetooth_forced": {
+					"type": "boolean"
+				},
+				"battery_hidden": {
+					"type": "boolean"
+				}
+			}
+		}
+	}
+}
