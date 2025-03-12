@@ -24,7 +24,7 @@ class ColorSchemeService(BaseService):
         self._settings = Gio.Settings.new("org.gnome.desktop.interface")
 
         self._color_scheme: COLOR_SCHEME = self._settings.get_string("color-scheme")  # type: ignore
-        self._is_dark: bool = False
+        self._is_dark: bool = True if self._color_scheme == "prefer-dark" else False
 
         self._lock = False
 
@@ -34,10 +34,11 @@ class ColorSchemeService(BaseService):
             and self.set_color_scheme(config.get_string(key)),
         )
         CACHE_OPTIONS.connect_option(
-            "theme_is_dark", lambda *_: self._update_dark_variable()
+            "theme_is_dark", lambda *_: self._update_scss_variable()
         )
 
-        self._sync()
+        if CACHE_OPTIONS.color_scheme != self.color_scheme:
+            self._sync()
 
     @IgnisProperty
     def color_scheme(self) -> COLOR_SCHEME:  # type: ignore
@@ -64,7 +65,7 @@ class ColorSchemeService(BaseService):
     def toggle(self) -> None:
         self.is_dark = not self.is_dark
 
-    def _update_dark_variable(self) -> None:
+    def _update_scss_variable(self) -> None:
         boolean = "false"
         if CACHE_OPTIONS.theme_is_dark or self._is_dark:
             boolean = "true"
@@ -75,9 +76,9 @@ class ColorSchemeService(BaseService):
     def _sync(self):
         self._lock = True
 
-        do_niri_transition()
-
         if self._color_scheme == "prefer-dark":
+            do_niri_transition()
+
             if CHANGE_THEME:
                 self._settings.set_string("gtk-theme", GTK_THEME_DARK)
             if CHANGE_ICON:
@@ -86,6 +87,8 @@ class ColorSchemeService(BaseService):
 
             self._is_dark = True
         elif self._color_scheme == "prefer-light":
+            do_niri_transition()
+
             if CHANGE_THEME:
                 self._settings.set_string("gtk-theme", GTK_THEME_LIGHT)
             if CHANGE_ICON:
@@ -99,6 +102,7 @@ class ColorSchemeService(BaseService):
         self.notify("color_scheme")
         self.notify("is_dark")
 
-        self._update_dark_variable()
+        CACHE_OPTIONS.color_scheme = self.color_scheme
+        self._update_scss_variable()
 
         self._lock = False

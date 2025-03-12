@@ -4,9 +4,10 @@ from nomix.utils.constants import CACHE_DIR, IGNIS_DIR
 
 
 class CacheOptions(OptionsManager):
-    last_ethernet = None
+    color_scheme = "default"
     theme_is_dark = False
     night_light = False
+    last_ethernet = None
     wallpaper = ""
     matugen_scheme = ""
 
