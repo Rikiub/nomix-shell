@@ -9,8 +9,8 @@ from ignis.utils.shell import exec_sh_async
 
 from nomix.services.color_scheme.service import ColorSchemeService
 from nomix.utils.constants import OVERRIDE_FILE
-from nomix.utils.options import CACHE_OPTIONS, USER_OPTIONS
 from nomix.utils.helpers import do_niri_transition, send_notification
+from nomix.utils.options import CACHE_OPTIONS, USER_OPTIONS
 from nomix.utils.types import StrPath
 
 from .constants import (

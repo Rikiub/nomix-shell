@@ -42,6 +42,7 @@ class NightLightQS(QSButton):
         except Exception:
             pass
 
+
 def night_light_control():
     if USER_OPTIONS.night_light.enabled:
         return [NightLightQS()]

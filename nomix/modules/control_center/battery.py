@@ -1,7 +1,7 @@
-from nomix.utils.options import USER_OPTIONS
-
 from ignis.services.upower import UPowerDevice, UPowerService
 from ignis.widgets import Widget
+
+from nomix.utils.options import USER_OPTIONS
 
 upower = UPowerService.get_default()
 

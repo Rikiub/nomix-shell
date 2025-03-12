@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 import asyncio
+from dataclasses import dataclass
 
 from gi.repository import Gio  # type: ignore
 from ignis.app import IgnisApp
