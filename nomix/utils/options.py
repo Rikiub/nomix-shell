@@ -48,11 +48,10 @@ class UserOptions(OptionsManager):
 
     class Matugen(OptionsGroup):
         enabled = False
-        scheme = "monochrome"
+        scheme = "tonal-spot"
         run_user_config = True
 
     class Debug(OptionsGroup):
-        bluetooth_forced = False
         battery_hidden = False
 
     bar = Bar()

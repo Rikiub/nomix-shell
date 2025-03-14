@@ -30,13 +30,6 @@ class MatugenService(BaseService):
     def __init__(self) -> None:
         super().__init__()
 
-        if USER_OPTIONS.matugen.scheme not in schemes:
-            text = f"{USER_OPTIONS.matugen.scheme} is not a valid matugen scheme, please check your config and restart Ignis again"
-            send_notification(
-                "Matugen Service Disabled", text, icon_name="dialog-warning"
-            )
-            return
-
         FileMonitor(
             path=str(SWWW_CACHE),
             callback=lambda monitor, path, event: self._on_update_wallpaper(
@@ -44,21 +37,40 @@ class MatugenService(BaseService):
             ),
         )
 
-        if USER_OPTIONS.prefer_dark_shell:
-            CACHE_OPTIONS.theme_is_dark = True
-            self._override_styles("dark")
-        else:
-            color_scheme.connect(
-                "notify::is-dark",
-                lambda *_: self._override_styles(self._get_mode()),
-            )
+        # Dark theme
+        def update_preference():
+            if USER_OPTIONS.prefer_dark_shell:
+                CACHE_OPTIONS.theme_is_dark = True
+                self._override_styles("dark")
+            else:
+                CACHE_OPTIONS.theme_is_dark = False
+                self._override_styles(self._get_mode())
 
-        if (
-            CACHE_OPTIONS.wallpaper
-            and USER_OPTIONS.matugen.scheme != CACHE_OPTIONS.matugen_scheme
-        ):
-            self._update_and_apply_scheme(CACHE_OPTIONS.wallpaper)
-            CACHE_OPTIONS.matugen_scheme = USER_OPTIONS.matugen.scheme
+        update_preference()
+        USER_OPTIONS.connect_option("prefer_dark_shell", lambda *_: update_preference())
+
+        color_scheme.connect(
+            "notify::is-dark",
+            lambda *_: not CACHE_OPTIONS.theme_is_dark
+            and self._override_styles(self._get_mode()),
+        )
+
+        # Scheme
+        def update_scheme():
+            if (
+                CACHE_OPTIONS.wallpaper
+                and USER_OPTIONS.matugen.scheme != CACHE_OPTIONS.matugen_scheme
+            ):
+                if USER_OPTIONS.matugen.scheme not in schemes:
+                    text = f"{USER_OPTIONS.matugen.scheme} is not a valid matugen scheme, please check your config and try again"
+                    send_notification("Matugen Error", text, icon_name="dialog-warning")
+                    return
+
+                self._update_and_apply_scheme(CACHE_OPTIONS.wallpaper)
+                CACHE_OPTIONS.matugen_scheme = USER_OPTIONS.matugen.scheme
+
+        update_scheme()
+        USER_OPTIONS.matugen.connect_option("scheme", lambda *_: update_scheme())
 
     def _on_update_wallpaper(self, monitor: FileMonitor, path: str, event: str):
         if event == "changes_done_hint":

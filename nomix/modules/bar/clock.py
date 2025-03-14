@@ -12,6 +12,10 @@ class Clock(Widget.Label):
     def __init__(self):
         self.format = self._update_format()
 
+        USER_OPTIONS.bar.connect_option(
+            "clock_format", lambda *_: self._update_format()
+        )
+
         super().__init__(
             css_classes=["clock"],
             label=Utils.Poll(

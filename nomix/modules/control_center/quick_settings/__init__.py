@@ -1,27 +1,45 @@
+from ignis.services.bluetooth import BluetoothService
 from ignis.services.network import NetworkService
 from ignis.widgets import Widget
 
 from nomix.modules.control_center.quick_settings.night import night_light_control
 from nomix.modules.control_center.quick_settings.vpn import vpn_control
+from nomix.utils.options import USER_OPTIONS
 from nomix.widgets.qsbutton import QSButton
 
-from .bluetooth import bluetooth_control
+from ..quick_settings.bluetooth import bluetooth_control
 from .dark import DarkModeQS
 from .ethernet import ethernet_control
 from .wifi import wifi_control
 
 network = NetworkService.get_default()
+bluetooth = BluetoothService.get_default()
 
 
 class QuickSettings(Widget.Box):
     def __init__(self):
         super().__init__(vertical=True, css_classes=["quick-settings"])
 
-        network.wifi.connect("notify::devices", lambda x, y: self._refresh())
-        network.ethernet.connect("notify::devices", lambda x, y: self._refresh())
-        network.vpn.connect("notify::connections", lambda x, y: self._refresh())
-
         self._refresh()
+
+        network.wifi.connect("notify::devices", lambda *_: self._refresh())
+        network.ethernet.connect("notify::devices", lambda *_: self._refresh())
+        network.vpn.connect("notify::connections", lambda *_: self._refresh())
+
+        USER_OPTIONS.night_light.connect_option("enabled", lambda *_: self._refresh())
+
+        # Bluetooth
+        self._bluetooth_available = False
+
+        def sync_bluetooth():
+            if bluetooth.state != "absent" and not self._bluetooth_available:
+                self._bluetooth_available = True
+                self._refresh()
+            elif bluetooth.state == "absent" and self._bluetooth_available:
+                self._bluetooth_available = False
+                self._refresh()
+
+        bluetooth.connect("notify::state", lambda *_: sync_bluetooth())
 
     def actions(self) -> list[QSButton]:
         return [

@@ -147,37 +147,26 @@ class SearchWebButton(Widget.Button):
 
 
 class Launcher(PopupWindow):
-    def __init__(
-        self,
-        valign: ALIGN = "start",
-        halign: ALIGN = "center",
-        grid: bool = USER_OPTIONS.launcher.grid,
-        grid_columns: int = USER_OPTIONS.launcher.grid_columns,
-    ):
-        self.grid = grid
-        self.apps: list[LauncherAppItem] = self._gen_apps()
+    def __init__(self, valign: ALIGN = "start", halign: ALIGN = "center"):
+        self._items: list[LauncherAppItem] = self._generate_items(applications.apps)
 
-        if self.grid:
-            self._app_list = Widget.Grid(
-                column_num=grid_columns,
-                child=self.apps,
-            )
-        else:
-            self._app_list = Widget.Box(
-                vertical=True,
-                child=self.apps,
-            )
-
-        applications.connect("notify::apps", lambda *_: self._sync())
+        self._layout = Widget.Box()
+        self._scroll = Widget.EventBox(
+            css_classes=["launcher-app-list"],
+            on_scroll_up=lambda _: self._entry.grab_focus(),
+            on_scroll_down=lambda _: self._entry.grab_focus(),
+            homogeneous=True,
+            child=[self._layout],
+        )
 
         self._entry = Widget.Entry(
             hexpand=True,
             placeholder_text="Search...",
-            on_change=self._search,
-            on_accept=self._on_accept,
+            on_change=lambda _: self._search(),
+            on_accept=lambda _: self._on_accept(),
         )
 
-        main_box = Widget.Box(
+        self._window_box = Widget.Box(
             vertical=True,
             valign=valign,
             halign=halign,
@@ -195,55 +184,69 @@ class Launcher(PopupWindow):
                     ],
                 ),
                 Widget.Box(style="margin: 5px 0;"),
-                Widget.Scroll(
-                    height_request=450,
-                    child=Widget.EventBox(
-                        css_classes=["launcher-app-list"],
-                        on_scroll_up=lambda _: self._entry.grab_focus(),
-                        on_scroll_down=lambda _: self._entry.grab_focus(),
-                        homogeneous=True,
-                        child=[self._app_list],
-                    ),
-                ),
+                Widget.Scroll(height_request=450, child=self._scroll),
             ],
         )
 
-        if self.grid:
-            main_box.add_css_class("launcher-grid")
-
         super().__init__(
             namespace=ModuleWindow.LAUNCHER,
-            setup=lambda self: self.connect("notify::visible", self._on_open),
-            child=[main_box],
+            setup=lambda self: self.connect(
+                "notify::visible", lambda *_: self._on_open()
+            ),
+            child=[self._window_box],
         )
 
-    def _search(self, *_) -> None:
+        self._update_layout()
+        """
+        USER_OPTIONS.launcher.connect_option("grid", lambda *_: self._update_layout())  # type: ignore
+        USER_OPTIONS.launcher.connect_option(
+            "grid_columns", lambda *_: self._update_layout()
+        )  # type: ignore
+        """
+
+        applications.connect("notify::apps", lambda *_: self._sync_items())
+
+    def _search(self) -> None:
         query = self._entry.text
 
         if not query:
-            self._app_list.child = self.apps
+            self._layout.child = self._items
         else:
             apps = applications.search(applications.apps, query)
 
             if not apps:
-                self._app_list.child = [SearchWebButton(query)]
+                self._layout.child = [SearchWebButton(query)]
             else:
-                self._app_list.child = [LauncherAppItem(i, self.grid) for i in apps]
+                self._layout.child = self._generate_items(apps)
 
-    def _gen_apps(self) -> list[LauncherAppItem]:
-        return [LauncherAppItem(i, self.grid) for i in applications.apps]
-
-    def _sync(self):
-        self.apps = self._gen_apps()
-        self._app_list.child = self.apps
-
-    def _on_open(self, *_) -> None:
+    def _on_open(self) -> None:
         if not self.visible:
             return
 
         self._entry.text = ""
         self._entry.grab_focus()
 
-    def _on_accept(self, *_) -> None:
-        if len(self._app_list.child) > 0:
-            self._app_list.child[0].launch()
+    def _on_accept(self) -> None:
+        if len(self._layout.child) > 0:
+            self._layout.child[0].launch()
+
+    def _update_layout(self):
+        css_class = "launcher-grid"
+
+        if USER_OPTIONS.launcher.grid:
+            self._window_box.add_css_class(css_class)
+            self._layout = Widget.Grid(
+                column_num=USER_OPTIONS.launcher.grid_columns, child=self._items
+            )
+        else:
+            self._window_box.remove_css_class(css_class)
+            self._layout = Widget.Box(vertical=True, child=self._items)
+
+        self._scroll.child = [self._layout]
+
+    def _generate_items(self, source: list[Application]) -> list[LauncherAppItem]:
+        return [LauncherAppItem(i, USER_OPTIONS.launcher.grid) for i in source]
+
+    def _sync_items(self):
+        self._items = self._generate_items(applications.apps)
+        self._layout.child = self._items

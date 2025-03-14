@@ -28,8 +28,14 @@ class BatteryStatus(Widget.Box):
             setup=lambda self: upower.connect(
                 "battery-added", lambda _, device: self.append(BatteryItem(device))
             ),
-            visible=upower.bind(
-                "batteries", lambda v: not USER_OPTIONS.debug.battery_hidden and bool(v)
-            ),
             **kwargs,
         )
+
+        def toggle_visible():
+            if USER_OPTIONS.debug.battery_hidden:
+                self.visible = False
+            else:
+                self.visible = upower.bind("batteries", lambda v: bool(v))
+
+        toggle_visible()
+        USER_OPTIONS.debug.connect_option("battery_hidden", lambda *_: toggle_visible())

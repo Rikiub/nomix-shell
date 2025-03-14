@@ -28,10 +28,12 @@ class IndicatorIcon(Widget.Box):
         label: str | Binding = "",
         **kwargs,
     ):
+        self.label = Widget.Label(label=label)
+
         super().__init__(
             style="margin-right: 0.5rem;",
             css_classes=["indicator-icon"],
-            child=[Widget.Icon(image=icon_name), Widget.Label(label=label)],
+            child=[Widget.Icon(image=icon_name), self.label],
             **kwargs,
         )
 
@@ -106,11 +108,28 @@ class BatteryItem(IndicatorIcon):
     def __init__(self, device: UPowerDevice):
         super().__init__(
             icon_name=device.bind("icon_name", lambda v: v + "-symbolic"),
-            label=device.bind("percent", lambda v: f"{round(v)}%")
-            if USER_OPTIONS.bar.status_pill.battery_percent
-            else "",
             setup=lambda self: device.connect("removed", lambda _: self.unparent()),
         )
+
+        # Options hot-reload
+        def sync():
+            if USER_OPTIONS.debug.battery_hidden:
+                self.visible = False
+            else:
+                self.visible = True
+
+            self.label.label = (
+                device.bind("percent", lambda v: f"{round(v)}%")
+                if USER_OPTIONS.bar.status_pill.battery_percent
+                else ""
+            )
+
+        sync()
+
+        USER_OPTIONS.bar.status_pill.connect_option(
+            "battery_percent", lambda *_: sync()
+        )
+        USER_OPTIONS.debug.connect_option("battery_hidden", lambda *_: sync())
 
 
 class BatteriesIcons(Widget.Box):
@@ -141,7 +160,7 @@ class StatusPill(ActionableButton):
                     BluetoothIcon(),
                     VolumeIcon(),
                     # DNDIcon(),
-                    BatteriesIcons() if not USER_OPTIONS.debug.battery_hidden else None,
+                    BatteriesIcons(),
                 ]
             ),
         )

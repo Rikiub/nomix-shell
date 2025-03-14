@@ -12,6 +12,8 @@ from nomix.utils.constants import OVERRIDE_FILE, STYLES_DIR
 from nomix.utils.helpers import monitor_gtk4_css
 from nomix.utils.options import USER_OPTIONS
 
+app = IgnisApp.get_default()
+
 # SETUP
 # services
 ColorSchemeService.get_default()
@@ -26,8 +28,10 @@ else:
     # auto reload in GTK4 theme changes
     monitor_gtk4_css()
 
+# Hot-reload options
+USER_OPTIONS.matugen.connect_option("enabled", lambda *_: app.reload())
+
 # css styles
-app = IgnisApp.get_default()
 app.apply_css(str(STYLES_DIR / "index.scss"))
 
 # WINDOWS

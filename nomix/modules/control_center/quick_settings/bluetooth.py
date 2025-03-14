@@ -48,7 +48,9 @@ class BluetoothMenu(DeviceMenu):
                 "devices", lambda value: [BluetoothItem(i) for i in value]
             ),
             settings_label="Bluetooth Settings",
-            settings_command=USER_OPTIONS.control_center.settings_apps.bluetooth,
+            settings_command=USER_OPTIONS.control_center.settings_apps.bind(  # type: ignore
+                "bluetooth"
+            ),
         )
 
 
@@ -80,7 +82,7 @@ class BluetoothQS(QSButton):
 
 
 def bluetooth_control() -> list[QSButton]:
-    if not USER_OPTIONS.debug.bluetooth_forced and bluetooth.state == "absent":
+    if bluetooth.state == "absent":
         return []
 
     return [BluetoothQS()]
