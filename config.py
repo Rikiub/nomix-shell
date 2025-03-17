@@ -13,6 +13,7 @@ from nomix.utils.helpers import monitor_gtk4_css
 from nomix.utils.options import USER_OPTIONS
 
 app = IgnisApp.get_default()
+app.apply_css(str(STYLES_DIR / "index.scss"))
 
 # SETUP
 # services
@@ -30,9 +31,6 @@ else:
 
 # Hot-reload options
 USER_OPTIONS.matugen.connect_option("enabled", lambda *_: app.reload())
-
-# css styles
-app.apply_css(str(STYLES_DIR / "index.scss"))
 
 # WINDOWS
 Launcher()

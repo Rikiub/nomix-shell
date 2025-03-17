@@ -1,9 +1,26 @@
+from pathlib import Path
 from ignis.options_manager import OptionsGroup, OptionsManager
 
+from nomix.utils.types import StrPath
 from nomix.utils.constants import CACHE_DIR, IGNIS_DIR
 
 
-class CacheOptions(OptionsManager):
+class BaseManager(OptionsManager):
+    def __init__(self, file: StrPath):
+        file = Path(file)
+
+        if not file.exists():
+            file.parent.mkdir(exist_ok=True)
+            file.write_text("{}")
+
+        super().__init__(str(file))
+
+
+class CacheOptions(BaseManager):
+    def __init__(self):
+        super().__init__(CACHE_DIR / "options.json")
+        self.theme_is_dark = False
+
     color_scheme = "default"
     theme_is_dark = False
     night_light = False
@@ -12,7 +29,10 @@ class CacheOptions(OptionsManager):
     matugen_scheme = ""
 
 
-class UserOptions(OptionsManager):
+class UserOptions(BaseManager):
+    def __init__(self):
+        super().__init__(IGNIS_DIR / "options.json")
+
     prefer_dark_shell = False
 
     class Bar(OptionsGroup):
@@ -31,8 +51,8 @@ class UserOptions(OptionsManager):
 
     class ControlCenter(OptionsGroup):
         class SettingsApps(OptionsGroup):
-            network = "nm-connection-editor"
             sound = "pavucontrol"
+            network = "nm-connection-editor"
             bluetooth = "overskride"
 
         settings_apps = SettingsApps()
@@ -62,21 +82,5 @@ class UserOptions(OptionsManager):
 
     debug = Debug()
 
-
-json_schema = """{
-    "$schema": "./schema.json"
-}"""
-
-config_file = IGNIS_DIR / "options.json"
-if not config_file.exists():
-    config_file.parent.mkdir(exist_ok=True)
-    config_file.write_text(json_schema)
-
-cache_file = CACHE_DIR / "options.json"
-if not cache_file.exists():
-    cache_file.parent.mkdir(exist_ok=True)
-    cache_file.write_text("{}")
-
-USER_OPTIONS = UserOptions(str(config_file))
-CACHE_OPTIONS = CacheOptions(str(cache_file))
-CACHE_OPTIONS.theme_is_dark = False
+USER_OPTIONS = UserOptions()
+CACHE_OPTIONS = CacheOptions()

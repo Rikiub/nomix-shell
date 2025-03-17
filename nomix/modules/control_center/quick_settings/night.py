@@ -19,7 +19,7 @@ class NightLightQS(QSButton):
         self._on_activate() if CACHE_OPTIONS.night_light else self._on_deactivate()
 
     def toggle(self):
-        self._on_deactivate() if self.active else self._on_activate()
+        self._on_deactivate() if CACHE_OPTIONS.night_light else self._on_activate()
 
     def _on_activate(self):
         asyncio.create_task(
