@@ -10,7 +10,7 @@ from nomix.utils.options import USER_OPTIONS
 
 class Clock(Widget.Label):
     def __init__(self):
-        self.format = self._update_format()
+        self.format: str = self._update_format()
 
         USER_OPTIONS.bar.connect(
             "subgroup_changed",

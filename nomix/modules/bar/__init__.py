@@ -11,7 +11,7 @@ from nomix.modules.bar.workspaces import Workspaces
 
 class Bar(Widget.Window):
     def __init__(self, monitor: int = 0):
-        self.monitor_id = monitor
+        self.monitor_id: int = monitor
 
         super().__init__(
             exclusivity="exclusive",
