@@ -1,10 +1,9 @@
 from typing import Literal
 
 from ignis.app import IgnisApp
-from ignis.base_service import BaseService
 from ignis.gobject import Binding
-from ignis.services.hyprland import HyprlandService
-from ignis.services.niri import NiriService
+from ignis.services.hyprland import HyprlandService, HyprlandWorkspace
+from ignis.services.niri import NiriService, NiriWorkspace
 from ignis.utils import Utils
 from ignis.widgets import Widget
 
@@ -15,9 +14,12 @@ niri = NiriService.get_default()
 
 app = IgnisApp.get_default()
 
+Service = HyprlandService | NiriService
+Workspace = HyprlandWorkspace | NiriWorkspace
+
 
 class BaseWorkspaces(Widget.EventBox):
-    def __init__(self, service: BaseService, enumerated: bool) -> None:
+    def __init__(self, service: Service, enumerated: bool) -> None:
         self.service = service
         self.enumerated = enumerated
 
@@ -31,11 +33,16 @@ class BaseWorkspaces(Widget.EventBox):
 
     def button_generator(self) -> Binding: ...
 
-    def active_workspace_id(self) -> int: ...
+    def is_workspace_active(self, workspace: Workspace) -> bool: ...
 
-    def is_workspace_active(self, workspace: dict) -> bool: ...
+    def active_workspace(self) -> Workspace:
+        for i in self.service.workspaces:
+            if i.is_active:
+                return i
 
-    def button(self, workspace: dict) -> ActionableButton:
+        raise ValueError("Niri has not active workspace")
+
+    def button(self, workspace: Workspace) -> ActionableButton:
         css_classes = ["workspace-item"]
 
         if self.is_workspace_active(workspace):
@@ -44,7 +51,7 @@ class BaseWorkspaces(Widget.EventBox):
         if self.enumerated:
             css_classes.append("enumerated")
 
-        idx = workspace["idx"]
+        idx = workspace.idx
         widget = ActionableButton(
             css_classes=css_classes,
             on_click=lambda _, id=idx: self.service.switch_to_workspace(id),
@@ -54,12 +61,12 @@ class BaseWorkspaces(Widget.EventBox):
         return widget
 
     def scroll(self, direction: Literal["up", "down"]) -> None:
-        current = self.active_workspace_id()
+        idx = self.active_workspace().idx
 
         if direction == "up":
-            current = current + 1
+            current = idx + 1
         elif direction == "down":
-            current = current - 1
+            current = idx - 1
 
         self.service.switch_to_workspace(current)
 
@@ -73,13 +80,11 @@ class HyprlandWorkspaces(BaseWorkspaces):
             "workspaces", lambda value: [self.button(i) for i in value]
         )
 
-    def active_workspace_id(self) -> int:
-        return hyprland.active_workspace.id
+    def active_workspace(self) -> Workspace:
+        return self.service.active_workspace
 
-    def is_workspace_active(self, workspace: dict) -> bool:
-        if workspace["id"] == self.active_workspace_id():
-            return True
-        return False
+    def is_workspace_active(self, workspace: Workspace) -> bool:
+        return workspace.id == self.active_workspace().id
 
 
 class NiriWorkspaces(BaseWorkspaces):
@@ -90,26 +95,18 @@ class NiriWorkspaces(BaseWorkspaces):
     def button_generator(self) -> Binding:
         return self.service.bind(
             "workspaces",
-            lambda value: [
-                self.button(i)
-                for i in value
-                if self.monitor and i["output"] == self.monitor
-            ],
+            lambda value: [self.button(i) for i in value if i.output == self.monitor],
         )
 
-    def active_workspace_id(self) -> int:
-        filtered = [
-            w
-            for w in niri.workspaces  # type: ignore
-            if w["is_active"] and w["output"] == self.monitor
-        ]
-        current: int = filtered[0]["idx"]
-        return current
+    def active_workspace(self) -> Workspace:
+        for w in self.service.workspaces:
+            if w.is_active:
+                return w
 
-    def is_workspace_active(self, workspace: dict) -> bool:
-        if workspace["is_active"]:
-            return True
-        return False
+        raise ValueError("Niri has not active workspace")
+
+    def is_workspace_active(self, workspace: Workspace) -> bool:
+        return workspace.is_active
 
 
 def Workspaces(monitor: int, enumerated: bool = False) -> Widget.EventBox:
