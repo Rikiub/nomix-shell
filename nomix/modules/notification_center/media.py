@@ -12,7 +12,7 @@ mpris = MprisService.get_default()
 class Player(Widget.Revealer):
     def __init__(self, player: MprisPlayer):
         self._player = player
-        self._player.connect("closed", lambda _: self._destroy())
+        self._player.connect("closed", lambda *_: self._destroy())
 
         app_name = ""
         app_icon = ""
@@ -38,7 +38,9 @@ class Player(Widget.Revealer):
             on_click=lambda _: play_pause(),
             child=[
                 Widget.Picture(
-                    image=self._player.bind("art_url"),
+                    image=self._player.bind(
+                        "art_url", lambda v: v or "emblem-music-symbolic"
+                    ),
                     width=picture_size,
                     height=picture_size,
                     content_fit="contain",
@@ -110,17 +112,23 @@ class Player(Widget.Revealer):
             ],
         )
 
-        def minutes(seconds: int) -> str:
+        def str_minutes(seconds: int) -> str:
+            if seconds == -1:
+                return ""
+
             minutes = seconds // 60
             remaining_seconds = seconds % 60
+
             return f"{minutes}:{remaining_seconds:02}"
 
         progress = Widget.EventBox(
             css_classes=["progress-bar"],
             on_click=lambda _: play_pause(),
-            visible=player.bind("position", lambda value: value != -1),
+            visible=player.bind("position", lambda v: v != -1),
             child=[
-                Widget.Label(label=self._player.bind("position", lambda v: minutes(v))),
+                Widget.Label(
+                    label=self._player.bind("position", lambda v: str_minutes(v))
+                ),
                 Widget.Scale(
                     max=self._player.bind("length"),
                     value=self._player.bind("position"),
@@ -129,13 +137,16 @@ class Player(Widget.Revealer):
                     ),
                     hexpand=True,
                 ),
-                Widget.Label(label=self._player.bind("length", lambda v: minutes(v))),
+                Widget.Label(
+                    label=self._player.bind("length", lambda v: str_minutes(v)),
+                    visible=self._player.bind("length", lambda v: v != -1),
+                ),
             ],
         )
 
         super().__init__(
             transition_type="slide_down",
-            reveal_child=False,
+            reveal_child=self._player.bind("position", lambda v: v != -1),
             child=Widget.Box(
                 css_classes=["notification", "player"],
                 vertical=True,
@@ -165,4 +176,3 @@ class MediaPlayer(Widget.Box):
     def _add_player(self, player: MprisPlayer):
         media = Player(player)
         self.append(media)
-        media.reveal_child = True

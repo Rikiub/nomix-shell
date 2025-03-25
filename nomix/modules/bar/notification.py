@@ -23,7 +23,7 @@ class NotificationCenterButton(ActionableButton):
             child=Widget.Box(
                 child=[
                     Widget.Icon(
-                        image="multimedia-player-symbolic",
+                        image="media-playback-start-symbolic",
                         visible=mpris.bind("players", lambda v: bool(v)),
                     ),
                     Widget.Icon(
