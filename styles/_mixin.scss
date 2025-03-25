@@ -22,11 +22,6 @@
 		);
 	}
 
-	&:focus-visible {
-		outline: var(--outline);
-		outline-offset: var(--outline-offset);
-	}
-
 	&.active, 
 	&:active {
 		background-color: color-mix(
@@ -34,5 +29,10 @@
 			var(#{$on}) var(--opacity-press),
 			var(#{$background})
 		);
+	}
+
+	&:focus-visible {
+		outline: var(--outline);
+		outline-offset: var(--outline-offset);
 	}
 }

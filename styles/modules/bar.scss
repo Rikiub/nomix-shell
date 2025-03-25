@@ -2,6 +2,9 @@
 
 .bar {
     background-color: var(--color-background);
+
+    --vertical-margin: 3px;
+    --margin: var(--vertical-margin) 0px;
     
     button {
         padding: 0 10px;
@@ -16,7 +19,7 @@
     .launcher-button,
     .status-pill {
         padding: 0 10px;
-        margin: 3px -4px;
+        margin: var(--vertical-margin) -4px;
 
         transition: all 200ms;
 
@@ -35,9 +38,9 @@
     }
 
     .workspaces {
+        background-color: var(--color-background);
         border-radius: var(--border-radius-md);
-
-        margin: 0 10px;
+        padding: 0 10px;
 
         .workspace-item {
             all: unset;
@@ -91,15 +94,20 @@
     }
 
     .clock {
+        background-color: var(--color-background);
+        
         font-size: 1.1rem;
         font-weight: bold;
-
-        padding: 0 3px;
+        
+        padding: 0 10px;
+        margin: var(--margin);
         border-radius: var(--border-radius-lg);
     }
 
     .kb-layout {
-        background-color: unset;
+        background-color: var(--color-background);
+        margin: var(--margin);
+        
         min-width: 20px;
 
         &:hover {
@@ -112,7 +120,11 @@
     }
 
     .tray {
+        background-color: var(--color-background);
         border-radius: var(--border-radius-sm);
+
+        padding: 0 5px;
+        margin: var(--margin);
 
         .tray-item {
             background-color: unset;
