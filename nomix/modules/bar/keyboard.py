@@ -28,11 +28,17 @@ class KeyboardLayout(Widget.Button):
             return v[:2].lower()
 
         super().__init__(
+            # CSS Classes
             css_classes=["keyboard-layout"],
-            tooltip_text=keyboard.bind(name_property, tooltip)
-            if keyboard
-            else "Unknown Keyboard Layout",
+            #
+            # Visibility
+            tooltip_text=keyboard.bind(name_property, tooltip) if keyboard else "?",
+            visible=keyboard and keyboard.bind("names", lambda v: len(v) > 1),
+            #
+            # Function
             on_click=lambda _: keyboard and keyboard.switch_layout(next_property),
+            #
+            # Widget
             child=Widget.Label(label=keyboard.bind(name_property, short))
             if keyboard
             else Widget.Label(label="?"),

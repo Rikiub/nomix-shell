@@ -106,9 +106,7 @@
 
     .keyboard-layout {
         background-color: var(--color-background);
-        margin: var(--margin);
-        
-        min-width: 20px;
+        min-width: 25px;
 
         &:hover {
             @include mixin.interactive(background);
@@ -123,12 +121,8 @@
         background-color: var(--color-background);
         border-radius: var(--border-radius-sm);
 
-        padding: 0 5px;
-        margin: var(--margin);
-
         .tray-item {
-            background-color: unset;
-            padding: 0 3px;
+            padding: 0 5px;
 
             &:hover {
                 @include mixin.interactive(background);
