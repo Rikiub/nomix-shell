@@ -28,7 +28,7 @@ class KeyboardLayout(Widget.Button):
             return v[:2].lower()
 
         super().__init__(
-            css_classes=["kb-layout"],
+            css_classes=["keyboard-layout"],
             tooltip_text=keyboard.bind(name_property, tooltip)
             if keyboard
             else "Unknown Keyboard Layout",
