@@ -3,6 +3,7 @@ from ignis.widgets import Widget
 
 from nomix.modules.control_center.battery import BatteryStatus
 from nomix.modules.control_center.brightness import Brightness
+from nomix.modules.control_center.lock import LockButton
 from nomix.modules.control_center.power import PowerButton
 from nomix.modules.control_center.quick_settings import QuickSettings
 from nomix.modules.control_center.volume import Volume
@@ -16,25 +17,21 @@ app = IgnisApp.get_default()
 
 class ControlCenter(PopupWindow):
     def __init__(self, valign: ALIGN = "start", halign: ALIGN = "center"):
-        power = PowerButton(hexpand=True, halign="end")
+        power = PowerButton()
 
-        sliders = Widget.Box(
-            vertical=True,
-            css_classes=["slider-control"],
-            child=[
-                Volume("speaker"),
-                Brightness(),
-            ],
+        actions_left = Widget.Box(
+            child=[BatteryStatus()],
+            css_classes=["left"],
+        )
+        actions_right = Widget.Box(
+            child=[LockButton(), power],
+            hexpand=True,
+            halign="end",
+            css_classes=["right"],
         )
         actions = Widget.Box(
-            vertical=True,
-            child=[
-                Widget.Box(
-                    css_classes=["actions"],
-                    child=[BatteryStatus(), power],
-                ),
-                power.menu,
-            ],
+            css_classes=["actions"],
+            child=[actions_left, actions_right],
         )
 
         super().__init__(
@@ -45,8 +42,21 @@ class ControlCenter(PopupWindow):
             valign=valign,
             halign=halign,
             child=[
-                actions,
-                sliders,
+                Widget.Box(
+                    vertical=True,
+                    child=[
+                        actions,
+                        power.menu,
+                    ],
+                ),
+                Widget.Box(
+                    vertical=True,
+                    css_classes=["slider-control"],
+                    child=[
+                        Volume("speaker"),
+                        Brightness(),
+                    ],
+                ),
                 QuickSettings(),
             ],
         )

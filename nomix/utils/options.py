@@ -55,6 +55,7 @@ class UserOptions(BaseManager):
             network = "nm-connection-editor"
             bluetooth = "overskride"
 
+        screenlocker = "swaylock"
         settings_apps = SettingsApps()
 
     class Launcher(OptionsGroup):
@@ -74,7 +75,7 @@ class UserOptions(BaseManager):
     class Debug(OptionsGroup):
         battery_hidden = False
 
-    bar = Bar()
+    bar: Bar | None = Bar()
     launcher = Launcher()
     control_center = ControlCenter()
     night_light = NightLight()

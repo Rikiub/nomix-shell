@@ -2,6 +2,7 @@ import asyncio
 import re
 
 from ignis.app import IgnisApp
+from ignis.menu_model import IgnisMenuItem, IgnisMenuModel, IgnisMenuSeparator
 from ignis.services.applications import (
     Application,
     ApplicationAction,
@@ -45,7 +46,7 @@ class LauncherAppItem(Widget.Button):
             ),
         )
         self._sync_menu()
-        application.connect("notify::is-pinned", lambda *_: self._sync_menu())
+        self._application.connect("notify::is-pinned", lambda *_: self._sync_menu())
 
     def launch(self) -> None:
         self._application.launch()
@@ -56,33 +57,29 @@ class LauncherAppItem(Widget.Button):
         app.close_window(ModuleWindow.LAUNCHER)
 
     def _sync_menu(self) -> None:
-        pin = (
-            [
-                Widget.MenuItem(
-                    label="Pin", on_activate=lambda _: self._application.pin()
-                )
-                if not self._application.is_pinned
-                else Widget.MenuItem(
-                    label="Unpin", on_activate=lambda _: self._application.unpin()
-                ),
-            ]
-            if PIN_APPS
-            else []
-        )
+        pin = None
+
+        if PIN_APPS:
+            pin = IgnisMenuItem(
+                label="Unpin" if self._application.is_pinned else "Pin",
+                on_activate=lambda _: self._application.unpin()
+                if self._application.is_pinned
+                else self._application.pin(),
+            )
 
         self._menu = Widget.PopoverMenu(
-            items=[
-                Widget.MenuItem(label="Launch", on_activate=lambda _: self.launch()),
-            ]
-            + pin
-            + [Widget.Separator()]
-            + [
-                Widget.MenuItem(
-                    label=i.name,
-                    on_activate=lambda _, action=i: self.launch_action(action),
-                )
-                for i in self._application.actions
-            ]
+            model=IgnisMenuModel(
+                IgnisMenuItem(label="Launch", on_activate=lambda _: self.launch()),
+                pin,  # type: ignore
+                IgnisMenuSeparator(),
+                *(
+                    IgnisMenuItem(
+                        label=i.name,
+                        on_activate=lambda _, action=i: self.launch_action(action),
+                    )
+                    for i in self._application.actions
+                ),
+            )
         )
         self.child.append(self._menu)
 
