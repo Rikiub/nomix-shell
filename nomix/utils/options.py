@@ -1,8 +1,9 @@
 from pathlib import Path
+
 from ignis.options_manager import OptionsGroup, OptionsManager
 
-from nomix.utils.types import StrPath
 from nomix.utils.constants import CACHE_DIR, IGNIS_DIR
+from nomix.utils.types import StrPath
 
 
 class BaseManager(OptionsManager):

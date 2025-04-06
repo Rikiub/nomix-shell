@@ -1,7 +1,7 @@
 import asyncio
 
-from ignis.widgets import Widget
 from ignis.utils.shell import exec_sh_async
+from ignis.widgets import Widget
 
 from nomix.utils.options import USER_OPTIONS
 
