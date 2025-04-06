@@ -46,8 +46,8 @@ class UserOptions(BaseManager):
             military_time = True
             seconds = False
 
-        clock_format = ClockFormat()
-        status_pill = StatusPill()
+        clock_format: ClockFormat = ClockFormat()  # type: ignore
+        status_pill: StatusPill = StatusPill()  # type: ignore
 
     class ControlCenter(OptionsGroup):
         class SettingsApps(OptionsGroup):
@@ -56,7 +56,7 @@ class UserOptions(BaseManager):
             bluetooth = "overskride"
 
         screenlocker = "swaylock"
-        settings_apps = SettingsApps()
+        settings_apps: SettingsApps = SettingsApps()  # type: ignore
 
     class Launcher(OptionsGroup):
         grid = False
@@ -75,13 +75,14 @@ class UserOptions(BaseManager):
     class Debug(OptionsGroup):
         battery_hidden = False
 
-    bar: Bar | None = Bar()
-    launcher = Launcher()
-    control_center = ControlCenter()
-    night_light = NightLight()
-    matugen = Matugen()
+    bar: Bar = Bar()  # type: ignore
+    launcher: Launcher = Launcher()  # type: ignore
+    control_center: ControlCenter = ControlCenter()  # type: ignore
+    night_light: NightLight = NightLight()  # type: ignore
+    matugen: Matugen = Matugen()  # type: ignore
 
-    debug = Debug()
+    debug: Debug = Debug()  # type: ignore
 
-USER_OPTIONS = UserOptions()
-CACHE_OPTIONS = CacheOptions()
+
+USER_OPTIONS: UserOptions = UserOptions()  # type: ignore
+CACHE_OPTIONS: CacheOptions = CacheOptions()  # type: ignore
