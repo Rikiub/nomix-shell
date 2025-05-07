@@ -77,7 +77,7 @@ class DeviceMenu(Menu):
     def __init__(
         self,
         name: str,
-        height_request: int = 150,
+        height_request: int = 200,
         header: BaseWidget | None = None,
         placeholder_text: str | Binding = "No devices found",
         devices: list[DeviceItem] | Binding = [],

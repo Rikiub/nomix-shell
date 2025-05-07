@@ -11,5 +11,5 @@ class NotificationCenter(PopupWindow):
             css_classes=["notification-center"],
             valign=valign,
             halign=halign,
-            child=[NotificationPanel(header_reverse=True)],
+            child=[NotificationPanel()],
         )

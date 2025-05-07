@@ -100,16 +100,15 @@ class NotificationPanel(Widget.Box):
 
         super().__init__(
             vertical=True,
-            vexpand=True,
             css_classes=["notification-center"],
             child=[
-                header if not header_reverse else Widget.Box(),
+                header if header_reverse else None,
                 Widget.Scroll(
                     child=Widget.Box(
                         vertical=True, child=[MediaPlayer(), NotificationList()]
                     ),
                     vexpand=True,
                 ),
-                header if header_reverse else Widget.Box(),
+                header if not header_reverse else None,
             ],
         )

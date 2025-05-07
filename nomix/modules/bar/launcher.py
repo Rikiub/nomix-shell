@@ -13,5 +13,5 @@ class LauncherButton(ActionableButton):
             css_classes=["launcher-button"],
             tooltip_text="App Launcher",
             toggle_window=ModuleWindow.LAUNCHER,
-            child=Widget.Icon(icon_name="start-here-symbolic", pixel_size=20),
+            child=Widget.Icon(icon_name="start-here-symbolic", pixel_size=24),
         )

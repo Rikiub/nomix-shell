@@ -11,14 +11,18 @@ class HeaderLabel(Widget.Box):
         **kwargs,
     ):
         self._icon = Widget.Icon(
-            image=icon_name, pixel_size=17, css_classes=["header-icon"]
+            image=icon_name, pixel_size=22, css_classes=["header-icon"]
         )
 
         super().__init__(
             css_classes=["header"],
             child=[
                 self._icon,
-                Widget.Label(label=label, halign="start", css_classes=["header-label"]),
+                Widget.Label(
+                    label=label,
+                    halign="start",
+                    css_classes=["header-label"],
+                ),
             ],
             **kwargs,
         )
@@ -27,7 +31,10 @@ class HeaderLabel(Widget.Box):
 
         if isinstance(active, Binding):
             self.bind_property2(
-                "active", active.target, active.target_properties, active.transform
+                "active",
+                active.target,
+                active.target_properties,
+                active.transform,
             )
         else:
             self.active = active
