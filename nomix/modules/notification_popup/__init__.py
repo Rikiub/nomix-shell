@@ -46,7 +46,8 @@ class NotificationPopup(Widget.Window):
         self.box = Widget.Box(
             vertical=True,
             setup=lambda _: notifications.connect(
-                "new_popup", lambda _, notification: self._on_notified(notification)
+                "new_popup",
+                lambda _, notification: self._on_notified(notification),
             ),
         )
 
@@ -68,5 +69,7 @@ class NotificationPopup(Widget.Window):
         popup.outer.reveal_child = True
 
         Utils.Timeout(
-            popup.outer.transition_duration, popup.inner.set_reveal_child, True
+            popup.outer.transition_duration,
+            popup.inner.set_reveal_child,
+            True,
         )

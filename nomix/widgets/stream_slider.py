@@ -35,7 +35,7 @@ class StreamVolume(Widget.Box):
                         else str(volume) + "%",
                     ),
                     css_classes=["volume-icon"],
-                    child=Widget.Icon(image=stream.bind("icon_name"), pixel_size=20),
+                    child=Widget.Icon(image=stream.bind("icon_name"), pixel_size=24),
                     sensitive=muteable,
                 ),
                 StreamSlider(stream, step),

@@ -101,7 +101,7 @@ class NotificationWidget(Widget.EventBox):
                                     child=Widget.Arrow(
                                         direction="up",
                                         degree=180,
-                                        pixel_size=20,
+                                        pixel_size=24,
                                         rotated=self.body.bind(
                                             "ellipsize",
                                             lambda v: True if v == "none" else False,
@@ -110,7 +110,7 @@ class NotificationWidget(Widget.EventBox):
                                 ),
                                 Widget.Button(
                                     child=Widget.Icon(
-                                        image="window-close-symbolic", pixel_size=20
+                                        image="window-close-symbolic", pixel_size=24
                                     ),
                                     on_click=lambda _: notification.close(),
                                 ),
@@ -125,7 +125,7 @@ class NotificationWidget(Widget.EventBox):
                             image=notification.icon
                             if notification.icon
                             else "dialog-information-symbolic",
-                            pixel_size=40,
+                            pixel_size=50,
                             halign="start",
                             valign="start",
                         ),
