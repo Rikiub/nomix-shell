@@ -33,7 +33,7 @@ else:
 USER_OPTIONS.matugen.connect_option("enabled", lambda *_: app.reload())
 
 # WINDOWS
-Launcher()
+Launcher(halign="start")
 ControlCenter(halign="end", valign="start")
 NotificationCenter(halign="end")
 OSD()

@@ -1,115 +1,131 @@
 @use "../mixin";
 
 .bar {
-    background-color: var(--color-background);
+	--borders-margin: 6px;
+	--vertical-margin: 2px;
+	background-color: var(--color-background);
 
-    --vertical-margin: 2px;
-    --margin: var(--vertical-margin) 0px;
-    
-    button {
-        padding: 0 10px;
-        margin: 0 -4px;
-    }
+	border-bottom-left-radius: var(--border-radius-sm);
+	border-bottom-right-radius: var(--border-radius-sm);
 
-    separator {
-        margin: 7px 5px;
-    }
+	button {
+		padding: 0 10px;
+		margin: 0 -4px;
+	}
 
-    .notification-center-button,
-    .launcher-button,
-    .status-pill,
-    .workspaces {
-        margin: var(--vertical-margin) -4px;
-        transition: all 200ms;
+	separator {
+		margin: 7px 5px;
+	}
 
-        &.active {
-            @include mixin.interactive("primary");
-            transform: scale(1.03);
-        }
-    }
+	.action-button {
+		margin: var(--vertical-margin) -4px;
+		transition: all 200ms;
 
-    .status-pill {
-        transition: all 500ms;
-        margin-right: 6px;
-        
-        padding: 0 10px;
-        border-radius: var(--border-radius-md);
-    }
+		&.active {
+			@include mixin.interactive("primary");
+			transform: scale(1.03);
+		}
+	}
 
-    .workspaces {
-        margin-left: 2px;
+	.action-start {
+		margin-left: var(--borders-margin);
+	}
 
-        .workspace-item {
-            all: unset;
-            margin: 6px 1px;
+	.action-end {
+		margin-right: var(--borders-margin);
+	}
 
-            background-color: color-mix(
-                in srgb,
-                var(--color-primary) 40%,
-                var(--color-surface)
-            );
-            color: var(--color-on-surface);
+	.workspaces {
+		.workspace-item {
+			all: unset;
+			margin: 5px 1px;
 
-            padding: 0 0.6rem;
-            border-radius: 100%;
+			background-color: color-mix(
+				in srgb,
+				var(--color-primary) 40%,
+				var(--color-surface)
+			);
+			color: var(--color-on-surface);
 
-            transition: transform 50ms ease-in-out;
+			padding: 0 0.6rem;
+			border-radius: 100%;
 
-            &.active {
-                background-color: var(--color-primary);
-                color: var(--color-on-primary);
+			transition: transform 50ms ease-in-out;
 
-                padding: 0 15px;
-                border-radius: 20px;
+			&.active {
+				background-color: var(--color-primary);
+				color: var(--color-on-primary);
 
-                @include mixin.interactive("primary");
-            }
+				padding: 0 15px;
+				border-radius: 20px;
 
-            &:focus-visible {
-                outline: var(--outline);
-                outline-offset: var(--outline-offset);
-            }
-        }
+				@include mixin.interactive("primary");
+			}
 
-        .enumerated {
-            border-radius: var(--border-radius-sm);
-        }
-    }
+			&:focus-visible {
+				outline: var(--outline);
+				outline-offset: var(--outline-offset);
+			}
+		}
 
-    .clock {
-        background-color: var(--color-background);
-        
-        font-size: 1.1rem;
-        font-weight: bold;
-        
-        padding: 0 10px;
-        margin: var(--margin);
-        border-radius: var(--border-radius-lg);
-    }
+		.enumerated {
+			border-radius: var(--border-radius-sm);
+		}
+	}
 
-    .keyboard-layout {
-        background-color: var(--color-background);
-        min-width: 25px;
+	.clock {
+		background-color: var(--color-background);
 
-        &:hover {
-            @include mixin.interactive(background);
-        }
+		font-size: 1.1rem;
+		font-weight: bold;
 
-        label {
-            font-size: large;
-        }
-    }
+		padding: 0 10px;
+		border-radius: var(--border-radius-lg);
+	}
 
-    .tray {
-        background-color: var(--color-background);
-        border-radius: var(--border-radius-sm);
+	.keyboard-layout {
+		background-color: var(--color-background);
+		min-width: 25px;
 
-        .tray-item {
-            padding: 0 5px;
+		&:hover {
+			@include mixin.interactive(background);
+		}
 
-            &:hover {
-                @include mixin.interactive(background);
-            }
-        }
-    }
+		label {
+			font-size: large;
+		}
+	}
+
+	.tray {
+		background-color: var(--color-background);
+		border-radius: var(--border-radius-sm);
+
+		.tray-item {
+			padding: 0 5px;
+
+			&:hover {
+				@include mixin.interactive(background);
+			}
+		}
+	}
+}
+
+.button-group {
+	.start,
+	.end {
+		border-radius: 0;
+		margin: 2px 1px;
+	}
+
+	.start {
+		border-top-left-radius: var(--border-radius-sm);
+		border-bottom-left-radius: var(--border-radius-sm);
+	}
+
+	.end {
+		border-top-right-radius: var(--border-radius-sm);
+		border-bottom-right-radius: var(--border-radius-sm);
+
+		margin-right: 5px;
+	}
 }

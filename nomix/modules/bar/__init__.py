@@ -31,7 +31,8 @@ class Bar(Widget.Window):
     def left(self) -> Widget.Box:
         return Widget.Box(
             child=[
-                Workspaces(self.monitor_id, enumerated=False),
+                Workspaces(self.monitor_id, enumerated=False, css_classes=["action-start"]),
+                LauncherButton(),
             ],
             css_classes=["bar-left"],
             spacing=10,
@@ -41,7 +42,6 @@ class Bar(Widget.Window):
         return Widget.Box(
             child=[
                 Clock(),
-                LauncherButton(),
             ],
             css_classes=["bar-center"],
             spacing=10,
@@ -53,8 +53,13 @@ class Bar(Widget.Window):
                 SystemTray(),
                 Widget.Separator(),
                 KeyboardLayout(),
-                NotificationCenterButton(),
-                StatusPill(),
+                Widget.Box(
+                    css_classes=["button-group"],
+                    child=[
+                        NotificationCenterButton(css_classes=["start"]),
+                        StatusPill(css_classes=["end"]),
+                    ],
+                ),
             ],
             css_classes=["bar-right"],
             spacing=15,

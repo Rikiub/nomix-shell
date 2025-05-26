@@ -143,11 +143,11 @@ class BatteriesIcons(Widget.Box):
 
 
 class StatusPill(ActionableButton):
-    def __init__(self):
+    def __init__(self, css_classes: list[str] = []):
         self.volume_steps = 5
 
         super().__init__(
-            css_classes=["status-pill"],
+            css_classes=["status-pill", *css_classes],
             tooltip_text="Control Center",
             on_scroll_up=lambda _: self._scroll("up"),
             on_scroll_down=lambda _: self._scroll("down"),

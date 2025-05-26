@@ -11,7 +11,7 @@ mpris = MprisService.get_default()
 
 
 class NotificationCenterButton(ActionableButton):
-    def __init__(self):
+    def __init__(self, css_classes: list[str] = []):
         self._counter = 0
         self._label = Widget.Label(label="")
 
@@ -19,7 +19,7 @@ class NotificationCenterButton(ActionableButton):
             toggle_window=ModuleWindow.NOTIFICATION_CENTER,
             on_click=lambda _: self._reset(),
             tooltip_text="Notification Center",
-            css_classes=["notification-center-button"],
+            css_classes=["notification-center-button", *css_classes],
             child=Widget.Box(
                 child=[
                     Widget.Icon(

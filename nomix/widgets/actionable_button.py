@@ -27,7 +27,9 @@ class ActionableButton(Widget.EventBox):
         self.__on_hover_lost = on_hover_lost
         self.__toggle_window = toggle_window
 
-        self._button = Widget.Button(css_classes=css_classes, child=child)
+        self._button = Widget.Button(
+            css_classes=["action-button", *css_classes], child=child
+        )
 
         super().__init__(
             on_click=lambda v: self._proxy_on_click(v),

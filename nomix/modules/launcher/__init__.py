@@ -165,8 +165,6 @@ class Launcher(PopupWindow):
 
         self._window_box = Widget.Box(
             vertical=True,
-            valign=valign,
-            halign=halign,
             css_classes=["launcher"],
             child=[
                 Widget.Box(
@@ -186,6 +184,8 @@ class Launcher(PopupWindow):
         )
 
         super().__init__(
+            valign=valign,
+            halign=halign,
             namespace=ModuleWindow.LAUNCHER,
             setup=lambda self: self.connect(
                 "notify::visible", lambda *_: self._on_open()
