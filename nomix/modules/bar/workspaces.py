@@ -1,10 +1,12 @@
 from typing import Literal
+import asyncio
 
 from ignis.app import IgnisApp
 from ignis.gobject import Binding
 from ignis.services.hyprland import HyprlandService, HyprlandWorkspace
 from ignis.services.niri import NiriService, NiriWorkspace
-from ignis.utils import Utils
+from ignis.utils.monitor import get_monitor
+from ignis.utils.shell import exec_sh_async
 from ignis.widgets import Widget
 
 from nomix.widgets.actionable_button import ActionableButton
@@ -18,17 +20,17 @@ Service = HyprlandService | NiriService
 Workspace = HyprlandWorkspace | NiriWorkspace
 
 
-class BaseWorkspaces(Widget.EventBox):
-    def __init__(self, service: Service, enumerated: bool) -> None:
+class BaseWorkspaces(ActionableButton):
+    def __init__(self, service: Service, enumerated: bool, **kwargs) -> None:
         self.service = service
         self.enumerated = enumerated
 
         super().__init__(
+            css_classes=["workspaces"],
             on_scroll_up=lambda _: self.scroll("up"),
             on_scroll_down=lambda _: self.scroll("down"),
-            css_classes=["workspaces"],
-            spacing=5,
-            child=self.button_generator(),
+            child=Widget.Box(child=self.button_generator()),
+            **kwargs,
         )
 
     def button_generator(self) -> Binding: ...
@@ -42,7 +44,7 @@ class BaseWorkspaces(Widget.EventBox):
 
         raise ValueError("Niri has not active workspace")
 
-    def button(self, workspace: Workspace) -> ActionableButton:
+    def button(self, workspace: Workspace) -> Widget.Button:
         css_classes = ["workspace-item"]
 
         if self.is_workspace_active(workspace):
@@ -52,9 +54,9 @@ class BaseWorkspaces(Widget.EventBox):
             css_classes.append("enumerated")
 
         idx = workspace.idx
-        widget = ActionableButton(
+        widget = Widget.Button(
+            # on_click=lambda _, id=idx: self.service.switch_to_workspace(id),
             css_classes=css_classes,
-            on_click=lambda _, id=idx: self.service.switch_to_workspace(id),
             child=Widget.Label(label=str(idx) if self.enumerated else ""),
         )
 
@@ -68,7 +70,7 @@ class BaseWorkspaces(Widget.EventBox):
         elif direction == "down":
             current = idx - 1
 
-        self.service.switch_to_workspace(current)
+        asyncio.create_task(exec_sh_async(f"niri msg action focus-workspace {current}"))
 
 
 class HyprlandWorkspaces(BaseWorkspaces):
@@ -88,9 +90,18 @@ class HyprlandWorkspaces(BaseWorkspaces):
 
 
 class NiriWorkspaces(BaseWorkspaces):
-    def __init__(self, monitor: int, enumerated: bool) -> None:
-        self.monitor = Utils.get_monitor(monitor).get_connector()  # type: ignore
-        super().__init__(niri, enumerated)
+    def __init__(self, monitor_id: int, enumerated: bool) -> None:
+        self.monitor = None
+        if monitor := get_monitor(monitor_id):
+            self.monitor = monitor.get_connector()
+
+        super().__init__(
+            niri,
+            enumerated,
+            on_click=lambda _: asyncio.create_task(
+                exec_sh_async("niri msg action toggle-overview")
+            ),
+        )
 
     def button_generator(self) -> Binding:
         return self.service.bind(
@@ -109,11 +120,11 @@ class NiriWorkspaces(BaseWorkspaces):
         return workspace.is_active
 
 
-def Workspaces(monitor: int, enumerated: bool = False) -> Widget.EventBox:
+def Workspaces(monitor_id: int, enumerated: bool = False) -> Widget.EventBox:
     if hyprland.is_available:
         workspace = HyprlandWorkspaces(enumerated)
     elif niri.is_available:
-        workspace = NiriWorkspaces(monitor, enumerated)
+        workspace = NiriWorkspaces(monitor_id, enumerated)
     else:
         return Widget.EventBox()
 
