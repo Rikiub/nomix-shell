@@ -2,66 +2,68 @@
 
 /* Defaults */
 :root {
-  background-color: var(--color-background);
-  color: var(--color-on-surface);
+	background-color: var(--color-background);
+	color: var(--color-on-surface);
 
-  font-family: var(--font), system-ui, sans-serif;
+	font-family: var(--font), system-ui, sans-serif;
 }
 
 button {
-  @include mixin.interactive("surface");
-  transition: background-color 200ms;
-  border-radius: var(--border-radius-sm);
+	@include mixin.interactive("surface");
+	transition: background-color 200ms;
+	border-radius: var(--border-radius-sm);
 }
 
 switch {
-  @include mixin.interactive("surface-variant");
-  transition: background-color 300ms;
+	@include mixin.interactive("surface-variant");
+	transition: background-color 300ms;
 
-  &:checked {
-    @include mixin.interactive("primary");
-  }
+	&:checked {
+		@include mixin.interactive("primary");
+	}
 }
 
 separator {
-  background-color: var(--color-outline-variant);
+	background-color: var(--color-outline-variant);
 }
 
 popover {
-  arrow {
-    background-color: var(--color-surface);
-    border: var(--border);
-  }
+	arrow {
+		background-color: var(--color-surface);
+		border: var(--border);
+	}
 
-  contents {
-    background-color: var(--color-surface);
-    box-shadow: var(--shadow);
+	contents {
+		background-color: var(--color-surface);
+		box-shadow: var(--shadow);
 
-    border: var(--border);
-    border-radius: var(--border-radius-md);
+		border: var(--border);
+		border-radius: var(--border-radius-md);
 
-    modelbutton {
-      @include mixin.interactive("surface");
-      margin: 2px;
-    }
-  }
+		modelbutton {
+			@include mixin.interactive("surface");
+			margin: 2px;
+		}
+	}
 }
 
 scale trough {
-  background-color: color-mix(in srgb,
-      var(--color-on-surface) 15%,
-      var(--color-surface));
+	background-color: color-mix(
+		in srgb,
+		var(--color-on-surface) 15%,
+		var(--color-surface)
+	);
 
-  highlight {
-    background-color: var(--color-primary);
-  }
+	highlight {
+		background-color: var(--color-primary);
+	}
 }
 
 check:checked {
-  background-color: var(--color-primary);
-  color: var(--color-on-primary);
+	background-color: var(--color-primary);
+	color: var(--color-on-primary);
 }
 
 entry {
-  @include mixin.interactive("surface");
+	@include mixin.interactive("surface");
 }

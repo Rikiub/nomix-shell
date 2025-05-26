@@ -1,25 +1,25 @@
 .osd {
-    min-width: 300px;
+	min-width: 300px;
 
-    background-color: var(--color-surface);
-    box-shadow: var(--shadow);
+	background-color: var(--color-surface);
+	box-shadow: var(--shadow);
 
-    border: var(--border);
-    border-radius: var(--border-radius-lg);
+	border: var(--border);
+	border-radius: var(--border-radius-lg);
 
-    padding: 15px 20px;
-    margin: 50px;
+	padding: 15px 20px;
+	margin: 50px;
 
-    .volume-slider {
-        button {
-            &:hover,
-            &:focus-visible {
-                background-color: var(--color-surface-variant);
-            }
-        }
+	.volume-slider {
+		button {
+			&:hover,
+			&:focus-visible {
+				background-color: var(--color-surface-variant);
+			}
+		}
 
-        .volume-icon:disabled {
-            filter: none;
-        }
-    }
+		.volume-icon:disabled {
+			filter: none;
+		}
+	}
 }

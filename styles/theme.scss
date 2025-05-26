@@ -20,7 +20,9 @@
 	--color-surface: var(--sidebar-bg-color);
 	--color-on-surface: var(--headerbar-fg-color);
 
-	--color-surface-variant: oklch(from var(--color-surface) calc(l #{if($DARK, "+", "-")} 10%) c h);
+	--color-surface-variant: oklch(
+		from var(--color-surface) calc(l #{if($DARK, "+", "-")} 10%) c h
+	);
 	--color-on-surface-variant: var(--color-on-surface);
 
 	--color-shadow: var(--headerbar-shade-color);

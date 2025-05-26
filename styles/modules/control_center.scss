@@ -1,21 +1,21 @@
 .control-center {
-    .slider-control,
-    .quick-settings,
-    .actions {
-        margin: 5px 0;
-    }
+	.slider-control,
+	.quick-settings,
+	.actions {
+		margin: 5px 0;
+	}
 
-    .actions button {
-        margin: 0 5px;
-    }
+	.actions button {
+		margin: 0 5px;
+	}
 
-    .battery-status {
-        background-color: var(--color-surface);
-        border-radius: var(--border-radius-lg);
-        padding: 10px;
+	.battery-status {
+		background-color: var(--color-surface);
+		border-radius: var(--border-radius-lg);
+		padding: 10px;
 
-        .battery-item {
-            font-weight: bold;
-        }
-    }
+		.battery-item {
+			font-weight: bold;
+		}
+	}
 }

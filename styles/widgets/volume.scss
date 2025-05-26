@@ -1,35 +1,35 @@
 @use "../mixin";
 
 .volume-slider {
-    padding: 0px 8px;
-    margin-bottom: 3px;
+	padding: 0px 8px;
+	margin-bottom: 3px;
 
-    .volume-icon,
-    .volume-arrow,
-    button {
-        background-color: transparent;
-        padding: 5px;
-    }
+	.volume-icon,
+	.volume-arrow,
+	button {
+		background-color: transparent;
+		padding: 5px;
+	}
 
-    button {
-        @include mixin.interactive("surface");
-    }
+	button {
+		@include mixin.interactive("surface");
+	}
 
-    trough {
-        min-width: 100px;
-        min-height: 0.3rem;
-        
-        margin-left: 10px;
-        border-radius: var(--border-radius-lg);
+	trough {
+		min-width: 100px;
+		min-height: 0.3rem;
 
-        highlight {
-            background-color: var(--color-primary);
-            padding: 7px 0;
-        }
-        
-        slider {
-            background-color: var(--color-primary);
-            box-shadow: unset;
-        }
-    }
+		margin-left: 10px;
+		border-radius: var(--border-radius-lg);
+
+		highlight {
+			background-color: var(--color-primary);
+			padding: 7px 0;
+		}
+
+		slider {
+			background-color: var(--color-primary);
+			box-shadow: unset;
+		}
+	}
 }

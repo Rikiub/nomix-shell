@@ -1,54 +1,54 @@
 @use "../mixin.scss";
 
 .qs-box {
-    border-radius: var(--border-radius-md);
-    margin-bottom: 3px;
+	border-radius: var(--border-radius-md);
+	margin-bottom: 3px;
 
-    button {
-        border-radius: var(--border-radius-md);
-        padding: 5px 8px;
-        min-height: 40px;
-    }
+	button {
+		border-radius: var(--border-radius-md);
+		padding: 5px 8px;
+		min-height: 40px;
+	}
 
-    & {
-        background-color: var(--color-surface);
+	& {
+		background-color: var(--color-surface);
 
-        button {
-            @include mixin.interactive(surface);
-        }
-    }
-    
-    &.active {
-        background-color: var(--color-primary);
-        
-        button {
-            @include mixin.interactive(primary);
-        }
-    }
+		button {
+			@include mixin.interactive(surface);
+		}
+	}
 
-    .qs-button-title {
-        font-weight: bold;
-    }
-    .qs-button-subtitle {
-        font-weight: normal;
-        font-size: small;
-    }
+	&.active {
+		background-color: var(--color-primary);
 
-    &.has-menu {
-        .qs-button-text {
-            border-top-left-radius: var(--border-radius-md);
-            border-bottom-left-radius: var(--border-radius-md);
+		button {
+			@include mixin.interactive(primary);
+		}
+	}
 
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-        }
+	.qs-button-title {
+		font-weight: bold;
+	}
+	.qs-button-subtitle {
+		font-weight: normal;
+		font-size: small;
+	}
 
-        .qs-button-menu {
-            border-top-right-radius: var(--border-radius-md);
-            border-bottom-right-radius: var(--border-radius-md);
+	&.has-menu {
+		.qs-button-text {
+			border-top-left-radius: var(--border-radius-md);
+			border-bottom-left-radius: var(--border-radius-md);
 
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-        }
-    }
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+		}
+
+		.qs-button-menu {
+			border-top-right-radius: var(--border-radius-md);
+			border-bottom-right-radius: var(--border-radius-md);
+
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+	}
 }

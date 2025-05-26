@@ -1,15 +1,15 @@
 .window-backdrop {
-    background-color: oklch(0 0 0 / 0.0);
-    border-radius: 0;
+	background-color: oklch(0 0 0 / 0);
+	border-radius: 0;
 }
 
 .popup-window {
-    background-color: var(--color-background);
-    box-shadow: var(--shadow);
+	background-color: var(--color-background);
+	box-shadow: var(--shadow);
 
-    border: var(--border);
-    border-radius: var(--border-radius-lg);
+	border: var(--border);
+	border-radius: var(--border-radius-lg);
 
-    margin: 10px;
-    padding: 20px;
+	margin: 10px;
+	padding: 20px;
 }

@@ -1,67 +1,67 @@
 @use "../mixin";
 
 .launcher {
-    min-width: 30rem;
+	min-width: 30rem;
 
-    .launcher-search {
-        background-color: var(--color-surface);
+	.launcher-search {
+		background-color: var(--color-surface);
 
-        padding: 0.50rem 1rem;
-        margin-bottom: 10px;
-        border-radius: var(--border-radius-md);
+		padding: 0.5rem 1rem;
+		margin-bottom: 10px;
+		border-radius: var(--border-radius-md);
 
-        entry {
-            background-color: unset;
-            outline: unset;
-        }
+		entry {
+			background-color: unset;
+			outline: unset;
+		}
 
-        &:focus-within {
-            @include mixin.interactive(surface);
+		&:focus-within {
+			@include mixin.interactive(surface);
 
-            outline: var(--outline);
-            outline-offset: var(--outline-offset);
-        }
+			outline: var(--outline);
+			outline-offset: var(--outline-offset);
+		}
 
-        .launcher-search {
-            background-color: inherit;
+		.launcher-search {
+			background-color: inherit;
 
-            &:focus-within {
-                outline: unset;
-            }
-        }
-    }
+			&:focus-within {
+				outline: unset;
+			}
+		}
+	}
 
-    .launcher-app {
-        background-color: var(--color-background);
-        border-radius: var(--border-radius-md);
+	.launcher-app {
+		background-color: var(--color-background);
+		border-radius: var(--border-radius-md);
 
-        margin: 3px 5px;
-        padding: .7rem 1rem;
+		margin: 3px 5px;
+		padding: 0.7rem 1rem;
 
-        &:focus-visible {
-            background-color: var(--color-surface);
-        }
-        
-        &:hover {
-            @include mixin.interactive("surface");
-        }
+		&:focus-visible {
+			background-color: var(--color-surface);
+		}
 
-        .launcher-app-label {
-            font-size: 1.1rem;
-            margin-left: 1rem;
-        }
-    }
+		&:hover {
+			@include mixin.interactive("surface");
+		}
+
+		.launcher-app-label {
+			font-size: 1.1rem;
+			margin-left: 1rem;
+		}
+	}
 }
 
 .launcher-grid {
-    min-width: 800px;
+	min-width: 800px;
 
-    .launcher-search {
-        margin: 0 200px;
-    }
+	.launcher-search {
+		margin: 0 200px;
+	}
 
-    .launcher-app {
-        margin: 10px;
-        border-radius: var(--border-radius-md);
-    }
+	.launcher-app {
+		margin: 10px;
+		border-radius: var(--border-radius-md);
+	}
 }

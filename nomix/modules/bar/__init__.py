@@ -31,7 +31,11 @@ class Bar(Widget.Window):
     def left(self) -> Widget.Box:
         return Widget.Box(
             child=[
-                Workspaces(self.monitor_id, enumerated=False, css_classes=["action-start"]),
+                Workspaces(
+                    self.monitor_id,
+                    enumerated=False,
+                    css_classes=["action-start"],
+                ),
                 LauncherButton(),
             ],
             css_classes=["bar-left"],

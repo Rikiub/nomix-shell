@@ -1,67 +1,67 @@
 @use "../mixin";
 
 .accordion-menu {
-    background-color: var(--color-surface);
-    border-radius: var(--border-radius-md);
-    
-    padding: 10px 20px;
-    margin: 10px;
+	background-color: var(--color-surface);
+	border-radius: var(--border-radius-md);
+
+	padding: 10px 20px;
+	margin: 10px;
 }
 
 .device-menu {
-    .header {
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
+	.header {
+		font-weight: bold;
+		margin-bottom: 5px;
+	}
 
-    separator {
-        margin: 3px 0;
-    }
+	separator {
+		margin: 3px 0;
+	}
 
-    .placeholder-label {
-        margin: 50px;
-        font-size: 16px;
-        color: oklch(from var(--color-on-surface) l c h / 0.6);
-    }
+	.placeholder-label {
+		margin: 50px;
+		font-size: 16px;
+		color: oklch(from var(--color-on-surface) l c h / 0.6);
+	}
 
-    .device-item {
-        margin: 2px 3px;
+	.device-item {
+		margin: 2px 3px;
 
-        &.settings, 
-        button {
-            all: unset;
+		&.settings,
+		button {
+			all: unset;
 
-            font-weight: normal;
-            border-radius: var(--border-radius-sm);
+			font-weight: normal;
+			border-radius: var(--border-radius-sm);
 
-            padding: 8px;
-            margin: 1px 0;
+			padding: 8px;
+			margin: 1px 0;
 
-            @include mixin.interactive("surface");
-        }
+			@include mixin.interactive("surface");
+		}
 
-        &.settings {
-            margin: 5px 0;
-        }
+		&.settings {
+			margin: 5px 0;
+		}
 
-        .device-icons .icon {
-            margin: 0 2px;
-        }
+		.device-icons .icon {
+			margin: 0 2px;
+		}
 
-        .label {
-            margin-left: 5px;
-        }
+		.label {
+			margin-left: 5px;
+		}
 
-        .indicators {
-            margin-right: 15px;
-            
-            > * {
-                margin: 0 3px;
-            }
-        }
-    }
+		.indicators {
+			margin-right: 15px;
+
+			> * {
+				margin: 0 3px;
+			}
+		}
+	}
 }
 
 .power-menu .device-item .indicators {
-    margin-right: 0px;
+	margin-right: 0px;
 }

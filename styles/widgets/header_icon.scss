@@ -1,19 +1,19 @@
 .header {
-    .header-icon {
-        background-color: var(--color-surface-variant);
-        color: var(--color-on-surface-variant);
-        border-radius: 100%;
-        padding: 5px;
-        margin-right: 10px;
+	.header-icon {
+		background-color: var(--color-surface-variant);
+		color: var(--color-on-surface-variant);
+		border-radius: 100%;
+		padding: 5px;
+		margin-right: 10px;
 
-        &.active {
-            background-color: var(--color-primary);
-            color: var(--color-on-primary);
-        }
-    }
+		&.active {
+			background-color: var(--color-primary);
+			color: var(--color-on-primary);
+		}
+	}
 
-    .header-label {
-        font-weight: bold;
-        font-size: large;
-    }
+	.header-label {
+		font-weight: bold;
+		font-size: large;
+	}
 }

@@ -1,5 +1,5 @@
-from typing import Literal
 import asyncio
+from typing import Literal
 
 from ignis.app import IgnisApp
 from ignis.gobject import Binding
@@ -21,7 +21,13 @@ Workspace = HyprlandWorkspace | NiriWorkspace
 
 
 class BaseWorkspaces(ActionableButton):
-    def __init__(self, service: Service, enumerated: bool, css_classes: list[str] = [], **kwargs) -> None:
+    def __init__(
+        self,
+        service: Service,
+        enumerated: bool,
+        css_classes: list[str] = [],
+        **kwargs,
+    ) -> None:
         self.service = service
         self.enumerated = enumerated
 
@@ -74,7 +80,11 @@ class BaseWorkspaces(ActionableButton):
 
 
 class HyprlandWorkspaces(BaseWorkspaces):
-    def __init__(self, enumerated: bool, css_classes: list[str] = []) -> None:
+    def __init__(
+        self,
+        enumerated: bool,
+        css_classes: list[str] = [],
+    ) -> None:
         super().__init__(hyprland, enumerated, css_classes)
 
     def button_generator(self) -> Binding:
@@ -90,7 +100,12 @@ class HyprlandWorkspaces(BaseWorkspaces):
 
 
 class NiriWorkspaces(BaseWorkspaces):
-    def __init__(self, monitor_id: int, enumerated: bool, css_classes: list[str] = []) -> None:
+    def __init__(
+        self,
+        monitor_id: int,
+        enumerated: bool,
+        css_classes: list[str] = [],
+    ) -> None:
         self.monitor = None
         if monitor := get_monitor(monitor_id):
             self.monitor = monitor.get_connector()
@@ -121,7 +136,11 @@ class NiriWorkspaces(BaseWorkspaces):
         return workspace.is_active
 
 
-def Workspaces(monitor_id: int, enumerated: bool = False, css_classes: list[str] = []) -> Widget.EventBox:
+def Workspaces(
+    monitor_id: int,
+    enumerated: bool = False,
+    css_classes: list[str] = [],
+) -> Widget.EventBox:
     if hyprland.is_available:
         workspace = HyprlandWorkspaces(enumerated, css_classes)
     elif niri.is_available:

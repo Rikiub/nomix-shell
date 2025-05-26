@@ -18,7 +18,7 @@
 	.notification-header {
 		--text-color: var(--color-on-surface);
 		--text-muted: oklch(from var(--text-color) l c h / 0.5);
-		
+
 		margin-bottom: 5px;
 
 		.app-icon {
@@ -40,7 +40,7 @@
 
 		button {
 			@include mixin.interactive("surface-variant");
-			
+
 			padding: 2px;
 			margin: 0 3px;
 		}
@@ -70,10 +70,10 @@
 
 .player {
 	@include mixin.interactive("secondary-container");
-	
+
 	.notification-header {
 		margin-bottom: 10px;
-		
+
 		.app-name {
 			--text-color: var(--color-on-secondary-container);
 		}
