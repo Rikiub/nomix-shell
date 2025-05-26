@@ -4,11 +4,12 @@
 	@include mixin.interactive("surface");
 
 	box-shadow: var(--shadow);
+
 	border: var(--border);
 	border-radius: var(--border-radius-md);
 
 	margin: 10px;
-	margin-bottom: 0px;
+	margin-bottom: 3px;
 
 	padding: 10px 20px;
 
