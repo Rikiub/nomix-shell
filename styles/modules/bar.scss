@@ -2,14 +2,14 @@
 
 .bar {
 	--borders-margin: 6px;
-	--vertical-margin: 2px;
+
 	background-color: var(--color-background);
 
 	border-bottom-left-radius: var(--border-radius-sm);
 	border-bottom-right-radius: var(--border-radius-sm);
 
 	button {
-		padding: 0 13px;
+		padding: 0 10px;
 		margin: 0 -4px;
 	}
 
@@ -18,8 +18,7 @@
 	}
 
 	.action-button {
-		margin: var(--vertical-margin) -4px;
-		transition: all 200ms;
+		margin: 2px -4px;
 
 		&.active {
 			@include mixin.interactive("primary");
@@ -41,7 +40,6 @@
 
 	.workspaces {
 		.workspace-item {
-			all: unset;
 			margin: 5px 2px;
 
 			background-color: color-mix(
@@ -53,8 +51,6 @@
 
 			padding: 0 0.6rem;
 			border-radius: 100%;
-
-			transition: transform 50ms ease-in-out;
 
 			&.active {
 				background-color: var(--color-primary);
@@ -74,6 +70,22 @@
 
 		.enumerated {
 			border-radius: var(--border-radius-sm);
+		}
+
+		&.active-command {
+			@include mixin.interactive("primary");
+		}
+		&.active-command .workspace-item {
+			background-color: color-mix(
+				in srgb,
+				var(--color-primary) 40%,
+				var(--color-surface)
+			);
+			color: var(--color-on-primary);
+
+			&.active {
+				background-color: var(--color-primary-container);
+			}
 		}
 	}
 

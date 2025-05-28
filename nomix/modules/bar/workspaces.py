@@ -34,6 +34,7 @@ class BaseWorkspaces(ActionableButton):
         super().__init__(
             on_scroll_up=lambda _: self.scroll("up"),
             on_scroll_down=lambda _: self.scroll("down"),
+            tooltip_text="Workspaces",
             css_classes=["workspaces", *css_classes],
             child=Widget.Box(child=self.button_generator()),
             **kwargs,
@@ -61,8 +62,8 @@ class BaseWorkspaces(ActionableButton):
 
         idx = workspace.idx
         widget = Widget.Box(
-            # on_click=lambda _, id=idx: self.service.switch_to_workspace(id),
             css_classes=css_classes,
+            # on_click=lambda _, id=idx: self.service.switch_to_workspace(id),
             child=[Widget.Label(label=str(idx) if self.enumerated else "")],
         )
 
@@ -118,6 +119,17 @@ class NiriWorkspaces(BaseWorkspaces):
                 exec_sh_async("niri msg action toggle-overview")
             ),
         )
+
+        niri.connect(
+            "notify::overview-opened",
+            lambda *_: self._toggle_overview_cssclass(),
+        )
+
+    def _toggle_overview_cssclass(self):
+        if niri.overview_opened:
+            self._button.add_css_class("active-command")
+        else:
+            self._button.remove_css_class("active-command")
 
     def button_generator(self) -> Binding:
         return self.service.bind(
