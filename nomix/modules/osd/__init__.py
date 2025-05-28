@@ -9,7 +9,7 @@ audio = AudioService.get_default()
 
 
 class OSD(Widget.Window):
-    def __init__(self, anchor: list["str"] = ["bottom"]):
+    def __init__(self, anchor: list[str] = ["bottom"]):
         self._persist = False
 
         def on_hover():
