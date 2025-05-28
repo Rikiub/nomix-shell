@@ -32,9 +32,9 @@ class BaseWorkspaces(ActionableButton):
         self.enumerated = enumerated
 
         super().__init__(
-            css_classes=["workspaces", *css_classes],
             on_scroll_up=lambda _: self.scroll("up"),
             on_scroll_down=lambda _: self.scroll("down"),
+            css_classes=["workspaces", *css_classes],
             child=Widget.Box(child=self.button_generator()),
             **kwargs,
         )
@@ -76,7 +76,7 @@ class BaseWorkspaces(ActionableButton):
         elif direction == "down":
             current = idx - 1
 
-        niri.switch_to_workspace(current)
+        self.service.switch_to_workspace(current)
 
 
 class HyprlandWorkspaces(BaseWorkspaces):
