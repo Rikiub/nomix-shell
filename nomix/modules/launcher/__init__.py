@@ -1,6 +1,7 @@
 import asyncio
 import re
 
+from gi.repository import Gtk
 from ignis.app import IgnisApp
 from ignis.menu_model import IgnisMenuItem, IgnisMenuModel, IgnisMenuSeparator
 from ignis.services.applications import (
@@ -193,6 +194,7 @@ class Launcher(PopupWindow):
             child=[self._window_box],
         )
 
+        applications.connect("notify::apps", lambda *_: self._sync_items())
         self._update_layout()
         """
         USER_OPTIONS.launcher.connect_option("grid", lambda *_: self._update_layout())  # type: ignore
@@ -201,7 +203,13 @@ class Launcher(PopupWindow):
         )  # type: ignore
         """
 
-        applications.connect("notify::apps", lambda *_: self._sync_items())
+        def on_keypressed(event_key, keyval: int, keycode: int, state):
+            if keycode not in (111, 113, 114, 116):
+                self._entry.grab_focus_without_selecting()
+
+        key_controller = Gtk.EventControllerKey()
+        self.add_controller(key_controller)
+        key_controller.connect("key-pressed", on_keypressed)
 
     def _search(self) -> None:
         query = self._entry.text

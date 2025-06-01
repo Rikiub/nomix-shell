@@ -5,10 +5,12 @@ from typing import Literal
 from ignis.utils import Utils
 from ignis.widgets import Widget
 
+from nomix.utils.constants import ModuleWindow
 from nomix.utils.options import USER_OPTIONS
+from nomix.widgets.actionable_button import ActionableButton
 
 
-class Clock(Widget.Label):
+class Clock(ActionableButton):
     def __init__(self):
         self.format: str = self._update_format()
 
@@ -21,10 +23,19 @@ class Clock(Widget.Label):
 
         super().__init__(
             css_classes=["clock"],
-            label=Utils.Poll(
-                1000,
-                lambda _: datetime.datetime.now().strftime(self.format),
-            ).bind("output"),
+            tooltip_text="App Launcher",
+            toggle_window=ModuleWindow.LAUNCHER,
+            child=Widget.Box(
+                child=[
+                    Widget.Label(
+                        css_classes=["clock-text"],
+                        label=Utils.Poll(
+                            1000,
+                            lambda _: datetime.datetime.now().strftime(self.format),
+                        ).bind("output"),
+                    )
+                ]
+            ),
         )
 
     def system_time_format(self) -> Literal["24", "12"]:

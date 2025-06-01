@@ -2,7 +2,6 @@ from ignis.widgets import Widget
 
 from nomix.modules.bar.clock import Clock
 from nomix.modules.bar.keyboard import KeyboardLayout
-from nomix.modules.bar.launcher import Launcher
 from nomix.modules.bar.notificationcenter import NotificationCenter
 from nomix.modules.bar.statuspill import StatusPill
 from nomix.modules.bar.systemtray import SystemTray
@@ -37,7 +36,6 @@ class Bar(Widget.Window):
                     enumerated=False,
                     css_classes=["button-start"],
                 ),
-                Launcher(),
             ],
         )
 
