@@ -155,7 +155,6 @@ class NotificationWidget(Widget.EventBox):
                         )
                         for action in notification.actions
                     ],
-                    spacing=10,
                     homogeneous=True,
                     style="margin-top: 0.75rem;" if notification.actions else "",
                 ),

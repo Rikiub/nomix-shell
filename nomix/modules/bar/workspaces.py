@@ -9,7 +9,7 @@ from ignis.utils.monitor import get_monitor
 from ignis.utils.shell import exec_sh_async
 from ignis.widgets import Widget
 
-from nomix.widgets.actionable_button import ActionableButton
+from nomix.widgets.action_button import ActionButton
 
 hyprland = HyprlandService.get_default()
 niri = NiriService.get_default()
@@ -20,7 +20,7 @@ Service = HyprlandService | NiriService
 Workspace = HyprlandWorkspace | NiriWorkspace
 
 
-class BaseWorkspaces(ActionableButton):
+class BaseWorkspaces(ActionButton):
     def __init__(
         self,
         service: Service,

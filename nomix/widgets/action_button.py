@@ -11,7 +11,7 @@ from nomix.widgets.popup_window import is_popup_opened
 app = IgnisApp.get_default()
 
 
-class ActionableButton(Widget.EventBox):
+class ActionButton(Widget.EventBox):
     def __init__(
         self,
         on_click: Callable | None = None,

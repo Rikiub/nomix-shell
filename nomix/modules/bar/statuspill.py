@@ -11,7 +11,7 @@ from ignis.widgets import Widget
 
 from nomix.utils.constants import ModuleWindow
 from nomix.utils.options import USER_OPTIONS
-from nomix.widgets.actionable_button import ActionableButton
+from nomix.widgets.action_button import ActionButton
 
 app = IgnisApp.get_default()
 
@@ -142,7 +142,7 @@ class BatteriesIcons(Widget.Box):
         )
 
 
-class StatusPill(ActionableButton):
+class StatusPill(ActionButton):
     def __init__(self, css_classes: list[str] = []):
         self.volume_steps = 5
 

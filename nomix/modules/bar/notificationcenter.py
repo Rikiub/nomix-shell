@@ -5,13 +5,13 @@ from ignis.widgets import Widget
 from ignis.variable import Variable
 
 from nomix.utils.constants import ModuleWindow
-from nomix.widgets.actionable_button import ActionableButton
+from nomix.widgets.action_button import ActionButton
 
 notification = NotificationService.get_default()
 mpris = MprisService.get_default()
 
 
-class NotificationCenter(ActionableButton):
+class NotificationCenter(ActionButton):
     def __init__(self, css_classes: list[str] = []):
         self._counter = Variable(0)
         self._label = Widget.Label(label="")

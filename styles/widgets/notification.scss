@@ -59,7 +59,7 @@
 	.action-button {
 		@include mixin.interactive("surface-variant");
 
-		margin-top: 5px;
+		margin: 5px;
 		border-radius: var(--border-radius-sm);
 	}
 }

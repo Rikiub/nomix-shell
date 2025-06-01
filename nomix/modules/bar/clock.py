@@ -7,10 +7,10 @@ from ignis.widgets import Widget
 
 from nomix.utils.constants import ModuleWindow
 from nomix.utils.options import USER_OPTIONS
-from nomix.widgets.actionable_button import ActionableButton
+from nomix.widgets.action_button import ActionButton
 
 
-class Clock(ActionableButton):
+class Clock(ActionButton):
     def __init__(self):
         self.format: str = self._update_format()
 
@@ -23,7 +23,7 @@ class Clock(ActionableButton):
 
         super().__init__(
             css_classes=["clock"],
-            tooltip_text="App Launcher",
+            tooltip_text="Launcher",
             toggle_window=ModuleWindow.LAUNCHER,
             child=Widget.Box(
                 child=[
