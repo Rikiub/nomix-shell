@@ -3,6 +3,7 @@ from ignis.widgets import Widget
 
 systemtray = SystemTrayService.get_default()
 
+
 class TrayItem(Widget.Button):
     def __init__(self, item: SystemTrayItem, **kwargs):
         def popup():

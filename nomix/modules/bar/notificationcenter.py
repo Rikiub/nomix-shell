@@ -1,8 +1,8 @@
 from ignis.options import options
 from ignis.services.mpris import MprisService
 from ignis.services.notifications import Notification, NotificationService
-from ignis.widgets import Widget
 from ignis.variable import Variable
+from ignis.widgets import Widget
 
 from nomix.utils.constants import ModuleWindow
 from nomix.widgets.action_button import ActionButton
