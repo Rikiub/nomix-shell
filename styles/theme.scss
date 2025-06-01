@@ -1,4 +1,4 @@
-@import "../.cache/dark";
+@use "../.cache/dark";
 
 :root {
 	/* FONTS */
@@ -21,7 +21,7 @@
 	--color-on-surface: var(--headerbar-fg-color);
 
 	--color-surface-variant: oklch(
-		from var(--color-surface) calc(l #{if($DARK, "+", "-")} 10%) c h
+		from var(--color-surface) calc(l #{if(dark.$DARK, "+", "-")} 10%) c h
 	);
 	--color-on-surface-variant: var(--color-on-surface);
 
@@ -46,5 +46,3 @@
 	--opacity-hover: 8%;
 	--opacity-press: 12%;
 }
-
-@import "../.cache/override.scss";

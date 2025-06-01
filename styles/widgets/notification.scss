@@ -1,7 +1,7 @@
 @use "../mixin.scss";
 
 .notification {
-	@include mixin.interactive("surface");
+	background-color: var(--color-surface);
 
 	box-shadow: var(--shadow);
 
@@ -57,7 +57,7 @@
 	*/
 
 	.action-button {
-		@include mixin.interactive("surface-variant");
+		@include mixin.interactive("secondary-container");
 
 		margin: 5px;
 		border-radius: var(--border-radius-sm);

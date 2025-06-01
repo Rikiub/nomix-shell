@@ -48,8 +48,13 @@
 		}
 	}
 
+	.status-pill,
 	.notification-center-button {
-		min-width: 32px;
+		min-width: 40px;
+	}
+
+	.notification-center-button image {
+		margin: 0 2px;
 	}
 
 	.clock {
