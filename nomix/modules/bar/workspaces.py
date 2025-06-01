@@ -10,6 +10,7 @@ from ignis.utils.shell import exec_sh_async
 from ignis.widgets import Widget
 
 from nomix.widgets.action_button import ActionButton
+from nomix.widgets.popup_window import OPENED_POPUP
 
 hyprland = HyprlandService.get_default()
 niri = NiriService.get_default()
@@ -130,6 +131,8 @@ class NiriWorkspaces(BaseWorkspaces):
             self._button.add_css_class("active-command")
         else:
             self._button.remove_css_class("active-command")
+
+        OPENED_POPUP.value = ""
 
     def button_generator(self) -> Binding:
         return self.service.bind(
