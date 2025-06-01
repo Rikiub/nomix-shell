@@ -147,8 +147,8 @@ class StatusPill(ActionableButton):
         self.volume_steps = 5
 
         super().__init__(
-            css_classes=["status-pill", *css_classes],
             tooltip_text="Control Center",
+            css_classes=["status-pill", *css_classes],
             on_scroll_up=lambda _: self._scroll("up"),
             on_scroll_down=lambda _: self._scroll("down"),
             toggle_window=ModuleWindow.CONTROL_CENTER,

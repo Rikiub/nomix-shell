@@ -7,7 +7,7 @@ from nomix.widgets.actionable_button import ActionableButton
 app = IgnisApp.get_default()
 
 
-class LauncherButton(ActionableButton):
+class Launcher(ActionableButton):
     def __init__(self, css_classes: list[str] = []):
         super().__init__(
             css_classes=["launcher-button", *css_classes],

@@ -11,7 +11,7 @@ notification = NotificationService.get_default()
 mpris = MprisService.get_default()
 
 
-class NotificationCenterButton(ActionableButton):
+class NotificationCenter(ActionableButton):
     def __init__(self, css_classes: list[str] = []):
         self._counter = Variable(0)
         self._label = Widget.Label(label="")
@@ -51,7 +51,7 @@ class NotificationCenterButton(ActionableButton):
                         ),
                     ),
                     Widget.Icon(
-                        image="mail-message-new-symbolic",
+                        image="notification-new-symbolic",
                         visible=self._counter.bind(
                             "value",
                             lambda v: v > 0,

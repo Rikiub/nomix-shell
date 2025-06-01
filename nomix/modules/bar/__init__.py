@@ -2,9 +2,9 @@ from ignis.widgets import Widget
 
 from nomix.modules.bar.clock import Clock
 from nomix.modules.bar.keyboard import KeyboardLayout
-from nomix.modules.bar.launcher import LauncherButton
-from nomix.modules.bar.notification import NotificationCenterButton
-from nomix.modules.bar.pill import StatusPill
+from nomix.modules.bar.launcher import Launcher
+from nomix.modules.bar.notificationcenter import NotificationCenter
+from nomix.modules.bar.statuspill import StatusPill
 from nomix.modules.bar.systemtray import SystemTray
 from nomix.modules.bar.workspaces import Workspaces
 
@@ -15,44 +15,43 @@ class Bar(Widget.Window):
 
         super().__init__(
             exclusivity="exclusive",
+            kb_mode="on_demand",
             anchor=["left", "top", "right"],
             namespace=f"bar_{self.monitor_id}",
             monitor=self.monitor_id,
-            kb_mode="on_demand",
-            style="background-color: transparent;",
+            style="background-color: transparent; border: unset;",
             child=Widget.CenterBox(
                 css_classes=["bar"],
-                start_widget=self.left(),
+                start_widget=self.start(),
                 center_widget=self.center(),
-                end_widget=self.right(),
+                end_widget=self.end(),
             ),
         )
 
-    def left(self) -> Widget.Box:
+    def start(self) -> Widget.Box:
         return Widget.Box(
+            css_classes=["bar-start"],
             child=[
                 Workspaces(
                     self.monitor_id,
                     enumerated=False,
-                    css_classes=["action-start"],
+                    css_classes=["button-start"],
                 ),
-                LauncherButton(),
+                Launcher(),
             ],
-            css_classes=["bar-left"],
-            spacing=10,
         )
 
     def center(self) -> Widget.Box:
         return Widget.Box(
+            css_classes=["bar-center"],
             child=[
                 Clock(),
             ],
-            css_classes=["bar-center"],
-            spacing=10,
         )
 
-    def right(self) -> Widget.Box:
+    def end(self) -> Widget.Box:
         return Widget.Box(
+            css_classes=["bar-end"],
             child=[
                 SystemTray(),
                 Widget.Separator(),
@@ -60,11 +59,9 @@ class Bar(Widget.Window):
                 Widget.Box(
                     css_classes=["button-group"],
                     child=[
-                        NotificationCenterButton(css_classes=["start"]),
-                        StatusPill(css_classes=["end"]),
+                        NotificationCenter(css_classes=["start"]),
+                        StatusPill(css_classes=["end", "button-end"]),
                     ],
                 ),
             ],
-            css_classes=["bar-right"],
-            spacing=15,
         )

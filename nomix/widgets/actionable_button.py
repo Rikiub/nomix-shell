@@ -28,6 +28,7 @@ class ActionableButton(Widget.EventBox):
         self.__toggle_window = toggle_window
 
         self._button = Widget.Button(
+            on_click=lambda v: self._proxy_on_click(v),
             css_classes=["action-button", *css_classes],
             child=child,
         )
