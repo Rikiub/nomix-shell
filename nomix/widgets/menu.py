@@ -15,15 +15,15 @@ class Menu(Widget.Revealer):
     ):
         self._name = name
         self._box = Widget.Box(
-            vertical=True,
             css_classes=["accordion-menu"] + css_classes,
+            vertical=True,
             child=child,
         )
 
         super().__init__(
+            reveal_child=OPENED_MENU.bind("value", lambda value: value == self._name),
             transition_type="slide_down",
             transition_duration=300,
-            reveal_child=OPENED_MENU.bind("value", lambda value: value == self._name),
             child=self._box,
             **kwargs,
         )

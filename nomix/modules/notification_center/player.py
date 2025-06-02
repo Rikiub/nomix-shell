@@ -10,9 +10,15 @@ mpris = MprisService.get_default()
 
 
 class Player(Widget.Revealer):
+    PICTURE_SIZE = 60
+    TEXT_LIMIT = 50
+
     def __init__(self, player: MprisPlayer):
         self._player = player
         self._player.connect("closed", lambda *_: self._destroy())
+
+        def play_pause():
+            asyncio.create_task(self._player.play_pause_async())
 
         app_name = ""
         app_icon = ""
@@ -20,9 +26,6 @@ class Player(Widget.Revealer):
         if desktop := AppInfo.from_app_name(player.desktop_entry or ""):
             app_name = desktop.name
             app_icon = desktop.symbolic_icon
-
-        def play_pause():
-            asyncio.create_task(self._player.play_pause_async())
 
         header = Widget.EventBox(
             css_classes=["notification-header"],
@@ -33,65 +36,62 @@ class Player(Widget.Revealer):
             ],
         )
 
-        picture_size = 50
         picture = Widget.EventBox(
             on_click=lambda _: play_pause(),
             child=[
                 Widget.Picture(
+                    css_classes=["art"],
                     image=self._player.bind(
                         "art_url", lambda v: v or "emblem-music-symbolic"
                     ),
-                    width=picture_size,
-                    height=picture_size,
                     content_fit="contain",
-                    css_classes=["art"],
+                    width=self.PICTURE_SIZE,
+                    height=self.PICTURE_SIZE,
                 )
             ],
         )
 
-        text_limit = 50
         metadata = Widget.EventBox(
+            css_classes=["metadata"],
             vertical=True,
             hexpand=True,
             on_click=lambda _: play_pause(),
-            css_classes=["metadata"],
             child=[
                 Widget.Label(
+                    css_classes=["label-title"],
                     label=self._player.bind("title"),
                     tooltip_text=self._player.bind("title"),
                     justify="left",
                     ellipsize="end",
-                    max_width_chars=text_limit,
-                    css_classes=["label-title"],
                     halign="start",
+                    max_width_chars=self.TEXT_LIMIT,
                 ),
                 Widget.Label(
+                    css_classes=["label-artist"],
                     label=self._player.bind("artist"),
                     tooltip_text=self._player.bind("artist"),
                     justify="left",
                     ellipsize="end",
-                    max_width_chars=text_limit,
-                    css_classes=["label-artist"],
                     halign="start",
+                    max_width_chars=self.TEXT_LIMIT,
                 ),
             ],
         )
 
         controls = Widget.Box(
+            css_classes=["controls"],
             valign="start",
             halign="end",
-            hexpand=True,
-            css_classes=["controls"],
             child=[
                 Widget.Button(
-                    css_classes=["action-button"],
+                    css_classes=["previous"],
                     on_click=lambda _: asyncio.create_task(
                         self._player.previous_async()
                     ),
                     child=Widget.Icon(image="media-skip-backward-symbolic"),
                 ),
                 Widget.Button(
-                    css_classes=["action-button"],
+                    css_classes=["play-pause"],
                     on_click=lambda _: play_pause(),
                     visible=self._player.bind("can_play"),
                     child=Widget.Icon(
@@ -104,7 +104,7 @@ class Player(Widget.Revealer):
                     ),
                 ),
                 Widget.Button(
-                    css_classes=["action-button"],
+                    css_classes=["next"],
                     on_click=lambda _: asyncio.create_task(self._player.next_async()),
                     visible=self._player.bind("can_go_next"),
                     child=Widget.Icon(image="media-skip-forward-symbolic"),
@@ -168,11 +168,8 @@ class MediaPlayer(Widget.Box):
         super().__init__(
             vertical=True,
             setup=lambda _: mpris.connect(
-                "player_added", lambda _, player: self._add_player(player)
+                "player_added",
+                lambda _, player: self.append(Player(player)),
             ),
             **kwargs,
         )
-
-    def _add_player(self, player: MprisPlayer):
-        media = Player(player)
-        self.append(media)

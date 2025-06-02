@@ -21,10 +21,7 @@ class SpeakerVolume(Widget.EventBox):
                 Widget.Button(
                     child=Widget.Box(
                         child=[
-                            Widget.Icon(
-                                image=audio.speaker.bind("icon_name"),
-                                style="margin-right: 5px;",
-                            ),
+                            Widget.Icon(image=audio.speaker.bind("icon_name")),
                             Widget.Label(
                                 label=audio.speaker.bind(
                                     "volume", transform=lambda v: str(v)

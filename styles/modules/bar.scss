@@ -53,8 +53,9 @@
 		min-width: 40px;
 	}
 
-	.notification-center-button image {
-		margin: 0 2px;
+	.notification-center-button image,
+	.indicator-icon {
+		margin: 0 3px;
 	}
 
 	.clock {
@@ -66,16 +67,8 @@
 	}
 
 	.keyboard-layout {
-		background-color: var(--color-background);
+		font-size: large;
 		min-width: 25px;
-
-		&:hover {
-			@include mixin.interactive(background);
-		}
-
-		label {
-			font-size: large;
-		}
 	}
 
 	.systemtray {

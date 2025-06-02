@@ -25,15 +25,6 @@ class NotificationWidget(Widget.EventBox):
             visible=notification.body != "",
         )
 
-        app_name = notification.app_name
-        app_icon = ""
-
-        if desktop := AppInfo.from_app_name(notification.app_name):
-            app_name = desktop.name
-
-            if desktop.symbolic_icon:
-                app_icon = desktop.symbolic_icon
-
         def _get_past_time(timestamp: float) -> tuple[int, int, int]:
             current = datetime.datetime.now()
             past = datetime.datetime.fromtimestamp(timestamp)
@@ -58,106 +49,121 @@ class NotificationWidget(Widget.EventBox):
             else:
                 return "Just now"
 
+        app_name = notification.app_name
+        app_icon = ""
+
+        if desktop := AppInfo.from_app_name(notification.app_name):
+            app_name = desktop.name
+
+            if desktop.symbolic_icon:
+                app_icon = desktop.symbolic_icon
+
+        header = Widget.Box(
+            css_classes=["notification-header"],
+            child=[
+                Widget.EventBox(
+                    on_click=lambda _: notification.close(),
+                    hexpand=True,
+                    child=[
+                        Widget.Icon(
+                            css_classes=["app-icon"],
+                            image=app_icon,
+                            pixel_size=15,
+                            visible=bool(app_icon),
+                        ),
+                        Widget.Label(
+                            css_classes=["app-name"],
+                            label=app_name,
+                            visible=bool(app_name),
+                            halign="start",
+                        ),
+                        Widget.Label(
+                            css_classes=["time"],
+                            label=Utils.Poll(1000, lambda _: _format_time()).bind(
+                                "output"
+                            ),
+                        ),
+                    ],
+                ),
+                Widget.Box(
+                    halign="end",
+                    hexpand=True,
+                    child=[
+                        Widget.Button(
+                            on_click=lambda _: self._toggle_body(),
+                            child=Widget.Arrow(
+                                direction="down",
+                                degree=180,
+                                pixel_size=24,
+                                rotated=self.body.bind(
+                                    "ellipsize",
+                                    lambda v: True if v == "none" else False,
+                                ),
+                            ),
+                        ),
+                        Widget.Button(
+                            child=Widget.Icon(
+                                image="window-close-symbolic", pixel_size=24
+                            ),
+                            on_click=lambda _: notification.close(),
+                        ),
+                    ],
+                ),
+            ],
+        )
+
+        center = Widget.EventBox(
+            css_classes=["information"],
+            on_click=lambda _: notification.close(),
+            child=[
+                Widget.Icon(
+                    css_classes=["icon"],
+                    image=notification.icon
+                    if notification.icon
+                    else "dialog-information-symbolic",
+                    pixel_size=50,
+                    halign="start",
+                    valign="start",
+                ),
+                Widget.Box(
+                    vertical=True,
+                    hexpand=True,
+                    child=[
+                        Widget.Label(
+                            label=notification.summary,
+                            visible=notification.summary != "",
+                            ellipsize="end",
+                            halign="start",
+                            css_classes=["summary"],
+                        ),
+                        self.body,
+                    ],
+                ),
+            ],
+        )
+
+        actions = Widget.Box(
+            css_classes=["actions"],
+            child=[
+                Widget.Button(
+                    on_click=lambda _, action=action: action.invoke(),
+                    child=Widget.Label(label=action.label),
+                )
+                for action in notification.actions
+            ],
+            homogeneous=True,
+        )
+
         super().__init__(
+            css_classes=["notification"] + css_classes,
             vertical=True,
             hexpand=True,
-            css_classes=["notification"] + css_classes,
             on_hover=lambda _: expand_on_hover and self._expand_body(True),
             on_hover_lost=lambda _: expand_on_hover and self._expand_body(False),
             child=[
-                Widget.Box(
-                    css_classes=["notification-header"],
-                    child=[
-                        Widget.EventBox(
-                            on_click=lambda _: notification.close(),
-                            hexpand=True,
-                            child=[
-                                Widget.Icon(
-                                    image=app_icon,
-                                    pixel_size=15,
-                                    visible=bool(app_icon),
-                                    css_classes=["app-icon"],
-                                ),
-                                Widget.Label(
-                                    label=app_name,
-                                    visible=bool(app_name),
-                                    halign="start",
-                                    css_classes=["app-name"],
-                                ),
-                                Widget.Label(
-                                    label=Utils.Poll(
-                                        1000, lambda _: _format_time()
-                                    ).bind("output"),
-                                    css_classes=["time"],
-                                ),
-                            ],
-                        ),
-                        Widget.Box(
-                            halign="end",
-                            hexpand=True,
-                            child=[
-                                Widget.Button(
-                                    on_click=lambda _: self._toggle_body(),
-                                    child=Widget.Arrow(
-                                        direction="up",
-                                        degree=180,
-                                        pixel_size=24,
-                                        rotated=self.body.bind(
-                                            "ellipsize",
-                                            lambda v: True if v == "none" else False,
-                                        ),
-                                    ),
-                                ),
-                                Widget.Button(
-                                    child=Widget.Icon(
-                                        image="window-close-symbolic", pixel_size=24
-                                    ),
-                                    on_click=lambda _: notification.close(),
-                                ),
-                            ],
-                        ),
-                    ],
-                ),
-                Widget.EventBox(
-                    on_click=lambda _: notification.close(),
-                    child=[
-                        Widget.Icon(
-                            image=notification.icon
-                            if notification.icon
-                            else "dialog-information-symbolic",
-                            pixel_size=50,
-                            halign="start",
-                            valign="start",
-                        ),
-                        Widget.Box(
-                            vertical=True,
-                            hexpand=True,
-                            style="margin-left: 0.75rem;",
-                            child=[
-                                Widget.Label(
-                                    label=notification.summary,
-                                    visible=notification.summary != "",
-                                    ellipsize="end",
-                                    halign="start",
-                                    css_classes=["summary"],
-                                ),
-                                self.body,
-                            ],
-                        ),
-                    ],
-                ),
-                Widget.Box(
-                    child=[
-                        Widget.Button(
-                            child=Widget.Label(label=action.label),
-                            on_click=lambda _, action=action: action.invoke(),
-                            css_classes=["action-button"],
-                        )
-                        for action in notification.actions
-                    ],
-                    homogeneous=True,
-                    style="margin-top: 0.75rem;" if notification.actions else "",
-                ),
+                header,
+                center,
+                actions,
             ],
         )
 

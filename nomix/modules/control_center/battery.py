@@ -14,8 +14,7 @@ class BatteryItem(Widget.Box):
             child=[
                 Widget.Icon(image=device.bind("icon-name")),
                 Widget.Label(
-                    label=device.bind("percent", lambda v: str(round(v)) + "%"),
-                    style="margin: 0 3px;",
+                    label=device.bind("percent", lambda v: str(round(v)) + "%")
                 ),
             ],
         )

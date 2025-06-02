@@ -1,6 +1,4 @@
 import datetime
-import locale
-from typing import Literal
 
 from ignis.utils import Utils
 from ignis.widgets import Widget
@@ -25,30 +23,14 @@ class Clock(ActionButton):
             css_classes=["clock"],
             tooltip_text="Launcher",
             toggle_window=ModuleWindow.LAUNCHER,
-            child=Widget.Box(
-                child=[
-                    Widget.Label(
-                        css_classes=["clock-text"],
-                        label=Utils.Poll(
-                            1000,
-                            lambda _: datetime.datetime.now().strftime(self.format),
-                        ).bind("output"),
-                    )
-                ]
+            child=Widget.Label(
+                css_classes=["clock-text"],
+                label=Utils.Poll(
+                    1000,
+                    lambda _: datetime.datetime.now().strftime(self.format),
+                ).bind("output"),
             ),
         )
-
-    def system_time_format(self) -> Literal["24", "12"]:
-        try:
-            locale.setlocale(locale.LC_TIME, "")
-            time_format = locale.nl_langinfo(locale.T_FMT)
-
-            if "%p" in time_format:
-                return "12"
-            else:
-                return "24"
-        except locale.Error:
-            return "24"
 
     def _update_format(self) -> str:
         opt = USER_OPTIONS.bar.clock_format

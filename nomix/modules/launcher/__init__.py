@@ -1,7 +1,7 @@
 import asyncio
 import re
 
-from gi.repository import Gtk
+from gi.repository import Gtk  # type: ignore
 from ignis.app import IgnisApp
 from ignis.menu_model import IgnisMenuItem, IgnisMenuModel, IgnisMenuSeparator
 from ignis.services.applications import (
@@ -151,35 +151,33 @@ class Launcher(PopupWindow):
         self._layout = Widget.Box()
         self._scroll = Widget.EventBox(
             css_classes=["launcher-app-list"],
+            homogeneous=True,
             on_scroll_up=lambda _: self._entry.grab_focus(),
             on_scroll_down=lambda _: self._entry.grab_focus(),
-            homogeneous=True,
             child=[self._layout],
         )
 
         self._entry = Widget.Entry(
-            hexpand=True,
             placeholder_text="Search...",
+            hexpand=True,
             on_change=lambda _: self._search(),
             on_accept=lambda _: self._on_accept(),
         )
 
         self._window_box = Widget.Box(
-            vertical=True,
             css_classes=["launcher"],
+            vertical=True,
             child=[
                 Widget.Box(
                     css_classes=["launcher-search"],
                     child=[
                         Widget.Icon(
                             icon_name="system-search-symbolic",
-                            style="margin-right: 0.5rem;",
                             pixel_size=24,
                         ),
                         self._entry,
                     ],
                 ),
-                Widget.Box(style="margin: 5px 0;"),
                 Widget.Scroll(height_request=450, child=self._scroll),
             ],
         )

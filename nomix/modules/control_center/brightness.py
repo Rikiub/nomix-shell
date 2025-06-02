@@ -22,17 +22,12 @@ class Brightness(Widget.Box):
 
         super().__init__(
             css_classes=["volume-slider"],
-            style="padding: 0 16px;",
             visible=backlight.bind("available"),
             child=[
-                Widget.Box(
+                Widget.Icon(
                     css_classes=["volume-icon"],
-                    child=[
-                        Widget.Icon(
-                            image="display-brightness-symbolic",
-                            pixel_size=20,
-                        )
-                    ],
+                    image="display-brightness-symbolic",
+                    pixel_size=20,
                 ),
                 BacklightSlider(step),
             ],

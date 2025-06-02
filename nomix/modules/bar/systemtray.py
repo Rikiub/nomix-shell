@@ -11,17 +11,17 @@ class TrayItem(Widget.Button):
                 item.menu.popup()
 
         super().__init__(
+            css_classes=["tray-item"],
+            tooltip_text=item.bind("tooltip"),
+            on_click=lambda _: popup(),
+            on_right_click=lambda _: popup(),
+            setup=lambda _: item.connect("removed", lambda _: self.unparent()),
             child=Widget.Box(
                 child=[
                     Widget.Icon(image=item.bind("icon"), pixel_size=24),
                     item.menu,
                 ]
             ),
-            on_click=lambda _: popup(),
-            on_right_click=lambda _: popup(),
-            setup=lambda _: item.connect("removed", lambda _: self.unparent()),
-            tooltip_text=item.bind("tooltip"),
-            css_classes=["tray-item"],
             **kwargs,
         )
 

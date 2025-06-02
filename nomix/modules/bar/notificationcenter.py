@@ -26,10 +26,10 @@ class NotificationCenter(ActionButton):
             return text
 
         super().__init__(
+            css_classes=["notification-center-button", *css_classes],
+            tooltip_text=self._counter.bind("value", lambda _: tooltip_text()),
             toggle_window=ModuleWindow.NOTIFICATION_CENTER,
             on_click=lambda _: self._reset(),
-            tooltip_text=self._counter.bind("value", lambda _: tooltip_text()),
-            css_classes=["notification-center-button", *css_classes],
             child=Widget.Box(
                 halign="center",
                 hexpand=True,

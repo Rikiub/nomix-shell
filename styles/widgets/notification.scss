@@ -42,21 +42,26 @@
 			@include mixin.interactive("surface-variant");
 
 			padding: 2px;
-			margin: 0 3px;
+			margin: 0 5px;
 		}
 	}
 
-	.summary {
-		margin-bottom: 3px;
-		font-weight: bold;
+	.information {
+		.icon {
+			margin-right: 10px;
+		}
+
+		.summary {
+			font-weight: bold;
+			margin-bottom: 3px;
+		}
+
+		.body {
+			margin-bottom: 10px;
+		}
 	}
 
-	/*
-	.body {
-	}
-	*/
-
-	.action-button {
+	.actions button {
 		@include mixin.interactive("secondary-container");
 
 		margin: 5px;
@@ -64,11 +69,11 @@
 	}
 }
 
-.notification-popup {
+.notification.popup {
 	min-width: 400px;
 }
 
-.player {
+.notification.player {
 	@include mixin.interactive("secondary-container");
 
 	.notification-header {
@@ -81,7 +86,18 @@
 
 	.controls button {
 		@include mixin.interactive("secondary");
-		margin: 0 5px;
+		margin: 0 3px;
+
+		&.previous,
+		&.next {
+			margin: 4px;
+			border-radius: var(--border-radius-lg);
+		}
+
+		&.play-pause {
+			padding: 0 15px;
+			border-radius: var(--border-radius-sm);
+		}
 	}
 
 	.art {

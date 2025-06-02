@@ -119,14 +119,16 @@ class DeviceMenu(Menu):
                                 exec_sh_async(settings_command)
                             ),
                             child=Widget.Box(
+                                css_classes=["device-icons"],
                                 child=[
                                     Widget.Icon(
                                         image="preferences-system-symbolic",
-                                        style="margin-right: 6px;",
+                                        css_classes=["icon"],
                                     ),
                                     Widget.Label(
                                         label=settings_label,
                                         halign="start",
+                                        css_classes=["icon"],
                                     ),
                                 ],
                             ),

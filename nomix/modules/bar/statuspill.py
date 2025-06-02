@@ -31,7 +31,6 @@ class IndicatorIcon(Widget.Box):
         self.label = Widget.Label(label=label)
 
         super().__init__(
-            style="margin-right: 0.5rem;",
             css_classes=["indicator-icon"],
             child=[Widget.Icon(image=icon_name), self.label],
             **kwargs,
@@ -39,35 +38,32 @@ class IndicatorIcon(Widget.Box):
 
 
 class NetworkIndicatorIcon(IndicatorIcon):
-    def __init__(
-        self, device_type: Ethernet | Wifi, other_device_type: Wifi | Ethernet
-    ):
-        self._device_type = device_type
-        self._other_device_type = other_device_type
+    def __init__(self, device: Wifi | Ethernet, other_device: Wifi | Ethernet):
+        self._device = device
+        self._other_device = other_device
 
-        super().__init__(icon_name=device_type.bind("icon-name"))
+        super().__init__(icon_name=self._device.bind("icon-name"))
 
         for binding in (
-            device_type.bind("devices", self._check_visibility),
-            other_device_type.bind("is_connected", self._check_visibility),
-            device_type.bind("is_connected", self._check_visibility),
+            self._device.bind_many(["is_connected", "devices"], self._check_visibility),
+            self._other_device.bind("is_connected", self._check_visibility),
         ):
             self.visible = binding
 
-    def _check_visibility(self, *args) -> bool:
-        return len(self._device_type.devices) > 0 and (
-            not self._other_device_type.is_connected or self._device_type.is_connected
+    def _check_visibility(self, *_) -> bool:
+        return len(self._device.devices) > 0 and (
+            not self._other_device.is_connected or self._device.is_connected
         )
 
 
 class WifiIcon(NetworkIndicatorIcon):
     def __init__(self):
-        super().__init__(device_type=network.wifi, other_device_type=network.ethernet)
+        super().__init__(device=network.wifi, other_device=network.ethernet)
 
 
 class EthernetIcon(NetworkIndicatorIcon):
     def __init__(self):
-        super().__init__(device_type=network.ethernet, other_device_type=network.wifi)
+        super().__init__(device=network.ethernet, other_device=network.wifi)
 
 
 class BluetoothIcon(IndicatorIcon):
@@ -147,11 +143,11 @@ class StatusPill(ActionButton):
         self.volume_steps = 5
 
         super().__init__(
-            tooltip_text="Control Center",
             css_classes=["status-pill", *css_classes],
+            tooltip_text="Control Center",
+            toggle_window=ModuleWindow.CONTROL_CENTER,
             on_scroll_up=lambda _: self._scroll("up"),
             on_scroll_down=lambda _: self._scroll("down"),
-            toggle_window=ModuleWindow.CONTROL_CENTER,
             child=Widget.Box(
                 child=[
                     WifiIcon(),
@@ -180,6 +176,6 @@ class StatusPill(ActionButton):
                 if volume > 100:
                     volume = 100
 
-            audio.speaker.set_volume(volume)
+            audio.speaker.volume = volume
 
             app.open_window(ModuleWindow.OSD)
