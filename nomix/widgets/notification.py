@@ -155,7 +155,7 @@ class NotificationWidget(Widget.EventBox):
         )
 
         super().__init__(
-            css_classes=["notification"] + css_classes,
+            css_classes=["notification", *css_classes],
             vertical=True,
             hexpand=True,
             on_hover=lambda _: expand_on_hover and self._expand_body(True),

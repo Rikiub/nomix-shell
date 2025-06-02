@@ -8,11 +8,9 @@ from ignis.widgets import Widget
 from nomix.utils.constants import ModuleWindow
 from nomix.utils.types import ANCHOR
 from nomix.widgets.notification import NotificationWidget
-from nomix.widgets.popup_window import OPENED_POPUP
 
 app = IgnisApp.get_default()
 notifications = NotificationService.get_default()
-
 
 class Popup(Widget.Box):
     def __init__(self, window: NotificationPopup, notification: Notification):
@@ -66,10 +64,15 @@ class NotificationPopup(Widget.Window):
             style="background-color: transparent; border: unset;",
         )
 
+        self._control_center = app.get_window(ModuleWindow.CONTROL_CENTER)
+        self._notification_center = app.get_window(ModuleWindow.NOTIFICATION_CENTER)
+
     def _on_notified(self, notification: Notification) -> None:
         self.visible = True
 
-        if OPENED_POPUP.value != ModuleWindow.NOTIFICATION_CENTER:
+        if not (
+            self._control_center.is_visible() or self._notification_center.is_visible()
+        ):
             popup = Popup(window=self, notification=notification)
             self.box.prepend(popup)
             popup.outer.reveal_child = True
