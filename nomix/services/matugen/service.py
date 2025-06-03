@@ -80,10 +80,14 @@ class MatugenService(BaseService):
                 return
 
             with file.open() as f:
-                image = f.readline().strip()
+                if lines := f.readlines():
+                    image = lines[1].strip()
+                else:
+                    return
 
             if image == CACHE_OPTIONS.wallpaper:
                 return
+
             CACHE_OPTIONS.wallpaper = image
 
             self._update_and_apply_scheme(image)
