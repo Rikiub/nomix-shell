@@ -36,6 +36,7 @@ class BaseItem(Widget.Button):
             css_classes=["app-item", *css_classes],
             child=Widget.Box(
                 vertical=vertical,
+                valign="center",
                 child=[
                     Widget.Icon(image=icon_name, pixel_size=48),
                     Widget.Label(
