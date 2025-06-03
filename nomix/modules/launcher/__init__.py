@@ -23,28 +23,43 @@ applications = ApplicationsService.get_default()
 
 PIN_APPS = False
 
+class BaseItem(Widget.Button):
+    def __init__(
+        self,
+        icon_name: str = "",
+        label: str = "",
+        vertical: bool = False,
+        css_classes: list[str] = [],
+        **kwargs,
+    ):
+        super().__init__(
+            css_classes=["app-item", *css_classes],
+            child=Widget.Box(
+                vertical=vertical,
+                child=[
+                    Widget.Icon(image=icon_name, pixel_size=48),
+                    Widget.Label(
+                        label=label,
+                        ellipsize="end",
+                        max_width_chars=30,
+                    ),
+                ],
+            ),
+            **kwargs,
+        )
 
-class LauncherAppItem(Widget.Button):
+
+class AppItem(BaseItem):
     def __init__(self, application: Application, vertical: bool = False) -> None:
         self._application = application
 
         super().__init__(
+            icon_name=application.icon,
+            label=application.name,
+            vertical=vertical,
             on_click=lambda _: self.launch(),
             on_right_click=lambda _: self._menu.popup(),
             tooltip_text=application.name if vertical else None,
-            css_classes=["launcher-app"],
-            child=Widget.Box(
-                vertical=vertical,
-                child=[
-                    Widget.Icon(image=application.icon, pixel_size=48),
-                    Widget.Label(
-                        label=application.name,
-                        ellipsize="end",
-                        max_width_chars=30,
-                        css_classes=["launcher-app-label"],
-                    ),
-                ],
-            ),
         )
         self._sync_menu()
         self._application.connect("notify::is-pinned", lambda *_: self._sync_menu())
@@ -95,7 +110,7 @@ def _get_default_browser_icon() -> str:
         return ""
 
 
-class SearchWebButton(Widget.Button):
+class SearchWebItem(BaseItem):
     icon = _get_default_browser_icon()
 
     def __init__(self, query: str):
@@ -113,17 +128,9 @@ class SearchWebButton(Widget.Button):
             self._url = f"https://www.google.com/search?q={query.replace(' ', '+')}"
 
         super().__init__(
+            icon_name=self.icon,
+            label=label,
             on_click=lambda _: self.launch(),
-            css_classes=["launcher-app", "launcher-web-search"],
-            child=Widget.Box(
-                child=[
-                    Widget.Icon(image=self.icon, pixel_size=48),
-                    Widget.Label(
-                        label=label,
-                        css_classes=["launcher-app-label"],
-                    ),
-                ]
-            ),
         )
 
     def _is_url(self, url: str) -> bool:
@@ -146,11 +153,11 @@ class SearchWebButton(Widget.Button):
 
 class Launcher(PopupWindow):
     def __init__(self, valign: ALIGN = "start", halign: ALIGN = "center"):
-        self._items: list[LauncherAppItem] = self._generate_items(applications.apps)
+        self._items: list[AppItem] = self._generate_items(applications.apps)
 
         self._layout = Widget.Box()
         self._scroll = Widget.EventBox(
-            css_classes=["launcher-app-list"],
+            css_classes=["app-list"],
             homogeneous=True,
             on_scroll_up=lambda _: self._entry.grab_focus(),
             on_scroll_down=lambda _: self._entry.grab_focus(),
@@ -169,7 +176,7 @@ class Launcher(PopupWindow):
             vertical=True,
             child=[
                 Widget.Box(
-                    css_classes=["launcher-search"],
+                    css_classes=["search-entry"],
                     child=[
                         Widget.Icon(
                             icon_name="system-search-symbolic",
@@ -218,7 +225,7 @@ class Launcher(PopupWindow):
             apps = applications.search(applications.apps, query)
 
             if not apps:
-                self._layout.child = [SearchWebButton(query)]
+                self._layout.child = [SearchWebItem(query)]
             else:
                 self._layout.child = self._generate_items(apps)
 
@@ -234,7 +241,7 @@ class Launcher(PopupWindow):
             self._layout.child[0].launch()
 
     def _update_layout(self):
-        css_class = "launcher-grid"
+        css_class = "grid"
 
         if USER_OPTIONS.launcher.grid:
             self._window_box.add_css_class(css_class)
@@ -247,8 +254,8 @@ class Launcher(PopupWindow):
 
         self._scroll.child = [self._layout]
 
-    def _generate_items(self, source: list[Application]) -> list[LauncherAppItem]:
-        return [LauncherAppItem(i, USER_OPTIONS.launcher.grid) for i in source]
+    def _generate_items(self, source: list[Application]) -> list[AppItem]:
+        return [AppItem(i, USER_OPTIONS.launcher.grid) for i in source]
 
     def _sync_items(self):
         self._items = self._generate_items(applications.apps)

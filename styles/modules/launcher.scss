@@ -1,67 +1,44 @@
 @use "../mixin";
 
 .launcher {
-	min-width: 30rem;
+	min-width: 440px;
 
-	.launcher-search {
-		background-color: var(--color-surface);
+	.search-entry {
+		@include mixin.interactive(surface);
 
-		padding: 0.5rem 1rem;
 		margin-bottom: 10px;
+		padding: 8px 15px;
 		border-radius: var(--border-radius-md);
 
 		entry {
 			background-color: unset;
 			outline: unset;
 		}
-
-		&:focus-within {
-			@include mixin.interactive(surface);
-
-			outline: var(--outline);
-			outline-offset: var(--outline-offset);
-		}
-
-		.launcher-search {
-			background-color: inherit;
-
-			&:focus-within {
-				outline: unset;
-			}
-		}
 	}
 
-	.launcher-app {
-		background-color: var(--color-background);
+	.app-item {
+		@include mixin.interactive("background");
 		border-radius: var(--border-radius-md);
-
+		
 		margin: 3px 5px;
-		padding: 0.7rem 1rem;
+		padding: 10px 15px;
 
-		&:focus-visible {
-			background-color: var(--color-surface);
-		}
-
-		&:hover {
-			@include mixin.interactive("surface");
-		}
-
-		.launcher-app-label {
+		label {
 			font-size: 1.1rem;
-			margin-left: 1rem;
+			margin-left: 15px;
 		}
 	}
 }
 
-.launcher-grid {
+.launcher.grid {
 	min-width: 800px;
 
-	.launcher-search {
+	.search-entry {
 		margin: 0 200px;
+		margin-bottom: 10px;
 	}
 
-	.launcher-app {
-		margin: 10px;
-		border-radius: var(--border-radius-md);
+	.app-item {
+		padding: 20px 0;
 	}
 }
