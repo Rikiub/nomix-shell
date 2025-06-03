@@ -80,7 +80,9 @@ class MatugenService(BaseService):
                 return
 
             with file.open() as f:
-                if lines := f.readlines():
+                lines = f.readlines()
+
+                if len(lines) >= 2:
                     image = lines[1].strip()
                 else:
                     return
