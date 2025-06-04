@@ -1,7 +1,7 @@
 import asyncio
-import random
 import re
 
+from gi.repository import GLib, Gdk, Gtk  # type: ignore
 from ignis.app import IgnisApp
 from ignis.menu_model import IgnisMenuItem, IgnisMenuModel, IgnisMenuSeparator
 from ignis.services.applications import (
@@ -18,14 +18,34 @@ from nomix.utils.options import USER_OPTIONS
 from nomix.utils.types import ALIGN
 from nomix.widgets.grid_view import GridLayout
 from nomix.widgets.popup_window import PopupWindow
+from nomix.widgets.search_entry import SearchEntry
 
 ignis_app = IgnisApp.get_default()
 applications = ApplicationsService.get_default()
 
 PIN_APPS = False
+NAVIGATION_KEYS = [
+    Gdk.KEY_Up,
+    Gdk.KEY_Down,
+    Gdk.KEY_Left,
+    Gdk.KEY_Right,
+    Gdk.KEY_Return,
+    Gdk.KEY_KP_Enter,
+    Gdk.KEY_Tab,
+    Gdk.KEY_ISO_Left_Tab,
+    Gdk.KEY_Home,
+    Gdk.KEY_End,
+    Gdk.KEY_Page_Up,
+    Gdk.KEY_Page_Down,
+]
 
 
-class BaseItem(Widget.Button):
+def launch_app(app: Application):
+    app.launch()
+    ignis_app.close_window(ModuleWindow.LAUNCHER)
+
+
+class BaseItem(Widget.EventBox):
     def __init__(
         self,
         icon_name: str = "",
@@ -37,18 +57,19 @@ class BaseItem(Widget.Button):
         self.icon = Widget.Icon(image=icon_name, pixel_size=48)
         self.text_label = Widget.Label(
             label=label,
+            wrap=True,
+            wrap_mode="word_char",
+            justify="center",
             ellipsize="end",
-            max_width_chars=30,
+            lines=2,
         )
         self.menu = Widget.PopoverMenu()
 
         super().__init__(
             css_classes=["app-item", *css_classes],
-            child=Widget.Box(
-                vertical=vertical,
-                valign="center",
-                child=[self.icon, self.text_label, self.menu],
-            ),
+            valign="center",
+            vertical=vertical,
+            child=[self.icon, self.text_label, self.menu],
             **kwargs,
         )
 
@@ -65,10 +86,6 @@ class AppItem(BaseItem):
         if application:
             self.update(application)
 
-    def launch(self, app: Application) -> None:
-        app.launch()
-        ignis_app.close_window(ModuleWindow.LAUNCHER)
-
     def launch_action(self, action: ApplicationAction) -> None:
         action.launch()
         ignis_app.close_window(ModuleWindow.LAUNCHER)
@@ -78,14 +95,14 @@ class AppItem(BaseItem):
         self.text_label.label = app.name
         self.tooltip_text = app.name if self._vertical else None
 
-        self.on_click = lambda _: self.launch(app)
+        self.on_click = lambda _: launch_app(app)
         self.on_right_click = lambda _: self.menu.popup()
 
         self._update_menu(app)
 
     def _update_menu(self, app: Application) -> None:
         self.menu.model = IgnisMenuModel(
-            IgnisMenuItem(label="Launch", on_activate=lambda _: self.launch(app)),
+            IgnisMenuItem(label="Launch", on_activate=lambda _: launch_app(app)),
             IgnisMenuItem(
                 label="Unpin" if app.is_pinned else "Pin",
                 on_activate=lambda _: app.unpin() if app.is_pinned else app.pin(),
@@ -169,16 +186,37 @@ class Launcher(PopupWindow):
 
             return False
 
+        def on_change():
+            self._grid.selected_position = 0
+
+            def scroll_callback():
+                vadj = self._scroll.get_vadjustment()
+                vadj.set_value(0)
+                return GLib.SOURCE_REMOVE
+
+            GLib.idle_add(scroll_callback)
+
         self._grid = GridLayout(
-            applications.apps,
+            items=Application,
             setup=lambda: AppItem(vertical=USER_OPTIONS.launcher.grid),
             bind=lambda widget, app: widget.update(app),
+            on_activate=lambda app: launch_app(app),
+            on_change=on_change,
             filter=filters,
         )
 
-        self._search_entry = self._grid.search_entry
-        self._search_entry.add_css_class("search-entry")
-        self._search_entry.set_placeholder_text("Search...")
+        applications.connect(
+            "notify::apps",
+            lambda *_: self._grid.update_items(applications.apps),
+        )
+
+        self._search_entry = SearchEntry(
+            placeholder_text="Search...",
+            css_classes=["search-entry"],
+            on_accept=lambda _: launch_app(self._grid.selected),
+            on_change=lambda _: self._grid.search(self._search_entry.text),
+        )
+        self._scroll = Widget.Scroll(css_classes=["scroll-container"], child=self._grid)
 
         super().__init__(
             valign=valign,
@@ -188,12 +226,26 @@ class Launcher(PopupWindow):
             on_close=lambda: self._search_entry.set_text(""),
             child=[
                 self._search_entry,
-                Widget.Scroll(css_classes=["scroll-container"], child=self._grid),
+                self._scroll,
             ],
         )
 
         if USER_OPTIONS.launcher.grid:
             self.panel.add_css_class("grid")
+
+        key_controller = Gtk.EventControllerKey()
+        key_controller.connect(
+            "key-pressed",
+            self._on_search_key_pressed,
+        )
+        self._search_entry.add_controller(key_controller)
+
+        key_controller = Gtk.EventControllerKey()
+        key_controller.connect(
+            "key-pressed",
+            self._on_key_pressed,
+        )
+        self.add_controller(key_controller)
 
         self.connect("notify::visible", lambda *_: self._on_open())
 
@@ -201,9 +253,33 @@ class Launcher(PopupWindow):
         if not self.visible:
             return
 
-        self._search_entry.set_text("")
+        self._search_entry.text = ""
         self._search_entry.grab_focus()
 
-    def _on_accept(self) -> None:
-        if len(self._layout.child) > 0:
-            self._layout.child[0].launch()
+    def _on_search_key_pressed(self, controller, keyval, keycode, state):
+        if keyval == Gdk.KEY_KP_Enter:
+            self._grid.selected.launch()
+
+        if keyval == Gdk.KEY_Escape:
+            ignis_app.close_window(ModuleWindow.LAUNCHER)
+
+    def _on_key_pressed(self, controller, keyval, keycode, state):
+        if keyval in NAVIGATION_KEYS:
+            return
+
+        unichar = Gdk.keyval_to_unicode(keyval)
+
+        if unichar > 0:
+            self._search_entry.grab_focus()
+
+            current: str = self._search_entry.get_text()
+            position = self._search_entry.get_position()
+
+            if keyval == Gdk.KEY_BackSpace:
+                new = current[:-1]
+            else:
+                char = chr(unichar)
+                new = current[:position] + char + current[position:]
+
+            self._search_entry.set_text(new)
+            self._search_entry.set_position(position + 1)
