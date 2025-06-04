@@ -1,7 +1,7 @@
 from typing import Callable
 
+from gi.repository import Gtk  # type: ignore
 from ignis.app import IgnisApp
-from ignis.base_widget import BaseWidget
 from ignis.variable import Variable
 from ignis.widgets import Widget
 
@@ -21,25 +21,27 @@ class PopupWindow(Widget.RevealerWindow):
         namespace: str,
         valign: ALIGN = "start",
         halign: ALIGN = "center",
+        vertical: bool = True,
         width_request: int = -1,
         height_request: int = -1,
         transition_type: TRANSITION_TYPE = "crossfade",
         transition_duration: int = 130,
         on_close: Callable | None = None,
         css_classes: list[str] = [],
-        child: list[BaseWidget] = [],
+        child: list[Gtk.Widget] = [],
         **kwargs,
     ):
         self._on_close = on_close
 
-        panel = Widget.Box(
-            css_classes=["popup-window"] + css_classes,
+        self.panel = Widget.Box(
+            css_classes=["popup-window", *css_classes],
             width_request=width_request,
             height_request=height_request,
             valign=valign,
             halign=halign,
-            vertical=True,
+            vertical=vertical,
             child=child,
+            **kwargs,
         )
 
         overlay = Widget.Overlay(
@@ -47,7 +49,7 @@ class PopupWindow(Widget.RevealerWindow):
                 css_classes=["window-backdrop"],
                 on_click=lambda _: OPENED_POPUP.set_value(""),
             ),
-            overlays=[panel],
+            overlays=[self.panel],
         )
 
         revealer = Widget.Revealer(
@@ -62,10 +64,9 @@ class PopupWindow(Widget.RevealerWindow):
             kb_mode="on_demand",
             namespace=namespace,
             popup=True,
-            visible=OPENED_POPUP.bind("value", lambda value: value == self.namespace),
             child=revealer,
             revealer=revealer,
-            **kwargs,
+            visible=OPENED_POPUP.bind("value", lambda value: value == self.namespace),
         )
 
         self.connect("notify::visible", lambda *_: self._toggle())
