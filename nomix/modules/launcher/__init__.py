@@ -1,7 +1,6 @@
 import asyncio
 import re
 
-from gi.repository import Gtk  # type: ignore
 from ignis.app import IgnisApp
 from ignis.menu_model import IgnisMenuItem, IgnisMenuModel, IgnisMenuSeparator
 from ignis.services.applications import (
@@ -16,12 +15,14 @@ from ignis.widgets import Widget
 from nomix.utils.constants import ModuleWindow
 from nomix.utils.options import USER_OPTIONS
 from nomix.utils.types import ALIGN
+from nomix.widgets.grid_view import GridLayout
 from nomix.widgets.popup_window import PopupWindow
 
 app = IgnisApp.get_default()
 applications = ApplicationsService.get_default()
 
 PIN_APPS = False
+
 
 class BaseItem(Widget.Button):
     def __init__(
@@ -32,56 +33,61 @@ class BaseItem(Widget.Button):
         css_classes: list[str] = [],
         **kwargs,
     ):
+        self.icon = Widget.Icon(image=icon_name, pixel_size=48)
+        self.text_label = Widget.Label(
+            label=label,
+            ellipsize="end",
+            max_width_chars=30,
+        )
+
         super().__init__(
             css_classes=["app-item", *css_classes],
             child=Widget.Box(
                 vertical=vertical,
                 valign="center",
-                child=[
-                    Widget.Icon(image=icon_name, pixel_size=48),
-                    Widget.Label(
-                        label=label,
-                        ellipsize="end",
-                        max_width_chars=30,
-                    ),
-                ],
+                child=[self.icon, self.text_label],
             ),
             **kwargs,
         )
 
 
 class AppItem(BaseItem):
-    def __init__(self, application: Application, vertical: bool = False) -> None:
-        self._application = application
+    def __init__(
+        self, application: Application | None = None, vertical: bool = False
+    ) -> None:
+        self._vertical = vertical
 
         super().__init__(
-            icon_name=application.icon,
-            label=application.name,
             vertical=vertical,
             on_click=lambda _: self.launch(),
             on_right_click=lambda _: self._menu.popup(),
-            tooltip_text=application.name if vertical else None,
         )
-        self._sync_menu()
-        self._application.connect("notify::is-pinned", lambda *_: self._sync_menu())
+
+        self._app = application
+        if self._app:
+            self.update(self._app)
+
+    def update(self, app: Application):
+        self.icon.icon_name = app.icon
+        self.text_label.label = app.name
+        self.tooltip_text = app.name if self._vertical else None
 
     def launch(self) -> None:
-        self._application.launch()
-        app.close_window(ModuleWindow.LAUNCHER)
+        if self._app:
+            self._app.launch()
+            app.close_window(ModuleWindow.LAUNCHER)
 
     def launch_action(self, action: ApplicationAction) -> None:
         action.launch()
         app.close_window(ModuleWindow.LAUNCHER)
 
-    def _sync_menu(self) -> None:
+    def _sync_menu(self, app: Application) -> None:
         pin = None
 
         if PIN_APPS:
             pin = IgnisMenuItem(
-                label="Unpin" if self._application.is_pinned else "Pin",
-                on_activate=lambda _: self._application.unpin()
-                if self._application.is_pinned
-                else self._application.pin(),
+                label="Unpin" if app.is_pinned else "Pin",
+                on_activate=lambda _: app.unpin() if app.is_pinned else app.pin(),
             )
 
         self._menu = Widget.PopoverMenu(
@@ -94,7 +100,7 @@ class AppItem(BaseItem):
                         label=i.name,
                         on_activate=lambda _, action=i: self.launch_action(action),
                     )
-                    for i in self._application.actions
+                    for i in app.actions
                 ),
             )
         )
@@ -154,88 +160,50 @@ class SearchWebItem(BaseItem):
 
 class Launcher(PopupWindow):
     def __init__(self, valign: ALIGN = "start", halign: ALIGN = "center"):
-        self._items: list[AppItem] = self._generate_items(applications.apps)
+        def filters(search: str, app: Application):
+            search = search.lower()
 
-        self._layout = Widget.Box()
-        self._scroll = Widget.EventBox(
-            css_classes=["app-list"],
-            homogeneous=True,
-            on_scroll_up=lambda _: self._entry.grab_focus(),
-            on_scroll_down=lambda _: self._entry.grab_focus(),
-            child=[self._layout],
+            if search in app.name.lower():
+                return True
+            if any(search in key.lower() for key in app.keywords):
+                return True
+
+            return False
+
+        self._grid = GridLayout(
+            applications.apps,
+            setup=lambda: AppItem(vertical=USER_OPTIONS.launcher.grid),
+            bind=lambda widget, app: widget.update(app),
+            filter=filters,
         )
 
-        self._entry = Widget.Entry(
-            placeholder_text="Search...",
-            hexpand=True,
-            on_change=lambda _: self._search(),
-            on_accept=lambda _: self._on_accept(),
-        )
-
-        self._window_box = Widget.Box(
-            css_classes=["launcher"],
-            vertical=True,
-            child=[
-                Widget.Box(
-                    css_classes=["search-entry"],
-                    child=[
-                        Widget.Icon(
-                            icon_name="system-search-symbolic",
-                            pixel_size=24,
-                        ),
-                        self._entry,
-                    ],
-                ),
-                Widget.Scroll(height_request=450, child=self._scroll),
-            ],
-        )
+        self._search_entry = self._grid.search_entry
+        self._search_entry.add_css_class("search-entry")
+        self._search_entry.set_placeholder_text("Search...")
 
         super().__init__(
             valign=valign,
             halign=halign,
             namespace=ModuleWindow.LAUNCHER,
-            setup=lambda self: self.connect(
-                "notify::visible", lambda *_: self._on_open()
-            ),
-            child=[self._window_box],
+            css_classes=["launcher"],
+            on_close=lambda: self._search_entry.set_text(""),
+            child=[
+                self._search_entry,
+                Widget.Scroll(css_classes=["scroll-container"], child=self._grid),
+            ],
         )
 
-        applications.connect("notify::apps", lambda *_: self._sync_items())
-        self._update_layout()
-        """
-        USER_OPTIONS.launcher.connect_option("grid", lambda *_: self._update_layout())  # type: ignore
-        USER_OPTIONS.launcher.connect_option(
-            "grid_columns", lambda *_: self._update_layout()
-        )  # type: ignore
-        """
+        if USER_OPTIONS.launcher.grid:
+            self.panel.add_css_class("grid")
 
-        def on_keypressed(event_key, keyval: int, keycode: int, state):
-            if keycode not in (111, 113, 114, 116):
-                self._entry.grab_focus_without_selecting()
-
-        key_controller = Gtk.EventControllerKey()
-        self.add_controller(key_controller)
-        key_controller.connect("key-pressed", on_keypressed)
-
-    def _search(self) -> None:
-        query = self._entry.text
-
-        if not query:
-            self._layout.child = self._items
-        else:
-            apps = applications.search(applications.apps, query)
-
-            if not apps:
-                self._layout.child = [SearchWebItem(query)]
-            else:
-                self._layout.child = self._generate_items(apps)
+        self.connect("notify::visible", lambda *_: self._on_open())
 
     def _on_open(self) -> None:
         if not self.visible:
             return
 
-        self._entry.text = ""
-        self._entry.grab_focus()
+        self._search_entry.set_text("")
+        self._search_entry.grab_focus()
 
     def _on_accept(self) -> None:
         if len(self._layout.child) > 0:
@@ -253,11 +221,4 @@ class Launcher(PopupWindow):
             self._window_box.remove_css_class(css_class)
             self._layout = Widget.Box(vertical=True, child=self._items)
 
-        self._scroll.child = [self._layout]
-
-    def _generate_items(self, source: list[Application]) -> list[AppItem]:
-        return [AppItem(i, USER_OPTIONS.launcher.grid) for i in source]
-
-    def _sync_items(self):
-        self._items = self._generate_items(applications.apps)
-        self._layout.child = self._items
+        self._grid.child = [self._layout]

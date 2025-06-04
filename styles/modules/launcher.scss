@@ -1,7 +1,9 @@
 @use "../mixin";
 
 .launcher {
-	min-width: 440px;
+	.grid-view {
+		background-color: transparent;
+	}
 
 	.search-entry {
 		@include mixin.interactive(surface);
@@ -17,7 +19,11 @@
 	}
 
 	.app-item {
-		@include mixin.interactive("background");
+		&,
+		&:hover {
+			background-color: unset;
+		}
+
 		border-radius: var(--border-radius-md);
 		
 		margin: 3px 5px;
@@ -31,15 +37,18 @@
 }
 
 .launcher.grid {
-	min-width: 800px;
+	.scroll-container {
+		min-width: 600px;
+		min-height: 450px;
+	}
 
 	.search-entry {
-		margin: 0 200px;
+		margin: 0 100px;
 		margin-bottom: 10px;
 	}
 
 	.app-item {
-		min-width: 160px;
-		min-height: 85px;
+		min-width: 100px;
+		min-height: 80px;
 	}
 }
