@@ -1,4 +1,5 @@
 import asyncio
+import random
 import re
 
 from ignis.app import IgnisApp
@@ -18,7 +19,7 @@ from nomix.utils.types import ALIGN
 from nomix.widgets.grid_view import GridLayout
 from nomix.widgets.popup_window import PopupWindow
 
-app = IgnisApp.get_default()
+ignis_app = IgnisApp.get_default()
 applications = ApplicationsService.get_default()
 
 PIN_APPS = False
@@ -39,13 +40,14 @@ class BaseItem(Widget.Button):
             ellipsize="end",
             max_width_chars=30,
         )
+        self.menu = Widget.PopoverMenu()
 
         super().__init__(
             css_classes=["app-item", *css_classes],
             child=Widget.Box(
                 vertical=vertical,
                 valign="center",
-                child=[self.icon, self.text_label],
+                child=[self.icon, self.text_label, self.menu],
             ),
             **kwargs,
         )
@@ -57,54 +59,50 @@ class AppItem(BaseItem):
     ) -> None:
         self._vertical = vertical
 
-        super().__init__(
-            vertical=vertical,
-            on_click=lambda _: self.launch(),
-            on_right_click=lambda _: self._menu.popup(),
-        )
+        super().__init__(vertical=vertical)
 
-        self._app = application
-        if self._app:
-            self.update(self._app)
+        if application:
+            self.update(application)
+
+    def launch(self, app: Application) -> None:
+        app.launch()
+        ignis_app.close_window(ModuleWindow.LAUNCHER)
+
+    def launch_action(self, action: ApplicationAction) -> None:
+        action.launch()
+        ignis_app.close_window(ModuleWindow.LAUNCHER)
 
     def update(self, app: Application):
         self.icon.icon_name = app.icon
         self.text_label.label = app.name
         self.tooltip_text = app.name if self._vertical else None
 
-    def launch(self) -> None:
-        if self._app:
-            self._app.launch()
-            app.close_window(ModuleWindow.LAUNCHER)
+        self.on_click = lambda _: self.launch(app)
+        self.on_right_click = lambda _: self.menu.popup()
 
-    def launch_action(self, action: ApplicationAction) -> None:
-        action.launch()
-        app.close_window(ModuleWindow.LAUNCHER)
+        self.update_menu(app)
 
-    def _sync_menu(self, app: Application) -> None:
-        pin = None
-
-        if PIN_APPS:
-            pin = IgnisMenuItem(
+    def update_menu(self, app: Application) -> None:
+        self.menu.model = IgnisMenuModel(
+            IgnisMenuItem(label="Launch", on_activate=lambda _: self.launch(app)),
+            IgnisMenuItem(
                 label="Unpin" if app.is_pinned else "Pin",
                 on_activate=lambda _: app.unpin() if app.is_pinned else app.pin(),
             )
-
-        self._menu = Widget.PopoverMenu(
-            model=IgnisMenuModel(
-                IgnisMenuItem(label="Launch", on_activate=lambda _: self.launch()),
-                pin,  # type: ignore
-                IgnisMenuSeparator(),
-                *(
-                    IgnisMenuItem(
-                        label=i.name,
-                        on_activate=lambda _, action=i: self.launch_action(action),
-                    )
-                    for i in app.actions
-                ),
-            )
+            if PIN_APPS
+            else None,  # type: ignore
+            IgnisMenuSeparator(),
+            *(
+                IgnisMenuItem(
+                    label=i.name,
+                    on_activate=lambda *_: self.launch_action(i),
+                )
+                for i in app.actions
+            ),
         )
-        self.child.append(self._menu)
+
+        if PIN_APPS:
+            app.connect("notify::is-pinned", lambda *_: self.update_menu(app))
 
 
 def _get_default_browser_icon() -> str:
@@ -155,7 +153,7 @@ class SearchWebItem(BaseItem):
 
     def launch(self) -> None:
         asyncio.create_task(exec_sh_async(f"xdg-open {self._url}"))
-        app.close_window(ModuleWindow.LAUNCHER)
+        ignis_app.close_window(ModuleWindow.LAUNCHER)
 
 
 class Launcher(PopupWindow):
