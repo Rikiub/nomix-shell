@@ -55,11 +55,12 @@ class BaseItem(Widget.Button):
 
 class AppItem(BaseItem):
     def __init__(
-        self, application: Application | None = None, vertical: bool = False
+        self,
+        application: Application | None = None,
+        vertical: bool = False,
     ) -> None:
         self._vertical = vertical
-
-        super().__init__(vertical=vertical)
+        super().__init__(vertical=self._vertical)
 
         if application:
             self.update(application)
@@ -80,9 +81,9 @@ class AppItem(BaseItem):
         self.on_click = lambda _: self.launch(app)
         self.on_right_click = lambda _: self.menu.popup()
 
-        self.update_menu(app)
+        self._update_menu(app)
 
-    def update_menu(self, app: Application) -> None:
+    def _update_menu(self, app: Application) -> None:
         self.menu.model = IgnisMenuModel(
             IgnisMenuItem(label="Launch", on_activate=lambda _: self.launch(app)),
             IgnisMenuItem(
@@ -102,7 +103,7 @@ class AppItem(BaseItem):
         )
 
         if PIN_APPS:
-            app.connect("notify::is-pinned", lambda *_: self.update_menu(app))
+            app.connect("notify::is-pinned", lambda *_: self._update_menu(app))
 
 
 def _get_default_browser_icon() -> str:
@@ -206,17 +207,3 @@ class Launcher(PopupWindow):
     def _on_accept(self) -> None:
         if len(self._layout.child) > 0:
             self._layout.child[0].launch()
-
-    def _update_layout(self):
-        css_class = "grid"
-
-        if USER_OPTIONS.launcher.grid:
-            self._window_box.add_css_class(css_class)
-            self._layout = Widget.Grid(
-                column_num=USER_OPTIONS.launcher.grid_columns, child=self._items
-            )
-        else:
-            self._window_box.remove_css_class(css_class)
-            self._layout = Widget.Box(vertical=True, child=self._items)
-
-        self._grid.child = [self._layout]

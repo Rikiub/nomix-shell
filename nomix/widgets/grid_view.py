@@ -26,6 +26,7 @@ class GridLayout(Generic[T], Gtk.GridView, BaseWidget):  # type: ignore
         self.search_entry.connect("search-changed", self._on_search_changed)
 
         self._store = Gio.ListStore(item_type=type(items[0]))
+        self.update_items(items)
         self._filter = Gtk.CustomFilter()
 
         self._setup = setup
@@ -48,6 +49,9 @@ class GridLayout(Generic[T], Gtk.GridView, BaseWidget):  # type: ignore
             factory=self._factory,
         )
         BaseWidget.__init__(self, **kwargs)
+
+    def update_items(self, items: list[T]):
+        self._store.remove_all()
 
         for i in items:
             self._store.append(i)  # type: ignore
