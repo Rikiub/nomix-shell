@@ -2,6 +2,7 @@ from typing import Callable
 
 from gi.repository import Gtk  # type: ignore
 from ignis.app import IgnisApp
+from ignis.base_widget import BaseWidget
 from ignis.variable import Variable
 from ignis.widgets import Widget
 
@@ -28,7 +29,7 @@ class PopupWindow(Widget.RevealerWindow):
         transition_duration: int = 130,
         on_close: Callable | None = None,
         css_classes: list[str] = [],
-        child: list[Gtk.Widget] = [],
+        child: list[Gtk.Widget | BaseWidget] = [],
         **kwargs,
     ):
         self._on_close = on_close
