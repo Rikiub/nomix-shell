@@ -16,7 +16,6 @@ class GridLayout(Generic[T], Gtk.GridView, BaseWidget):  # type: ignore
         on_bind: Callable[[BaseWidget, T], None],
         on_activate: Callable[[T], None] | None = None,
         on_change: Callable[[], None] | None = None,
-        filter: Callable[[str, T], bool] | None = None,
         **kwargs,
     ):
         if isinstance(items, list):
@@ -29,7 +28,6 @@ class GridLayout(Generic[T], Gtk.GridView, BaseWidget):  # type: ignore
         self._on_bind = on_bind
         self._on_activate = on_activate
         self._on_change = on_change
-        self._filter_func = filter
 
         self._factory = Gtk.SignalListItemFactory()
         self._factory.connect("setup", lambda _, item: self._on_factory_setup(item))
@@ -46,7 +44,8 @@ class GridLayout(Generic[T], Gtk.GridView, BaseWidget):  # type: ignore
         )
         BaseWidget.__init__(self, **kwargs)
 
-        self.connect("activate", self._activate)
+        if self._on_activate:
+            self.connect("activate", self._activate)
 
     @IgnisProperty
     def on_activate(self) -> Callable[[T], None] | None:
@@ -72,17 +71,16 @@ class GridLayout(Generic[T], Gtk.GridView, BaseWidget):  # type: ignore
         for i in items:
             self._store.append(i)  # type: ignore
 
-    def search(self, search: str):
-        if func := self._filter_func:
-            self._filter.set_filter_func(lambda item: func(search, item))
+    def search(self, search: str, filter: Callable[[str, T], bool]):
+        self._filter.set_filter_func(lambda item: filter(search, item))
 
         if self._on_change:
             self._on_change()
 
     def _activate(self, grid_view, position: int):
         if item := self._filter_model.get_item(position):
-            if self._on_activate:
-                self._on_activate(item)  # type: ignore
+            if f := self._on_activate:
+                f(item)  # type: ignore
 
     def _on_factory_setup(self, list_item: Gtk.ListItem):
         list_item.set_child(self._on_setup())

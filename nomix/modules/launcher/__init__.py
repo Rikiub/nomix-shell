@@ -202,7 +202,6 @@ class Launcher(PopupWindow):
             on_bind=lambda widget, app: widget.update(app),
             on_activate=lambda app: launch_app(app),
             on_change=on_change,
-            filter=filters,
         )
 
         applications.connect(
@@ -214,7 +213,7 @@ class Launcher(PopupWindow):
             placeholder_text="Search...",
             css_classes=["search-entry"],
             on_accept=lambda _: launch_app(self._grid.selected),
-            on_change=lambda _: self._grid.search(self._search_entry.text),
+            on_change=lambda _: self._grid.search(self._search_entry.text, filters),
         )
         self._scroll = Widget.Scroll(css_classes=["scroll-container"], child=self._grid)
 
@@ -222,16 +221,16 @@ class Launcher(PopupWindow):
             valign=valign,
             halign=halign,
             namespace=ModuleWindow.LAUNCHER,
-            css_classes=["launcher"],
             on_close=lambda: self._search_entry.set_text(""),
+            css_classes=[
+                "launcher",
+                "grid" if USER_OPTIONS.launcher.grid else "",
+            ],
             child=[
                 self._search_entry,
                 self._scroll,
             ],
         )
-
-        if USER_OPTIONS.launcher.grid:
-            self.panel.add_css_class("grid")
 
         key_controller = Gtk.EventControllerKey()
         key_controller.connect(

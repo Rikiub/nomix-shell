@@ -8,11 +8,17 @@ from ignis.gobject import IgnisProperty
 class SearchEntry(Gtk.SearchEntry, BaseWidget):  # type: ignore
     def __init__(
         self,
+        placeholder_text: str | None = None,
+        search_delay: int = 250,
         on_accept: Callable | None = None,
         on_change: Callable | None = None,
         **kwargs,
     ):
-        Gtk.SearchEntry.__init__(self)
+        Gtk.SearchEntry.__init__(
+            self,
+            placeholder_text=placeholder_text,
+            search_delay=search_delay,
+        )
         self._on_accept = on_accept
         self._on_change = on_change
         BaseWidget.__init__(self, **kwargs)
