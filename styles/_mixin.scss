@@ -19,9 +19,10 @@
 			in srgb,
 			var(#{$on}) var(--opacity-hover),
 			var(#{$background})
-		);
+			);
 	}
-
+	
+	&:selected,
 	&.active,
 	&:active {
 		background-color: color-mix(
