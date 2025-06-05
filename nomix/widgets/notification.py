@@ -118,13 +118,13 @@ class NotificationWidget(Widget.EventBox):
             child=[
                 Widget.Icon(
                     css_classes=["icon"],
-                    image=notification.icon
-                    if notification.icon
-                    else "dialog-information-symbolic",
+                    image=notification.icon,
                     pixel_size=50,
                     halign="start",
                     valign="start",
-                ),
+                )
+                if notification.icon
+                else None,
                 Widget.Box(
                     vertical=True,
                     hexpand=True,
