@@ -198,8 +198,8 @@ class Launcher(PopupWindow):
 
         self._grid = GridLayout(
             items=Application,
-            setup=lambda: AppItem(vertical=USER_OPTIONS.launcher.grid),
-            bind=lambda widget, app: widget.update(app),
+            on_setup=lambda: AppItem(vertical=USER_OPTIONS.launcher.grid),
+            on_bind=lambda widget, app: widget.update(app),
             on_activate=lambda app: launch_app(app),
             on_change=on_change,
             filter=filters,

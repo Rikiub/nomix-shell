@@ -12,8 +12,8 @@ class GridLayout(Generic[T], Gtk.GridView, BaseWidget):  # type: ignore
     def __init__(
         self,
         items: Type[T] | list[T],
-        setup: Callable[[], BaseWidget],
-        bind: Callable[[BaseWidget, T], None],
+        on_setup: Callable[[], BaseWidget],
+        on_bind: Callable[[BaseWidget, T], None],
         on_activate: Callable[[T], None] | None = None,
         on_change: Callable[[], None] | None = None,
         filter: Callable[[str, T], bool] | None = None,
@@ -25,8 +25,8 @@ class GridLayout(Generic[T], Gtk.GridView, BaseWidget):  # type: ignore
         else:
             self._store = Gio.ListStore(item_type=items)
 
-        self._setup = setup
-        self._bind = bind
+        self._on_setup = on_setup
+        self._on_bind = on_bind
         self._on_activate = on_activate
         self._on_change = on_change
         self._filter_func = filter
@@ -85,7 +85,7 @@ class GridLayout(Generic[T], Gtk.GridView, BaseWidget):  # type: ignore
                 self._on_activate(item)  # type: ignore
 
     def _on_factory_setup(self, list_item: Gtk.ListItem):
-        list_item.set_child(self._setup())
+        list_item.set_child(self._on_setup())
 
     def _on_factory_bind(self, list_item: Gtk.ListItem):
         widget = list_item.get_child()
@@ -94,4 +94,4 @@ class GridLayout(Generic[T], Gtk.GridView, BaseWidget):  # type: ignore
         if not (widget or item):
             raise ValueError()
 
-        self._bind(widget, item)  # type: ignore
+        self._on_bind(widget, item)  # type: ignore
