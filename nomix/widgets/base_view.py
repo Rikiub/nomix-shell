@@ -65,8 +65,10 @@ class BaseView(Generic[T], Widget.Box):
         self._store.append(item)  # type: ignore
 
     def remove_item(self, item: T):
-        _, position = self._store.find(item)  # type: ignore
-        self._store.remove(position)
+        exists, position = self._store.find(item)  # type: ignore
+
+        if exists:
+            self._store.remove(position)
 
     def update_items(self, items: list[T]):
         self._store.remove_all()
