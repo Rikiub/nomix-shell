@@ -33,3 +33,10 @@
 		box-shadow: unset;
 	}
 }
+
+.notification-list {
+	.activatable {
+		background-color: transparent;
+		padding: 0;
+	}
+}

@@ -67,3 +67,8 @@ check:checked {
 entry {
 	@include mixin.interactive("surface");
 }
+
+listview,
+gridview {
+	background-color: transparent;
+}

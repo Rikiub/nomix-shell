@@ -1,59 +1,47 @@
+from gi.repository import GLib  # type: ignore
 from ignis.options import options
 from ignis.services.notifications import Notification, NotificationService
-from ignis.utils import Utils
+from ignis.utils.timeout import Timeout
 from ignis.widgets import Widget
 
 from nomix.modules.notification_center.player import MediaPlayer
+from nomix.widgets.base_view import ListView
 from nomix.widgets.notification import NotificationWidget
 
 notifications = NotificationService.get_default()
 
 
-class Popup(Widget.Revealer):
-    def __init__(self, notification: Notification, **kwargs):
+class NotificationList(ListView):
+    def __init__(self, css_classes: list[str] = [], **kwargs):
+        def on_bind(revealer: Widget.Revealer, notify: Notification):
+            child = revealer.child
+            child.update(notify)
+
+            def close():
+                revealer.reveal_child = False
+                Timeout(revealer.transition_duration, lambda: self.remove_item(notify))
+
+            child.on_close = close
+            GLib.idle_add(lambda: revealer.set_reveal_child(True))
+
         super().__init__(
-            child=NotificationWidget(notification),
-            transition_type="slide_down",
+            item_type=Notification,
+            items=notifications.notifications,
+            on_setup=lambda: Widget.Revealer(
+                reveal_child=False,
+                transition_type="slide_down",
+                transition_duration=300,
+                child=NotificationWidget(),
+            ),
+            on_bind=on_bind,
+            css_classes=["notification-list", *css_classes],
             **kwargs,
         )
 
-        notification.connect("closed", lambda _: self.destroy())
-
-    def destroy(self):
-        self.reveal_child = False
-        Utils.Timeout(self.transition_duration, self.unparent)
-
-
-class NotificationList(Widget.Box):
-    def __init__(self):
-        super().__init__(
-            css_classes=["notification-list"],
-            vertical=True,
-            vexpand=True,
-            setup=lambda _: notifications.connect(
-                "notified",
-                lambda _, notification: self._on_notified(notification),
-            ),
-            child=[
-                Widget.Label(
-                    css_classes=["info-label"],
-                    label="No notifications",
-                    valign="center",
-                    vexpand=True,
-                    visible=notifications.bind(
-                        "notifications", lambda value: len(value) == 0
-                    ),
-                ),
-            ],
+        notifications.connect(
+            "notified",
+            lambda _, notify: self.append_item(notify),
         )
-
-        for n in notifications.notifications:
-            self.append(Popup(n, reveal_child=True))
-
-    def _on_notified(self, notification: Notification) -> None:
-        popup = Popup(notification)
-        self.prepend(popup)
-        popup.reveal_child = True
 
 
 class NotificationPanel(Widget.Box):
@@ -66,8 +54,8 @@ class NotificationPanel(Widget.Box):
                     halign="start",
                     child=[
                         Widget.Switch(
-                            active=options.notifications.bind("dnd"),
-                            on_change=lambda _, active: options.notifications.set_dnd(
+                            active=options.notifications.bind("dnd"),  # type: ignore
+                            on_change=lambda _, active: options.notifications.set_dnd(  # type: ignore
                                 active
                             ),
                         ),
@@ -96,6 +84,20 @@ class NotificationPanel(Widget.Box):
                         child=[
                             MediaPlayer(),
                             NotificationList(),
+                            Widget.Revealer(
+                                vexpand=True,
+                                valign="center",
+                                transition_type="crossfade",
+                                transition_duration=700,
+                                reveal_child=notifications.bind(
+                                    "notifications",
+                                    lambda v: len(v) == 0,
+                                ),
+                                child=Widget.Label(
+                                    css_classes=["info-label"],
+                                    label="No notifications",
+                                ),
+                            ),
                         ],
                     ),
                 ),
