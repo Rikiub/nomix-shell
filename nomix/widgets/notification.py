@@ -70,12 +70,13 @@ class Header(Placeholder):
         self.app_name.label = item.app_name
         self.app_name.visible = bool(item.app_name)
 
-        self.time.label = Utils.Poll(1000, lambda _: self._format_time(item.time)).bind(
-            "output"
-        )
+        self.time.label = Utils.Poll(
+            1000,
+            lambda _: self._format_time(item.time),
+        ).bind("output")
 
     def _format_time(self, time: int) -> str:
-        days, hours, minutes = self._get_past_time(time)
+        days, hours, minutes = self._extract_date(time)
 
         if days:
             return f"{days} days ago"
@@ -86,7 +87,7 @@ class Header(Placeholder):
         else:
             return "Just now"
 
-    def _get_past_time(self, timestamp: float) -> tuple[int, int, int]:
+    def _extract_date(self, timestamp: float) -> tuple[int, int, int]:
         current = datetime.datetime.now()
         past = datetime.datetime.fromtimestamp(timestamp)
         delta = current - past
@@ -211,8 +212,8 @@ class NotificationWidget(Widget.EventBox):
         return self._on_close
 
     @on_close.setter
-    def on_close(self, callable: Callable):
-        self._on_close = callable
+    def on_close(self, callback: Callable):
+        self._on_close = callback
 
     def update(self, notify: Notification):
         for widget in self.child:
@@ -226,5 +227,5 @@ class NotificationWidget(Widget.EventBox):
 
         notify.connect(
             "closed",
-            lambda *_: self._on_close and self._on_close(),
+            lambda *_: self.on_close and self.on_close(),
         )
