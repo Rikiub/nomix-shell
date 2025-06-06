@@ -1,6 +1,25 @@
 @use "../mixin";
 
 .launcher {
+	min-width: 700px;
+	min-height: 440px;
+
+	.scroll-container,
+	.placeholder {
+		min-width: inherit;
+		min-height: inherit;
+	}
+
+	.placeholder {
+		font-size: 1.5em;
+		color: oklch(from var(--color-on-background) l c h / 0.6);
+
+		label,
+		image {
+			margin: 5px 0;
+		}
+	}
+
 	.search-entry {
 		@include mixin.interactive("surface");
 
@@ -24,11 +43,6 @@
 }
 
 .launcher.grid {
-	.scroll-container {
-		min-width: 700px;
-		min-height: 450px;
-	}
-
 	.search-entry {
 		margin: 0 150px;
 		margin-bottom: 10px;

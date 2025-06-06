@@ -40,26 +40,11 @@ class BaseView(Generic[T], BaseWidget):
         if self._on_activate:
             self.connect("activate", self._activate)
 
-    @IgnisProperty
-    def on_activate(self) -> Callable[[T], None] | None:
-        return self._on_activate
-
-    @IgnisProperty
-    def selected(self) -> T:
-        position = self._selection_model.get_selected()
-        item = self._filter_model.get_item(position)
-        return item  # type: ignore
-
-    @IgnisProperty
-    def selected_position(self) -> int:  # type: ignore
-        return self._selection_model.get_selected()
-
-    @selected_position.setter
-    def selected_position(self, position: int):
-        self._selection_model.set_selected(position)
-
     def append_item(self, item: T):
         self._store.append(item)  # type: ignore
+
+        self._total_items += 1
+        self.notify("total_items")
 
     def remove_item(self, item: T):
         exists, position = self._store.find(item)  # type: ignore
@@ -67,14 +52,24 @@ class BaseView(Generic[T], BaseWidget):
         if exists:
             self._store.remove(position)
 
+            self._total_items -= 1
+            self.notify("total_items")
+
     def update_items(self, items: list[T]):
         self._store.remove_all()
+        self._total_items = 0
 
         for i in items:
             self._store.append(i)  # type: ignore
+            self._total_items += 1
+
+        self.notify("total_items")
 
     def search(self, search: str, filter: Callable[[str, T], bool]):
         self._filter.set_filter_func(lambda item: filter(search, item))
+
+        self._total_items = self._filter_model.get_n_items()
+        self.notify("total_items")
 
         if f := self._on_change:
             f()
@@ -101,7 +96,51 @@ class GridView(Gtk.GridView, BaseView):  # type: ignore
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+    @IgnisProperty
+    def on_activate(self) -> Callable[[T], None] | None:  # type: ignore
+        return self._on_activate
+
+    @IgnisProperty
+    def total_items(self) -> int:
+        return self._total_items
+
+    @IgnisProperty
+    def selected(self):
+        position = self._selection_model.get_selected()
+        item = self._filter_model.get_item(position)
+        return item  # type: ignore
+
+    @IgnisProperty
+    def selected_position(self) -> int:  # type: ignore
+        return self._selection_model.get_selected()
+
+    @selected_position.setter
+    def selected_position(self, position: int):
+        self._selection_model.set_selected(position)
+
 
 class ListView(Gtk.ListView, BaseView):  # type: ignore
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    @IgnisProperty
+    def on_activate(self) -> Callable[[T], None] | None:  # type: ignore
+        return self._on_activate
+
+    @IgnisProperty
+    def total_items(self) -> int:
+        return self._total_items
+
+    @IgnisProperty
+    def selected(self):
+        position = self._selection_model.get_selected()
+        item = self._filter_model.get_item(position)
+        return item  # type: ignore
+
+    @IgnisProperty
+    def selected_position(self) -> int:  # type: ignore
+        return self._selection_model.get_selected()
+
+    @selected_position.setter
+    def selected_position(self, position: int):
+        self._selection_model.set_selected(position)

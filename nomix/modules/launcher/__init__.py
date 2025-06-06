@@ -187,7 +187,7 @@ class Launcher(PopupWindow):
             return False
 
         def on_change():
-            self._grid._selection_model.set_selected(0)
+            self._grid.selected_position = 0
 
             def scroll_callback():
                 vadj = self._scroll.get_vadjustment()
@@ -215,7 +215,40 @@ class Launcher(PopupWindow):
             on_accept=lambda _: launch_app(self._grid.selected),
             on_change=lambda _: self._grid.search(self._search_entry.text, filters),
         )
-        self._scroll = Widget.Scroll(css_classes=["scroll-container"], child=self._grid)
+        self._scroll = Widget.Scroll(
+            css_classes=["scroll-container"],
+            valign="center",
+            vexpand=True,
+            child=self._grid,
+            visible=self._grid.bind(
+                "total_items",
+                lambda v: v != 0,
+            ),
+        )
+        self._placeholder = Widget.Revealer(
+            css_classes=["placeholder"],
+            transition_type="crossfade",
+            transition_duration=300,
+            reveal_child=self._grid.bind(
+                "total_items",
+                lambda v: v == 0,
+            ),
+            visible=self._grid.bind(
+                "total_items",
+                lambda v: v == 0,
+            ),
+            child=Widget.Box(
+                vertical=True,
+                vexpand=True,
+                hexpand=True,
+                valign="center",
+                halign="center",
+                child=[
+                    Widget.Icon(image="search-symbolic", pixel_size=80),
+                    Widget.Label(label="No apps founded"),
+                ],
+            ),
+        )
 
         super().__init__(
             valign=valign,
@@ -229,6 +262,7 @@ class Launcher(PopupWindow):
             child=[
                 self._search_entry,
                 self._scroll,
+                self._placeholder,
             ],
         )
 
