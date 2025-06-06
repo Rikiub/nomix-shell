@@ -11,8 +11,8 @@ class BaseView(Generic[T], BaseWidget):
     def __init__(
         self,
         item_type: type[T],
-        on_setup: Callable[[], BaseWidget],
-        on_bind: Callable[[BaseWidget, T], None],
+        on_setup: Callable[[], Gtk.Widget],
+        on_bind: Callable[[Gtk.Widget, T], None],
         on_activate: Callable[[T], None] | None = None,
         on_change: Callable[[], None] | None = None,
         items: list[T] = [],
@@ -31,32 +31,12 @@ class BaseView(Generic[T], BaseWidget):
         self._factory.connect("bind", self._bind)
 
         self._filter = Gtk.CustomFilter()
-        self._filter_model = Gtk.FilterListModel(
-            model=self._store,
-            filter=self._filter,
-        )
+        self._filter_model = Gtk.FilterListModel(model=self._store, filter=self._filter)
         self._selection_model = Gtk.SingleSelection(model=self._filter_model)
 
         super().__init__(model=self._selection_model, factory=self._factory, **kwargs)
 
         self.connect("activate", self._activate)
-
-    def _setup(self, view, list_item: Gtk.ListItem):
-        list_item.set_child(self._on_setup())
-
-    def _bind(self, view, list_item: Gtk.ListItem):
-        widget = list_item.get_child()
-        item = list_item.get_item()
-
-        if not (widget or item):
-            raise ValueError()
-
-        self._on_bind(widget, item)  # type: ignore
-
-    def _activate(self, view, position):
-        if item := self._filter_model.get_item(position):
-            if f := self._on_activate:
-                f(item)  # type: ignore
 
     def append_item(self, item: T):
         self._store.append(item)  # type: ignore
@@ -91,6 +71,23 @@ class BaseView(Generic[T], BaseWidget):
 
         if f := self._on_change:
             f()
+
+    def _setup(self, view, list_item: Gtk.ListItem):
+        list_item.set_child(self._on_setup())
+
+    def _bind(self, view, list_item: Gtk.ListItem):
+        widget = list_item.get_child()
+        item = list_item.get_item()
+
+        if not (widget or item):
+            raise ValueError()
+
+        self._on_bind(widget, item)  # type: ignore
+
+    def _activate(self, view, position):
+        if item := self._filter_model.get_item(position):
+            if f := self._on_activate:
+                f(item)  # type: ignore
 
 
 class GridView(Gtk.GridView, BaseView):  # type: ignore

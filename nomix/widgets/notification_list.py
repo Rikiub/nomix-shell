@@ -3,7 +3,7 @@ from ignis.services.notifications import Notification, NotificationService
 from ignis.utils.timeout import Timeout
 from ignis.widgets import Widget
 
-from nomix.widgets.base_view import ListView
+from nomix.widgets.view import ListView
 from nomix.widgets.notification import NotificationWidget
 
 
@@ -22,6 +22,10 @@ class NotificationList(ListView):
             child = revealer.child
             child.update(notify)
 
+            def open():
+                revealer.reveal_child = True
+                return GLib.SOURCE_REMOVE
+
             def close():
                 revealer.reveal_child = False
                 Timeout(
@@ -36,7 +40,7 @@ class NotificationList(ListView):
                     lambda _: close(),
                 )
 
-            GLib.idle_add(lambda: revealer.set_reveal_child(True))
+            GLib.idle_add(open)
 
         super().__init__(
             item_type=Notification,

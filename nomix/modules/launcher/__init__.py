@@ -1,22 +1,18 @@
-import asyncio
-import re
-
 from gi.repository import GLib, Gdk, Gtk  # type: ignore
 from ignis.app import IgnisApp
+from ignis.gobject import Binding
 from ignis.menu_model import IgnisMenuItem, IgnisMenuModel, IgnisMenuSeparator
 from ignis.services.applications import (
     Application,
     ApplicationAction,
     ApplicationsService,
 )
-from ignis.utils.icon import get_app_icon_name
-from ignis.utils.shell import exec_sh, exec_sh_async
 from ignis.widgets import Widget
 
-from nomix.utils.constants import ModuleWindow
+from nomix.utils.constants import NAVIGATION_KEYS, ModuleWindow
 from nomix.utils.options import USER_OPTIONS
 from nomix.utils.types import ALIGN
-from nomix.widgets.base_view import GridView
+from nomix.widgets.view import GridView
 from nomix.widgets.popup_window import PopupWindow
 from nomix.widgets.search_entry import SearchEntry
 
@@ -24,20 +20,6 @@ ignis_app = IgnisApp.get_default()
 applications = ApplicationsService.get_default()
 
 PIN_APPS = False
-NAVIGATION_KEYS = [
-    Gdk.KEY_Up,
-    Gdk.KEY_Down,
-    Gdk.KEY_Left,
-    Gdk.KEY_Right,
-    Gdk.KEY_Return,
-    Gdk.KEY_KP_Enter,
-    Gdk.KEY_Tab,
-    Gdk.KEY_ISO_Left_Tab,
-    Gdk.KEY_Home,
-    Gdk.KEY_End,
-    Gdk.KEY_Page_Up,
-    Gdk.KEY_Page_Down,
-]
 
 
 def launch_app(app: Application):
@@ -45,18 +27,15 @@ def launch_app(app: Application):
     ignis_app.close_window(ModuleWindow.LAUNCHER)
 
 
-class BaseItem(Widget.EventBox):
+class AppItem(Widget.Box):
     def __init__(
         self,
-        icon_name: str = "",
-        label: str = "",
-        vertical: bool = False,
+        application: Application | None = None,
         css_classes: list[str] = [],
         **kwargs,
-    ):
-        self.icon = Widget.Icon(image=icon_name, pixel_size=48)
+    ) -> None:
+        self.icon = Widget.Icon(pixel_size=48)
         self.title = Widget.Label(
-            label=label,
             wrap=True,
             wrap_mode="word_char",
             justify="center",
@@ -66,22 +45,11 @@ class BaseItem(Widget.EventBox):
         self.menu = Widget.PopoverMenu()
 
         super().__init__(
-            css_classes=["app-item", *css_classes],
             valign="center",
-            vertical=vertical,
+            css_classes=["app-item", *css_classes],
             child=[self.icon, self.title, self.menu],
             **kwargs,
         )
-
-
-class AppItem(BaseItem):
-    def __init__(
-        self,
-        application: Application | None = None,
-        vertical: bool = False,
-    ) -> None:
-        self._vertical = vertical
-        super().__init__(vertical=self._vertical)
 
         if application:
             self.update(application)
@@ -93,7 +61,7 @@ class AppItem(BaseItem):
     def update(self, app: Application):
         self.icon.image = app.icon
         self.title.label = app.name
-        self.tooltip_text = app.name if self._vertical else None
+        self.tooltip_text = app.name if self.vertical else None
 
         self.on_click = lambda _: launch_app(app)
         self.on_right_click = lambda _: self.menu.popup()
@@ -121,57 +89,6 @@ class AppItem(BaseItem):
 
         if PIN_APPS:
             app.connect("notify::is-pinned", lambda *_: self._update_menu(app))
-
-
-def _get_default_browser_icon() -> str:
-    desktop = exec_sh("xdg-settings get default-web-browser").stdout.strip()
-    desktop = str(desktop).strip(".desktop")
-
-    if icon := get_app_icon_name(desktop):
-        return icon
-    else:
-        return ""
-
-
-class SearchWebItem(BaseItem):
-    icon = _get_default_browser_icon()
-
-    def __init__(self, query: str):
-        self._query = query
-        self._url = ""
-
-        if not query.startswith(("http://", "https://")) and "." in query:
-            query = "https://" + query
-
-        if self._is_url(query):
-            label = f"Visit {query}"
-            self._url = query
-        else:
-            label = "Search in Google"
-            self._url = f"https://www.google.com/search?q={query.replace(' ', '+')}"
-
-        super().__init__(
-            icon_name=self.icon,
-            label=label,
-            on_click=lambda _: self.launch(),
-        )
-
-    def _is_url(self, url: str) -> bool:
-        regex = re.compile(
-            r"^(?:http|ftp)s?://"  # http:// or https://
-            r"(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|"  # domain
-            r"localhost|"  # localhost
-            r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|"  # or ipv4
-            r"\[?[A-F0-9]*:[A-F0-9:]+\]?)"  # or ipv6
-            r"(?::\d+)?"  # optional port
-            r"(?:/?|[/?]\S+)$",
-            re.IGNORECASE,
-        )
-        return re.match(regex, url) is not None
-
-    def launch(self) -> None:
-        asyncio.create_task(exec_sh_async(f"xdg-open {self._url}"))
-        ignis_app.close_window(ModuleWindow.LAUNCHER)
 
 
 class Launcher(PopupWindow):
@@ -225,18 +142,14 @@ class Launcher(PopupWindow):
                 lambda v: v != 0,
             ),
         )
+
+        hidder: Binding = self._grid.bind("total_items", lambda v: v == 0)
         self._placeholder = Widget.Revealer(
             css_classes=["placeholder"],
             transition_type="crossfade",
             transition_duration=300,
-            reveal_child=self._grid.bind(
-                "total_items",
-                lambda v: v == 0,
-            ),
-            visible=self._grid.bind(
-                "total_items",
-                lambda v: v == 0,
-            ),
+            reveal_child=hidder,
+            visible=hidder,
             child=Widget.Box(
                 vertical=True,
                 vexpand=True,
@@ -245,7 +158,7 @@ class Launcher(PopupWindow):
                 halign="center",
                 child=[
                     Widget.Icon(image="search-symbolic", pixel_size=80),
-                    Widget.Label(label="No results found"),
+                    Widget.Label(label="No Results Found"),
                 ],
             ),
         )
