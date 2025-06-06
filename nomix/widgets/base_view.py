@@ -3,16 +3,14 @@ from gi.repository import Gio, Gtk  # type: ignore
 
 from ignis.base_widget import BaseWidget
 from ignis.gobject import IgnisProperty
-from ignis.widgets import Widget
 
 
 T = TypeVar(name="T")
 
 
-class BaseView(Generic[T], Widget.Box):
+class BaseView(Generic[T], BaseWidget):
     def __init__(
         self,
-        view: Type[Gtk.ListView | Gtk.GridView],
         item_type: Type[T],
         on_setup: Callable[[], BaseWidget],
         on_bind: Callable[[BaseWidget, T], None],
@@ -37,11 +35,10 @@ class BaseView(Generic[T], Widget.Box):
         self._filter_model = Gtk.FilterListModel(model=self._store, filter=self._filter)
         self._selection_model = Gtk.SingleSelection(model=self._filter_model)
 
-        self._view = view(model=self._selection_model, factory=self._factory)
-        super().__init__(child=[self._view], **kwargs)
+        super().__init__(model=self._selection_model, factory=self._factory, **kwargs)
 
         if self._on_activate:
-            self._view.connect("activate", self._activate)
+            self.connect("activate", self._activate)
 
     @IgnisProperty
     def on_activate(self) -> Callable[[T], None] | None:
@@ -100,11 +97,11 @@ class BaseView(Generic[T], Widget.Box):
         self._on_bind(widget, item)  # type: ignore
 
 
-class GridView(BaseView):
+class GridView(Gtk.GridView, BaseView):  # type: ignore
     def __init__(self, **kwargs):
-        super().__init__(Gtk.GridView, **kwargs)
+        super().__init__(**kwargs)
 
 
-class ListView(BaseView):
+class ListView(Gtk.ListView, BaseView):  # type: ignore
     def __init__(self, **kwargs):
-        super().__init__(Gtk.ListView, **kwargs)
+        super().__init__(**kwargs)

@@ -55,7 +55,7 @@ class BaseItem(Widget.EventBox):
         **kwargs,
     ):
         self.icon = Widget.Icon(image=icon_name, pixel_size=48)
-        self.text_label = Widget.Label(
+        self.title = Widget.Label(
             label=label,
             wrap=True,
             wrap_mode="word_char",
@@ -69,7 +69,7 @@ class BaseItem(Widget.EventBox):
             css_classes=["app-item", *css_classes],
             valign="center",
             vertical=vertical,
-            child=[self.icon, self.text_label, self.menu],
+            child=[self.icon, self.title, self.menu],
             **kwargs,
         )
 
@@ -91,8 +91,8 @@ class AppItem(BaseItem):
         ignis_app.close_window(ModuleWindow.LAUNCHER)
 
     def update(self, app: Application):
-        self.icon.icon_name = app.icon
-        self.text_label.label = app.name
+        self.icon.image = app.icon
+        self.title.label = app.name
         self.tooltip_text = app.name if self._vertical else None
 
         self.on_click = lambda _: launch_app(app)
@@ -187,7 +187,7 @@ class Launcher(PopupWindow):
             return False
 
         def on_change():
-            self._grid.selected_position = 0
+            self._grid._selection_model.set_selected(0)
 
             def scroll_callback():
                 vadj = self._scroll.get_vadjustment()
