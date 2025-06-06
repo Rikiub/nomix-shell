@@ -16,7 +16,7 @@ from ignis.widgets import Widget
 from nomix.utils.constants import ModuleWindow
 from nomix.utils.options import USER_OPTIONS
 from nomix.utils.types import ALIGN
-from nomix.widgets.grid_view import GridLayout
+from nomix.widgets.base_view import GridView
 from nomix.widgets.popup_window import PopupWindow
 from nomix.widgets.search_entry import SearchEntry
 
@@ -196,8 +196,8 @@ class Launcher(PopupWindow):
 
             GLib.idle_add(scroll_callback)
 
-        self._grid = GridLayout(
-            items=Application,
+        self._grid = GridView(
+            item_type=Application,
             on_setup=lambda: AppItem(vertical=USER_OPTIONS.launcher.grid),
             on_bind=lambda widget, app: widget.update(app),
             on_activate=lambda app: launch_app(app),

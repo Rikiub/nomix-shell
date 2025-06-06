@@ -1,10 +1,6 @@
 @use "../mixin";
 
 .launcher {
-	gridview {
-		background-color: transparent;
-	}
-
 	.search-entry {
 		@include mixin.interactive("surface");
 
