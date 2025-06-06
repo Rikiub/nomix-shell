@@ -1,45 +1,40 @@
 @use "../mixin";
 
 .launcher {
-	min-width: 440px;
+	gridview {
+		background-color: transparent;
+	}
 
 	.search-entry {
-		@include mixin.interactive(surface);
+		@include mixin.interactive("surface");
 
 		margin-bottom: 10px;
 		padding: 8px 15px;
 		border-radius: var(--border-radius-md);
-
-		entry {
-			background-color: unset;
-			outline: unset;
-		}
 	}
 
-	.app-item {
+	.activatable {
 		@include mixin.interactive("background");
-		border-radius: var(--border-radius-md);
-		
-		margin: 3px 5px;
-		padding: 10px 15px;
 
-		label {
-			font-size: 1.1rem;
-			margin-left: 15px;
-		}
+		font-size: 1.1rem;
+		font-weight: 500;
+
+		min-width: 100px;
+		min-height: 80px;
+		
+		margin: 3px;
+		padding: 10px;
 	}
 }
 
 .launcher.grid {
-	min-width: 800px;
-
-	.search-entry {
-		margin: 0 200px;
-		margin-bottom: 10px;
+	.scroll-container {
+		min-width: 700px;
+		min-height: 450px;
 	}
 
-	.app-item {
-		min-width: 160px;
-		min-height: 85px;
+	.search-entry {
+		margin: 0 150px;
+		margin-bottom: 10px;
 	}
 }
