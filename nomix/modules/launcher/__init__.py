@@ -245,7 +245,7 @@ class Launcher(PopupWindow):
                 halign="center",
                 child=[
                     Widget.Icon(image="search-symbolic", pixel_size=80),
-                    Widget.Label(label="No apps founded"),
+                    Widget.Label(label="No results found"),
                 ],
             ),
         )
