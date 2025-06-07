@@ -1,6 +1,6 @@
 from ignis.services.bluetooth import BluetoothService
 from ignis.services.network import NetworkService
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.modules.control_center.quick_settings.night import night_light_control
 from nomix.modules.control_center.quick_settings.vpn import vpn_control
@@ -16,7 +16,7 @@ network = NetworkService.get_default()
 bluetooth = BluetoothService.get_default()
 
 
-class QuickSettings(Widget.Box):
+class QuickSettings(widgets.Box):
     def __init__(self):
         super().__init__(vertical=True, css_classes=["quick-settings"])
 
@@ -60,7 +60,7 @@ class QuickSettings(Widget.Box):
             self._add_row(buttons, i)
 
     def _add_row(self, buttons: tuple[QSButton, ...], i: int) -> None:
-        row = Widget.Box(homogeneous=True)
+        row = widgets.Box(homogeneous=True)
 
         if len(self.child) > 0:
             row.style = "margin-top: 0.7rem;"  # type: ignore
@@ -77,7 +77,7 @@ class QuickSettings(Widget.Box):
             self._add_button(row, button2, buttons, i)
 
     def _add_button(
-        self, row: Widget.Box, button: QSButton, buttons: tuple[QSButton, ...], i: int
+        self, row: widgets.Box, button: QSButton, buttons: tuple[QSButton, ...], i: int
     ) -> None:
         row.append(button)
 

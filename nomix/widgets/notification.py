@@ -3,13 +3,13 @@ from typing import Callable, Generic, TypeVar
 
 from ignis.gobject import IgnisProperty
 from ignis.services.notifications import Notification
-from ignis.utils import Utils
-from ignis.widgets import Widget
+from ignis import utils
+from ignis import widgets
 
 T = TypeVar("T")
 
 
-class Placeholder(Generic[T], Widget.EventBox):
+class Placeholder(Generic[T], widgets.EventBox):
     def __init__(self, item: T | None = None, **kwargs):
         super().__init__(**kwargs)
 
@@ -24,12 +24,12 @@ class Placeholder(Generic[T], Widget.EventBox):
 
 class Header(Placeholder):
     def __init__(self):
-        self.app_icon = Widget.Icon(css_classes=["app-icon"], pixel_size=15)
-        self.app_name = Widget.Label(css_classes=["app-name"], halign="start")
-        self.time = Widget.Label(css_classes=["time"])
+        self.app_icon = widgets.Icon(css_classes=["app-icon"], pixel_size=15)
+        self.app_name = widgets.Label(css_classes=["app-name"], halign="start")
+        self.time = widgets.Label(css_classes=["time"])
 
-        self.button_arrow = Widget.Button(
-            child=Widget.Arrow(
+        self.button_arrow = widgets.Button(
+            child=widgets.Arrow(
                 direction="down",
                 degree=180,
                 pixel_size=24,
@@ -39,18 +39,18 @@ class Header(Placeholder):
         super().__init__(
             css_classes=["notification-header"],
             child=[
-                Widget.EventBox(
+                widgets.EventBox(
                     hexpand=True,
                     on_click=lambda _: self.item and self.item.close(),
                     child=[self.app_icon, self.app_name, self.time],
                 ),
-                Widget.Box(
+                widgets.Box(
                     halign="end",
                     hexpand=True,
                     child=[
                         self.button_arrow,
-                        Widget.Button(
-                            child=Widget.Icon(
+                        widgets.Button(
+                            child=widgets.Icon(
                                 image="window-close-symbolic",
                                 pixel_size=24,
                             ),
@@ -70,7 +70,7 @@ class Header(Placeholder):
         self.app_name.label = item.app_name
         self.app_name.visible = bool(item.app_name)
 
-        self.time.label = Utils.Poll(
+        self.time.label = utils.Poll(
             1000,
             lambda _: self._format_time(item.time),
         ).bind("output")
@@ -102,19 +102,19 @@ class Header(Placeholder):
 
 class Content(Placeholder):
     def __init__(self):
-        self.icon = Widget.Icon(
+        self.icon = widgets.Icon(
             css_classes=["icon"],
             pixel_size=50,
             halign="start",
             valign="start",
         )
 
-        self.summary = Widget.Label(
+        self.summary = widgets.Label(
             css_classes=["summary"],
             ellipsize="end",
             halign="start",
         )
-        self.body = Widget.Label(
+        self.body = widgets.Label(
             css_classes=["body"],
             use_markup=True,
             ellipsize="end",
@@ -128,7 +128,7 @@ class Content(Placeholder):
             on_click=lambda _: self.item and self.item.close(),
             child=[
                 self.icon,
-                Widget.Box(
+                widgets.Box(
                     vertical=True,
                     hexpand=True,
                     child=[self.summary, self.body],
@@ -173,15 +173,15 @@ class Action(Placeholder):
         self.item = item
 
         self.child = [
-            Widget.Button(
+            widgets.Button(
                 on_click=lambda _, action=action: action.invoke(),
-                child=Widget.Label(label=action.label),
+                child=widgets.Label(label=action.label),
             )
             for action in item.actions
         ]
 
 
-class NotificationWidget(Widget.EventBox):
+class NotificationWidget(widgets.EventBox):
     def __init__(
         self,
         notification: Notification | None = None,

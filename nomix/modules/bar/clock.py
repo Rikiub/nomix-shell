@@ -1,7 +1,7 @@
 import datetime
 
-from ignis.utils import Utils
-from ignis.widgets import Widget
+from ignis import utils
+from ignis import widgets
 
 from nomix.utils.constants import ModuleWindow
 from nomix.utils.options import USER_OPTIONS
@@ -23,9 +23,9 @@ class Clock(ActionButton):
             css_classes=["clock"],
             tooltip_text="Launcher",
             toggle_window=ModuleWindow.LAUNCHER,
-            child=Widget.Label(
+            child=widgets.Label(
                 css_classes=["clock-text"],
-                label=Utils.Poll(
+                label=utils.Poll(
                     1000,
                     lambda _: datetime.datetime.now().strftime(self.format),
                 ).bind("output"),

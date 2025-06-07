@@ -1,7 +1,7 @@
 import asyncio
 
 from ignis.services.bluetooth import BluetoothDevice, BluetoothService
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.utils.options import USER_OPTIONS
 from nomix.widgets.header_label import HeaderLabel
@@ -20,7 +20,7 @@ class BluetoothItem(DeviceItem):
             on_click=lambda _: asyncio.create_task(device.disconnect_from())
             if device.connected
             else asyncio.create_task(device.connect_to()),
-            extra_widget=Widget.Icon(
+            extra_widget=widgets.Icon(
                 image="bluetooth-active-symbolic",
                 tooltip_text="Paired",
                 visible=device.bind("paired"),

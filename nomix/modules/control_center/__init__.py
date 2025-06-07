@@ -1,5 +1,5 @@
 from ignis.app import IgnisApp
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.modules.control_center.battery import BatteryStatus
 from nomix.modules.control_center.brightness import Brightness
@@ -19,17 +19,17 @@ class ControlCenter(PopupWindow):
     def __init__(self, valign: ALIGN = "start", halign: ALIGN = "center"):
         power = PowerButton()
 
-        actions_left = Widget.Box(
+        actions_left = widgets.Box(
             child=[BatteryStatus()],
             css_classes=["left"],
         )
-        actions_right = Widget.Box(
+        actions_right = widgets.Box(
             child=[LockButton(), power],
             hexpand=True,
             halign="end",
             css_classes=["right"],
         )
-        actions = Widget.Box(
+        actions = widgets.Box(
             css_classes=["actions"],
             child=[actions_left, actions_right],
         )
@@ -42,14 +42,14 @@ class ControlCenter(PopupWindow):
             valign=valign,
             halign=halign,
             child=[
-                Widget.Box(
+                widgets.Box(
                     vertical=True,
                     child=[
                         actions,
                         power.menu,
                     ],
                 ),
-                Widget.Box(
+                widgets.Box(
                     vertical=True,
                     css_classes=["slider-control"],
                     child=[

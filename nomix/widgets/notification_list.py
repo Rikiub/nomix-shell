@@ -1,7 +1,7 @@
 from gi.repository import GLib  # type: ignore
 from ignis.services.notifications import Notification, NotificationService
 from ignis.utils.timeout import Timeout
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.widgets.view import ListView
 from nomix.widgets.notification import NotificationWidget
@@ -18,7 +18,7 @@ class NotificationList(ListView):
         control=None,
         **kwargs,
     ):
-        def on_bind(revealer: Widget.Revealer, notify: Notification):
+        def on_bind(revealer: widgets.Revealer, notify: Notification):
             child = revealer.child
             child.update(notify)
 
@@ -45,7 +45,7 @@ class NotificationList(ListView):
         super().__init__(
             item_type=Notification,
             items=notifications.notifications if not only_popups else [],
-            on_setup=lambda: Widget.Revealer(
+            on_setup=lambda: widgets.Revealer(
                 reveal_child=False,
                 transition_type="slide_down",
                 transition_duration=300,

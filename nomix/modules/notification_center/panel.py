@@ -1,6 +1,6 @@
 from ignis.options import options
 from ignis.services.notifications import NotificationService
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.modules.notification_center.player import MediaPlayer
 from nomix.widgets.notification_list import NotificationList
@@ -8,25 +8,25 @@ from nomix.widgets.notification_list import NotificationList
 notifications = NotificationService.get_default()
 
 
-class NotificationPanel(Widget.Box):
+class NotificationPanel(widgets.Box):
     def __init__(self, header_reverse: bool = False):
-        header = Widget.Box(
+        header = widgets.Box(
             css_classes=["header"],
             child=[
-                Widget.Box(
+                widgets.Box(
                     css_classes=["dnd"],
                     halign="start",
                     child=[
-                        Widget.Switch(
+                        widgets.Switch(
                             active=options.notifications.bind("dnd"),  # type: ignore
                             on_change=lambda _, active: options.notifications.set_dnd(  # type: ignore
                                 active
                             ),
                         ),
-                        Widget.Label(label="Do Not Disturb"),
+                        widgets.Label(label="Do Not Disturb"),
                     ],
                 ),
-                Widget.Button(
+                widgets.Button(
                     css_classes=["clear-all"],
                     label="Clear",
                     halign="end",
@@ -36,12 +36,12 @@ class NotificationPanel(Widget.Box):
             ],
         )
 
-        container = Widget.Box(
+        container = widgets.Box(
             vertical=True,
             child=[
                 MediaPlayer(),
                 NotificationList(),
-                Widget.Revealer(
+                widgets.Revealer(
                     vexpand=True,
                     valign="center",
                     transition_type="crossfade",
@@ -50,7 +50,7 @@ class NotificationPanel(Widget.Box):
                         "notifications",
                         lambda v: len(v) == 0,
                     ),
-                    child=Widget.Label(
+                    child=widgets.Label(
                         css_classes=["info-label"],
                         label="No notifications",
                     ),
@@ -63,7 +63,7 @@ class NotificationPanel(Widget.Box):
             vertical=True,
             child=[
                 header if header_reverse else None,
-                Widget.Scroll(vexpand=True, child=container),
+                widgets.Scroll(vexpand=True, child=container),
                 header if not header_reverse else None,
             ],
         )

@@ -1,10 +1,10 @@
 from ignis.services.system_tray import SystemTrayItem, SystemTrayService
-from ignis.widgets import Widget
+from ignis import widgets
 
 systemtray = SystemTrayService.get_default()
 
 
-class TrayItem(Widget.Button):
+class TrayItem(widgets.Button):
     def __init__(self, item: SystemTrayItem, **kwargs):
         def popup():
             if item.menu:
@@ -16,9 +16,9 @@ class TrayItem(Widget.Button):
             on_click=lambda _: popup(),
             on_right_click=lambda _: popup(),
             setup=lambda _: item.connect("removed", lambda _: self.unparent()),
-            child=Widget.Box(
+            child=widgets.Box(
                 child=[
-                    Widget.Icon(image=item.bind("icon"), pixel_size=24),
+                    widgets.Icon(image=item.bind("icon"), pixel_size=24),
                     item.menu,
                 ]
             ),
@@ -26,7 +26,7 @@ class TrayItem(Widget.Button):
         )
 
 
-class SystemTray(Widget.Box):
+class SystemTray(widgets.Box):
     def __init__(self):
         super().__init__(
             css_classes=["systemtray"],

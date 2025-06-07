@@ -1,7 +1,7 @@
 from typing import Literal
 
 from ignis.services.audio import AudioService, Stream
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.utils.options import USER_OPTIONS
 from nomix.widgets.header_label import HeaderLabel
@@ -52,15 +52,17 @@ class StreamMenu(DeviceMenu):
         )
 
 
-class Volume(Widget.Box):
+class Volume(widgets.Box):
     def __init__(self, stream_type: Literal["speaker", "microphone"]):
         stream = getattr(audio, stream_type)
         devices = stream_type + "s"
 
         device_menu = StreamMenu(stream_type=stream_type)
         scale = StreamVolume(stream=stream)
-        arrow = Widget.Button(
-            child=Widget.Arrow(pixel_size=20, rotated=device_menu.bind("reveal_child")),
+        arrow = widgets.Button(
+            child=widgets.Arrow(
+                pixel_size=20, rotated=device_menu.bind("reveal_child")
+            ),
             on_click=lambda _: device_menu.toggle(),
             css_classes=["volume-arrow"],
             visible=audio.bind(devices, lambda v: len(v) > 1),
@@ -70,7 +72,7 @@ class Volume(Widget.Box):
             visible=audio.bind(devices, lambda v: len(v) > 0),
             vertical=True,
             child=[
-                Widget.Box(
+                widgets.Box(
                     css_classes=["volume-slider", f"volume-{stream_type}"],
                     child=[scale, arrow],
                 ),

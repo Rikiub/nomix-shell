@@ -7,7 +7,7 @@ from ignis.services.applications import (
     ApplicationAction,
     ApplicationsService,
 )
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.utils.constants import NAVIGATION_KEYS, ModuleWindow
 from nomix.utils.options import USER_OPTIONS
@@ -27,22 +27,22 @@ def launch_app(app: Application):
     ignis_app.close_window(ModuleWindow.LAUNCHER)
 
 
-class AppItem(Widget.Box):
+class AppItem(widgets.Box):
     def __init__(
         self,
         application: Application | None = None,
         css_classes: list[str] = [],
         **kwargs,
     ) -> None:
-        self.icon = Widget.Icon(pixel_size=48)
-        self.title = Widget.Label(
+        self.icon = widgets.Icon(pixel_size=48)
+        self.title = widgets.Label(
             wrap=True,
             wrap_mode="word_char",
             justify="center",
             ellipsize="end",
             lines=2,
         )
-        self.menu = Widget.PopoverMenu()
+        self.menu = widgets.PopoverMenu()
 
         super().__init__(
             valign="center",
@@ -132,7 +132,7 @@ class Launcher(PopupWindow):
             on_accept=lambda _: launch_app(self._grid.selected),
             on_change=lambda _: self._grid.search(self._search_entry.text, filters),
         )
-        self._scroll = Widget.Scroll(
+        self._scroll = widgets.Scroll(
             css_classes=["scroll-container"],
             valign="center",
             vexpand=True,
@@ -144,21 +144,21 @@ class Launcher(PopupWindow):
         )
 
         hidder: Binding = self._grid.bind("total_items", lambda v: v == 0)
-        self._placeholder = Widget.Revealer(
+        self._placeholder = widgets.Revealer(
             css_classes=["placeholder"],
             transition_type="crossfade",
             transition_duration=300,
             reveal_child=hidder,
             visible=hidder,
-            child=Widget.Box(
+            child=widgets.Box(
                 vertical=True,
                 vexpand=True,
                 hexpand=True,
                 valign="center",
                 halign="center",
                 child=[
-                    Widget.Icon(image="search-symbolic", pixel_size=80),
-                    Widget.Label(label="No Results Found"),
+                    widgets.Icon(image="search-symbolic", pixel_size=80),
+                    widgets.Label(label="No Results Found"),
                 ],
             ),
         )

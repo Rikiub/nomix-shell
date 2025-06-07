@@ -7,7 +7,7 @@ from ignis.services.audio import AudioService
 from ignis.services.bluetooth import BluetoothDevice, BluetoothService
 from ignis.services.network import Ethernet, NetworkService, Wifi
 from ignis.services.upower import UPowerDevice, UPowerService
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.utils.constants import ModuleWindow
 from nomix.utils.options import USER_OPTIONS
@@ -21,18 +21,18 @@ audio = AudioService.get_default()
 upower = UPowerService.get_default()
 
 
-class IndicatorIcon(Widget.Box):
+class IndicatorIcon(widgets.Box):
     def __init__(
         self,
         icon_name: str | Binding = "",
         label: str | Binding = "",
         **kwargs,
     ):
-        self.label = Widget.Label(label=label)
+        self.label = widgets.Label(label=label)
 
         super().__init__(
             css_classes=["indicator-icon"],
-            child=[Widget.Icon(image=icon_name), self.label],
+            child=[widgets.Icon(image=icon_name), self.label],
             **kwargs,
         )
 
@@ -128,7 +128,7 @@ class BatteryItem(IndicatorIcon):
         USER_OPTIONS.debug.connect_option("battery_hidden", lambda *_: sync())
 
 
-class BatteriesIcons(Widget.Box):
+class BatteriesIcons(widgets.Box):
     def __init__(self):
         super().__init__(
             setup=lambda self: upower.connect(
@@ -148,7 +148,7 @@ class StatusPill(ActionButton):
             toggle_window=ModuleWindow.CONTROL_CENTER,
             on_scroll_up=lambda _: self._scroll("up"),
             on_scroll_down=lambda _: self._scroll("down"),
-            child=Widget.Box(
+            child=widgets.Box(
                 child=[
                     WifiIcon(),
                     EthernetIcon(),

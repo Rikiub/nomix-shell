@@ -4,7 +4,7 @@ from gi.repository import Gtk  # type: ignore
 from ignis.app import IgnisApp
 from ignis.base_widget import BaseWidget
 from ignis.variable import Variable
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.utils.types import ALIGN, TRANSITION_TYPE
 
@@ -16,7 +16,7 @@ def is_popup_opened() -> bool:
     return bool([i for i in app.windows if i.popup and i.visible])
 
 
-class PopupWindow(Widget.RevealerWindow):
+class PopupWindow(widgets.RevealerWindow):
     def __init__(
         self,
         namespace: str,
@@ -34,7 +34,7 @@ class PopupWindow(Widget.RevealerWindow):
     ):
         self._on_close = on_close
 
-        self.panel = Widget.Box(
+        self.panel = widgets.Box(
             css_classes=["popup-window", *css_classes],
             width_request=width_request,
             height_request=height_request,
@@ -45,15 +45,15 @@ class PopupWindow(Widget.RevealerWindow):
             **kwargs,
         )
 
-        overlay = Widget.Overlay(
-            child=Widget.EventBox(
+        overlay = widgets.Overlay(
+            child=widgets.EventBox(
                 css_classes=["window-backdrop"],
                 on_click=lambda _: OPENED_POPUP.set_value(""),
             ),
             overlays=[self.panel],
         )
 
-        revealer = Widget.Revealer(
+        revealer = widgets.Revealer(
             transition_type=transition_type,
             transition_duration=transition_duration,
             child=overlay,

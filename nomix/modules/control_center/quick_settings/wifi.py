@@ -1,8 +1,8 @@
 import asyncio
 
 from ignis.services.network import NetworkService, WifiAccessPoint, WifiDevice
-from ignis.utils import Utils
-from ignis.widgets import Widget
+from ignis import utils
+from ignis import widgets
 
 from nomix.utils.options import USER_OPTIONS
 from nomix.widgets.header_label import HeaderLabel
@@ -22,10 +22,10 @@ class WifiItem(DeviceItem):
             else "changes-allow-symbolic",
             active=access_point.bind("is_connected"),
             on_click=lambda _: self.toggle(access_point),
-            extra_widget=Widget.Button(
+            extra_widget=widgets.Button(
                 tooltip_text="Click to Forget",
                 on_click=lambda _: asyncio.create_task(access_point.forget()),
-                child=Widget.Icon(image="dialog-password-symbolic"),
+                child=widgets.Icon(image="dialog-password-symbolic"),
                 visible=access_point.bind("psk", lambda v: bool(v)),
             ),
         )
@@ -93,7 +93,7 @@ class WifiQS(QSButton):
             "notify::reveal-child", lambda v, _: on_opened(v.reveal_child)
         )
 
-        Utils.Poll(2000, lambda _: self._auto_scan and self.scan())
+        utils.Poll(2000, lambda _: self._auto_scan and self.scan())
 
     def scan(self):
         if network.wifi.enabled:

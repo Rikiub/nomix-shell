@@ -1,8 +1,8 @@
 from ignis.gobject import Binding, IgnisProperty
-from ignis.widgets import Widget
+from ignis import widgets
 
 
-class HeaderLabel(Widget.Box):
+class HeaderLabel(widgets.Box):
     def __init__(
         self,
         icon_name: str = "",
@@ -10,7 +10,7 @@ class HeaderLabel(Widget.Box):
         active: bool | Binding = False,
         **kwargs,
     ):
-        self._icon = Widget.Icon(
+        self._icon = widgets.Icon(
             image=icon_name,
             pixel_size=22,
             css_classes=["header-icon"],
@@ -20,7 +20,7 @@ class HeaderLabel(Widget.Box):
             css_classes=["header"],
             child=[
                 self._icon,
-                Widget.Label(
+                widgets.Label(
                     label=label,
                     halign="start",
                     css_classes=["header-label"],

@@ -2,7 +2,7 @@ from ignis.options import options
 from ignis.services.mpris import MprisService
 from ignis.services.notifications import Notification, NotificationService
 from ignis.variable import Variable
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.utils.constants import ModuleWindow
 from nomix.widgets.action_button import ActionButton
@@ -14,7 +14,7 @@ mpris = MprisService.get_default()
 class NotificationCenter(ActionButton):
     def __init__(self, css_classes: list[str] = []):
         self._counter = Variable(0)
-        self._label = Widget.Label(label="")
+        self._label = widgets.Label(label="")
 
         def tooltip_text():
             text = "Notification Center"
@@ -30,15 +30,15 @@ class NotificationCenter(ActionButton):
             tooltip_text=self._counter.bind("value", lambda _: tooltip_text()),
             toggle_window=ModuleWindow.NOTIFICATION_CENTER,
             on_click=lambda _: self._reset(),
-            child=Widget.Box(
+            child=widgets.Box(
                 halign="center",
                 hexpand=True,
                 child=[
-                    Widget.Icon(
+                    widgets.Icon(
                         image="media-playback-start-symbolic",
                         visible=mpris.bind("players", lambda v: bool(v)),
                     ),
-                    Widget.Icon(
+                    widgets.Icon(
                         image=options.notifications.bind(  # type: ignore
                             "dnd",
                             lambda v: "notification-disabled-symbolic"
@@ -50,7 +50,7 @@ class NotificationCenter(ActionButton):
                             lambda v: v == 0,
                         ),
                     ),
-                    Widget.Icon(
+                    widgets.Icon(
                         image="notification-new-symbolic",
                         visible=self._counter.bind(
                             "value",

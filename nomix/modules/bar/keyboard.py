@@ -1,12 +1,12 @@
 from ignis.services.hyprland import HyprlandKeyboard, HyprlandService
 from ignis.services.niri import NiriKeyboardLayouts, NiriService
-from ignis.widgets import Widget
+from ignis import widgets
 
 hyprland = HyprlandService.get_default()
 niri = NiriService.get_default()
 
 
-class KeyboardLayout(Widget.Button):
+class KeyboardLayout(widgets.Button):
     def __init__(self):
         keyboard: HyprlandKeyboard | NiriKeyboardLayouts | None = None
         name_property = ""
@@ -39,7 +39,7 @@ class KeyboardLayout(Widget.Button):
             on_click=lambda _: keyboard and keyboard.switch_layout(next_property),
             #
             # Widget
-            child=Widget.Label(label=keyboard.bind(name_property, short))
+            child=widgets.Label(label=keyboard.bind(name_property, short))
             if keyboard
-            else Widget.Label(label="?"),
+            else widgets.Label(label="?"),
         )

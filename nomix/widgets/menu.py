@@ -1,11 +1,11 @@
 from ignis.base_widget import BaseWidget
 from ignis.variable import Variable
-from ignis.widgets import Widget
+from ignis import widgets
 
 OPENED_MENU = Variable("")
 
 
-class Menu(Widget.Revealer):
+class Menu(widgets.Revealer):
     def __init__(
         self,
         name: str,
@@ -14,7 +14,7 @@ class Menu(Widget.Revealer):
         **kwargs,
     ):
         self._name = name
-        self._box = Widget.Box(
+        self._box = widgets.Box(
             css_classes=["accordion-menu"] + css_classes,
             vertical=True,
             child=child,

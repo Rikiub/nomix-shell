@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from gi.repository import Gio  # type: ignore
 from ignis.app import IgnisApp
 from ignis.services.niri import NiriService
-from ignis.utils import Utils
+from ignis import utils
 from ignis.utils.shell import exec_sh_async
 
 from nomix.utils.constants import USER_CONFIG_DIR
@@ -18,7 +18,7 @@ niri = NiriService.get_default()
 def monitor_gtk4_css():
     """Auto reload ignis on ~/.config/gtk-4.0/gtk.css changes"""
 
-    Utils.FileMonitor(
+    utils.FileMonitor(
         str(USER_CONFIG_DIR / "gtk-4.0" / "gtk.css"),
         callback=lambda *_: app.reload(),
     )

@@ -1,12 +1,12 @@
 from typing import Callable
 
 from ignis.gobject import Binding, IgnisProperty
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.widgets.menu import Menu
 
 
-class QSButton(Widget.Box):
+class QSButton(widgets.Box):
     def __init__(
         self,
         title: str | Binding | None = None,
@@ -22,7 +22,7 @@ class QSButton(Widget.Box):
         self._active = False
         self._menu = menu
 
-        self._subtitle = Widget.Label(
+        self._subtitle = widgets.Label(
             label=subtitle,
             halign="start",
             ellipsize="end",
@@ -37,22 +37,22 @@ class QSButton(Widget.Box):
 
         super().__init__(
             child=[
-                Widget.Button(
+                widgets.Button(
                     on_click=self._callback,
                     css_classes=["qs-button-text"],
                     hexpand=True,
-                    child=Widget.Box(
+                    child=widgets.Box(
                         child=[
-                            Widget.Icon(image=icon_name, style="margin: 0 7px;")
+                            widgets.Icon(image=icon_name, style="margin: 0 7px;")
                             if icon_name
                             else None,
-                            Widget.Box(
+                            widgets.Box(
                                 vertical=True,
                                 valign="center",
                                 halign="start",
                                 css_classes=["qs-button-title"],
                                 child=[
-                                    Widget.Label(
+                                    widgets.Label(
                                         label=title, halign="start", ellipsize="end"
                                     )
                                     if title
@@ -63,11 +63,11 @@ class QSButton(Widget.Box):
                         ],
                     ),
                 ),
-                Widget.Separator() if menu else None,
-                Widget.Button(
+                widgets.Separator() if menu else None,
+                widgets.Button(
                     on_click=lambda _: menu and menu.toggle(),
                     css_classes=["qs-button-menu"],
-                    child=Widget.Arrow(
+                    child=widgets.Arrow(
                         pixel_size=20, rotated=menu and menu.bind("reveal_child")
                     ),
                 )

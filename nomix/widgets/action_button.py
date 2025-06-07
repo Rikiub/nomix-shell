@@ -3,7 +3,7 @@ from typing import Callable
 from ignis.app import IgnisApp
 from ignis.base_widget import BaseWidget
 from ignis.gobject import Binding
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.utils.constants import ModuleWindow
 from nomix.widgets.popup_window import is_popup_opened
@@ -11,7 +11,7 @@ from nomix.widgets.popup_window import is_popup_opened
 app = IgnisApp.get_default()
 
 
-class ActionButton(Widget.EventBox):
+class ActionButton(widgets.EventBox):
     def __init__(
         self,
         on_click: Callable | None = None,
@@ -27,7 +27,7 @@ class ActionButton(Widget.EventBox):
         self.__on_hover_lost = on_hover_lost
         self.__toggle_window = toggle_window
 
-        self._button = Widget.Button(
+        self._button = widgets.Button(
             on_click=lambda v: self._proxy_on_click(v),
             css_classes=["action-button", *css_classes],
             child=child,

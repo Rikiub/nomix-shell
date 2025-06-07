@@ -4,12 +4,12 @@ from typing import Callable
 from ignis.base_widget import BaseWidget
 from ignis.gobject import Binding, IgnisProperty
 from ignis.utils.shell import exec_sh_async
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.widgets.menu import Menu
 
 
-class DeviceItem(Widget.EventBox):
+class DeviceItem(widgets.EventBox):
     def __init__(
         self,
         on_click: Callable | None = None,
@@ -20,14 +20,14 @@ class DeviceItem(Widget.EventBox):
         extra_widget: BaseWidget | None = None,
         tooltip_text: str | Binding | None = None,
     ):
-        start = Widget.Box(
+        start = widgets.Box(
             css_classes=["device-icons"],
             child=[
-                Widget.Icon(
+                widgets.Icon(
                     image=icon_name,
                     css_classes=["icon"],
                 ),
-                Widget.Icon(
+                widgets.Icon(
                     image=extra_icon_name or "",
                     visible=bool(extra_icon_name),
                     pixel_size=10,
@@ -36,14 +36,14 @@ class DeviceItem(Widget.EventBox):
             ],
         )
 
-        center = Widget.Label(
+        center = widgets.Label(
             label=label,
             max_width_chars=35,
             ellipsize="end",
             css_classes=["label"],
         )
 
-        check = Widget.Icon(
+        check = widgets.Icon(
             image="object-select-symbolic",
             visible=active,
             tooltip_text="Connected",
@@ -52,20 +52,20 @@ class DeviceItem(Widget.EventBox):
             hexpand=True,
         )
 
-        end = Widget.Box(
+        end = widgets.Box(
             css_classes=["indicators"],
             child=[
-                extra_widget or Widget.Box(),
+                extra_widget or widgets.Box(),
             ],
         )
 
         super().__init__(
             css_classes=["device-item"],
             child=[
-                Widget.Button(
+                widgets.Button(
                     hexpand=True,
                     on_click=on_click,
-                    child=Widget.Box(child=[start, center, check]),
+                    child=widgets.Box(child=[start, center, check]),
                     tooltip_text=tooltip_text,
                 ),
                 end,
@@ -90,7 +90,7 @@ class DeviceMenu(Menu):
         self._placeholder_text = ""
         self._device_items: list[DeviceItem] = []
 
-        self._devices_widget = Widget.Box(
+        self._devices_widget = widgets.Box(
             css_classes=["devices"], vertical=True, child=devices
         )
 
@@ -98,34 +98,34 @@ class DeviceMenu(Menu):
             name=name,
             css_classes=["device-menu"] + css_classes,
             child=[
-                Widget.Box(
+                widgets.Box(
                     vertical=True,
                     css_classes=["header"],
-                    child=[header if header else Widget.Label(visible=False)],
+                    child=[header if header else widgets.Label(visible=False)],
                 ),
-                Widget.Scroll(
+                widgets.Scroll(
                     height_request=height_request,
                     vexpand=True,
                     child=self._devices_widget,
                 ),
-                Widget.Box(
+                widgets.Box(
                     vertical=True,
                     visible=settings_visible,
                     child=[
-                        Widget.Separator(),
-                        Widget.Button(
+                        widgets.Separator(),
+                        widgets.Button(
                             css_classes=["device-item", "settings"],
                             on_click=lambda _: asyncio.create_task(
                                 exec_sh_async(settings_command)
                             ),
-                            child=Widget.Box(
+                            child=widgets.Box(
                                 css_classes=["device-icons"],
                                 child=[
-                                    Widget.Icon(
+                                    widgets.Icon(
                                         image="preferences-system-symbolic",
                                         css_classes=["icon"],
                                     ),
-                                    Widget.Label(
+                                    widgets.Label(
                                         label=settings_label,
                                         halign="start",
                                         css_classes=["icon"],
@@ -177,8 +177,8 @@ class DeviceMenu(Menu):
         self._device_items = value
         self._sync()
 
-    def _get_placeholder_text(self) -> Widget.Label:
-        return Widget.Label(
+    def _get_placeholder_text(self) -> widgets.Label:
+        return widgets.Label(
             label=self._placeholder_text,
             wrap="word",
             justify="center",

@@ -1,10 +1,10 @@
 from ignis.services.backlight import BacklightService
-from ignis.widgets import Widget
+from ignis import widgets
 
 backlight = BacklightService.get_default()
 
 
-class BacklightSlider(Widget.Scale):
+class BacklightSlider(widgets.Scale):
     def __init__(self, step: int = 5):
         super().__init__(
             min=0,
@@ -16,7 +16,7 @@ class BacklightSlider(Widget.Scale):
         )
 
 
-class Brightness(Widget.Box):
+class Brightness(widgets.Box):
     def __init__(self, step: int = 1, **kwargs):
         self.step = step
 
@@ -24,7 +24,7 @@ class Brightness(Widget.Box):
             css_classes=["volume-slider"],
             visible=backlight.bind("available"),
             child=[
-                Widget.Icon(
+                widgets.Icon(
                     css_classes=["volume-icon"],
                     image="display-brightness-symbolic",
                     pixel_size=20,

@@ -1,12 +1,12 @@
 from typing import Literal
 
 from ignis.services.audio import AudioService
-from ignis.widgets import Widget
+from ignis import widgets
 
 audio = AudioService.get_default()
 
 
-class SpeakerVolume(Widget.EventBox):
+class SpeakerVolume(widgets.EventBox):
     def __init__(self, steps: int = 5):
         self.steps = steps
 
@@ -18,11 +18,11 @@ class SpeakerVolume(Widget.EventBox):
             ),
             css_classes=["volume"],
             child=[
-                Widget.Button(
-                    child=Widget.Box(
+                widgets.Button(
+                    child=widgets.Box(
                         child=[
-                            Widget.Icon(image=audio.speaker.bind("icon_name")),
-                            Widget.Label(
+                            widgets.Icon(image=audio.speaker.bind("icon_name")),
+                            widgets.Label(
                                 label=audio.speaker.bind(
                                     "volume", transform=lambda v: str(v)
                                 )

@@ -1,8 +1,8 @@
 from ignis.services.audio import Stream
-from ignis.widgets import Widget
+from ignis import widgets
 
 
-class StreamSlider(Widget.Scale):
+class StreamSlider(widgets.Scale):
     def __init__(self, stream: Stream, step: int):
         super().__init__(
             min=0,
@@ -18,7 +18,7 @@ class StreamSlider(Widget.Scale):
         )
 
 
-class StreamVolume(Widget.Box):
+class StreamVolume(widgets.Box):
     def __init__(self, stream: Stream, step: int = 5, muteable: bool = True, **kwargs):
         self.step = step
 
@@ -26,7 +26,7 @@ class StreamVolume(Widget.Box):
             css_classes=["volume-slider"],
             hexpand=True,
             child=[
-                Widget.Button(
+                widgets.Button(
                     on_click=lambda _: stream.set_is_muted(not stream.is_muted),
                     tooltip_text=stream.bind_many(
                         ["is_muted", "volume"],
@@ -35,7 +35,7 @@ class StreamVolume(Widget.Box):
                         else str(volume) + "%",
                     ),
                     css_classes=["volume-icon"],
-                    child=Widget.Icon(image=stream.bind("icon_name"), pixel_size=24),
+                    child=widgets.Icon(image=stream.bind("icon_name"), pixel_size=24),
                     sensitive=muteable,
                 ),
                 StreamSlider(stream, step),

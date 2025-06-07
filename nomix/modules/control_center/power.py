@@ -3,7 +3,7 @@ from typing import Callable
 from ignis.services.hyprland import HyprlandService
 from ignis.services.niri import NiriService
 from ignis.utils.shell import exec_sh
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.widgets.header_label import HeaderLabel
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu
@@ -35,7 +35,7 @@ class PowerMenu(DeviceMenu):
                 icon_name="system-shutdown-symbolic",
                 on_click=lambda _: exec_sh("systemctl poweroff"),
             ),
-            Widget.Separator(),
+            widgets.Separator(),
             PowerItem(
                 label="Logout",
                 icon_name="system-log-out-symbolic",
@@ -61,16 +61,16 @@ class PowerMenu(DeviceMenu):
             exec_sh("niri msg action quit --skip-confirmation")
 
 
-class PowerButton(Widget.Button):
+class PowerButton(widgets.Button):
     def __init__(self, **kwargs):
         self.menu = PowerMenu()
 
         super().__init__(
             css_classes=["power-menu-button"],
-            child=Widget.Box(
+            child=widgets.Box(
                 child=[
-                    Widget.Icon(image="system-shutdown-symbolic"),
-                    Widget.Arrow(
+                    widgets.Icon(image="system-shutdown-symbolic"),
+                    widgets.Arrow(
                         pixel_size=20,
                         rotated=self.menu.bind("reveal_child"),
                     ),

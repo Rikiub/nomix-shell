@@ -1,4 +1,4 @@
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.modules.bar.clock import Clock
 from nomix.modules.bar.keyboard import KeyboardLayout
@@ -8,7 +8,7 @@ from nomix.modules.bar.systemtray import SystemTray
 from nomix.modules.bar.workspaces import Workspaces
 
 
-class Bar(Widget.Window):
+class Bar(widgets.Window):
     def __init__(self, monitor: int = 0):
         self.monitor_id: int = monitor
 
@@ -19,7 +19,7 @@ class Bar(Widget.Window):
             namespace=f"bar_{self.monitor_id}",
             monitor=self.monitor_id,
             style="background-color: transparent; border: unset;",
-            child=Widget.CenterBox(
+            child=widgets.CenterBox(
                 css_classes=["bar"],
                 start_widget=self.start(),
                 center_widget=self.center(),
@@ -27,8 +27,8 @@ class Bar(Widget.Window):
             ),
         )
 
-    def start(self) -> Widget.Box:
-        return Widget.Box(
+    def start(self) -> widgets.Box:
+        return widgets.Box(
             css_classes=["bar-start"],
             child=[
                 Workspaces(
@@ -39,22 +39,22 @@ class Bar(Widget.Window):
             ],
         )
 
-    def center(self) -> Widget.Box:
-        return Widget.Box(
+    def center(self) -> widgets.Box:
+        return widgets.Box(
             css_classes=["bar-center"],
             child=[
                 Clock(),
             ],
         )
 
-    def end(self) -> Widget.Box:
-        return Widget.Box(
+    def end(self) -> widgets.Box:
+        return widgets.Box(
             css_classes=["bar-end"],
             child=[
                 SystemTray(),
-                Widget.Separator(),
+                widgets.Separator(),
                 KeyboardLayout(),
-                Widget.Box(
+                widgets.Box(
                     css_classes=["button-group"],
                     child=[
                         NotificationCenter(css_classes=["start"]),

@@ -7,7 +7,7 @@ from ignis.services.hyprland import HyprlandService, HyprlandWorkspace
 from ignis.services.niri import NiriService, NiriWorkspace
 from ignis.utils.monitor import get_monitor
 from ignis.utils.shell import exec_sh_async
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.widgets.action_button import ActionButton
 from nomix.widgets.popup_window import OPENED_POPUP
@@ -37,7 +37,7 @@ class BaseWorkspaces(ActionButton):
             on_scroll_down=lambda _: self.scroll("down"),
             tooltip_text="Workspaces",
             css_classes=["workspaces", *css_classes],
-            child=Widget.Box(child=self.button_generator()),
+            child=widgets.Box(child=self.button_generator()),
             **kwargs,
         )
 
@@ -52,7 +52,7 @@ class BaseWorkspaces(ActionButton):
 
         raise ValueError("Niri has not active workspace")
 
-    def button(self, workspace: Workspace) -> Widget.Box:
+    def button(self, workspace: Workspace) -> widgets.Box:
         css_classes = ["workspace-item"]
 
         if self.is_workspace_active(workspace):
@@ -62,10 +62,10 @@ class BaseWorkspaces(ActionButton):
             css_classes.append("enumerated")
 
         idx = workspace.idx
-        widget = Widget.Box(
+        widget = widgets.Box(
             css_classes=css_classes,
             # on_click=lambda _, id=idx: self.service.switch_to_workspace(id),
-            child=[Widget.Label(label=str(idx) if self.enumerated else "")],
+            child=[widgets.Label(label=str(idx) if self.enumerated else "")],
         )
 
         return widget
@@ -155,12 +155,12 @@ def Workspaces(
     monitor_id: int,
     enumerated: bool = False,
     css_classes: list[str] = [],
-) -> Widget.EventBox:
+) -> widgets.EventBox:
     if hyprland.is_available:
         workspace = HyprlandWorkspaces(enumerated, css_classes)
     elif niri.is_available:
         workspace = NiriWorkspaces(monitor_id, enumerated, css_classes)
     else:
-        return Widget.EventBox()
+        return widgets.EventBox()
 
     return workspace

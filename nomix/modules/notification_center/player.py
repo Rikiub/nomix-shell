@@ -1,15 +1,15 @@
 import asyncio
 
 from ignis.services.mpris import MprisPlayer, MprisService
-from ignis.utils import Utils
-from ignis.widgets import Widget
+from ignis import utils
+from ignis import widgets
 
 from nomix.utils.helpers import AppInfo
 
 mpris = MprisService.get_default()
 
 
-class Player(Widget.Revealer):
+class Player(widgets.Revealer):
     PICTURE_SIZE = 60
     TEXT_LIMIT = 50
 
@@ -27,19 +27,19 @@ class Player(Widget.Revealer):
             app_name = desktop.name
             app_icon = desktop.symbolic_icon
 
-        header = Widget.EventBox(
+        header = widgets.EventBox(
             css_classes=["notification-header"],
             on_click=lambda _: play_pause(),
             child=[
-                Widget.Icon(image=app_icon, css_classes=["app-icon"]),
-                Widget.Label(label=app_name, css_classes=["app-name"]),
+                widgets.Icon(image=app_icon, css_classes=["app-icon"]),
+                widgets.Label(label=app_name, css_classes=["app-name"]),
             ],
         )
 
-        picture = Widget.EventBox(
+        picture = widgets.EventBox(
             on_click=lambda _: play_pause(),
             child=[
-                Widget.Picture(
+                widgets.Picture(
                     css_classes=["art"],
                     image=self._player.bind(
                         "art_url", lambda v: v or "emblem-music-symbolic"
@@ -51,13 +51,13 @@ class Player(Widget.Revealer):
             ],
         )
 
-        metadata = Widget.EventBox(
+        metadata = widgets.EventBox(
             css_classes=["metadata"],
             vertical=True,
             hexpand=True,
             on_click=lambda _: play_pause(),
             child=[
-                Widget.Label(
+                widgets.Label(
                     css_classes=["label-title"],
                     label=self._player.bind("title"),
                     tooltip_text=self._player.bind("title"),
@@ -66,7 +66,7 @@ class Player(Widget.Revealer):
                     halign="start",
                     max_width_chars=self.TEXT_LIMIT,
                 ),
-                Widget.Label(
+                widgets.Label(
                     css_classes=["label-artist"],
                     label=self._player.bind("artist"),
                     tooltip_text=self._player.bind("artist"),
@@ -78,23 +78,23 @@ class Player(Widget.Revealer):
             ],
         )
 
-        controls = Widget.Box(
+        controls = widgets.Box(
             css_classes=["controls"],
             valign="start",
             halign="end",
             child=[
-                Widget.Button(
+                widgets.Button(
                     css_classes=["previous"],
                     on_click=lambda _: asyncio.create_task(
                         self._player.previous_async()
                     ),
-                    child=Widget.Icon(image="media-skip-backward-symbolic"),
+                    child=widgets.Icon(image="media-skip-backward-symbolic"),
                 ),
-                Widget.Button(
+                widgets.Button(
                     css_classes=["play-pause"],
                     on_click=lambda _: play_pause(),
                     visible=self._player.bind("can_play"),
-                    child=Widget.Icon(
+                    child=widgets.Icon(
                         image=self._player.bind(
                             "playback_status",
                             lambda value: "media-playback-pause-symbolic"
@@ -103,11 +103,11 @@ class Player(Widget.Revealer):
                         )
                     ),
                 ),
-                Widget.Button(
+                widgets.Button(
                     css_classes=["next"],
                     on_click=lambda _: asyncio.create_task(self._player.next_async()),
                     visible=self._player.bind("can_go_next"),
-                    child=Widget.Icon(image="media-skip-forward-symbolic"),
+                    child=widgets.Icon(image="media-skip-forward-symbolic"),
                 ),
             ],
         )
@@ -121,15 +121,15 @@ class Player(Widget.Revealer):
 
             return f"{minutes}:{remaining_seconds:02}"
 
-        progress = Widget.EventBox(
+        progress = widgets.EventBox(
             css_classes=["progress-bar"],
             on_click=lambda _: play_pause(),
             visible=player.bind("position", lambda v: v != -1),
             child=[
-                Widget.Label(
+                widgets.Label(
                     label=self._player.bind("position", lambda v: str_minutes(v))
                 ),
-                Widget.Scale(
+                widgets.Scale(
                     max=self._player.bind("length"),
                     value=self._player.bind("position"),
                     on_change=lambda x: asyncio.create_task(
@@ -137,7 +137,7 @@ class Player(Widget.Revealer):
                     ),
                     hexpand=True,
                 ),
-                Widget.Label(
+                widgets.Label(
                     label=self._player.bind("length", lambda v: str_minutes(v)),
                     visible=self._player.bind("length", lambda v: v != -1),
                 ),
@@ -147,12 +147,12 @@ class Player(Widget.Revealer):
         super().__init__(
             transition_type="slide_down",
             reveal_child=self._player.bind("position", lambda v: v != -1),
-            child=Widget.Box(
+            child=widgets.Box(
                 css_classes=["notification", "player"],
                 vertical=True,
                 child=[
                     header,
-                    Widget.Box(child=[picture, metadata, controls]),
+                    widgets.Box(child=[picture, metadata, controls]),
                     progress,
                 ],
             ),
@@ -160,10 +160,10 @@ class Player(Widget.Revealer):
 
     def _destroy(self):
         self.reveal_child = False
-        Utils.Timeout(self.transition_duration, self.unparent)
+        utils.Timeout(self.transition_duration, self.unparent)
 
 
-class MediaPlayer(Widget.Box):
+class MediaPlayer(widgets.Box):
     def __init__(self, **kwargs):
         super().__init__(
             vertical=True,

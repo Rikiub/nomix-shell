@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from ignis.app import IgnisApp
 from ignis.services.notifications import NotificationService
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.utils.types import ANCHOR
 from nomix.widgets.notification_list import NotificationList
@@ -11,7 +11,7 @@ app = IgnisApp.get_default()
 notifications = NotificationService.get_default()
 
 
-class NotificationPopup(Widget.Window):
+class NotificationPopup(widgets.Window):
     def __init__(
         self,
         monitor: int = 0,

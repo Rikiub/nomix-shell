@@ -1,6 +1,6 @@
 from ignis.services.audio import AudioService
 from ignis.utils.debounce import debounce
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.utils.constants import ModuleWindow
 from nomix.widgets.stream_slider import StreamVolume
@@ -8,7 +8,7 @@ from nomix.widgets.stream_slider import StreamVolume
 audio = AudioService.get_default()
 
 
-class OSD(Widget.Window):
+class OSD(widgets.Window):
     def __init__(self, anchor: list[str] = ["bottom"]):
         self._persist = False
 
@@ -26,7 +26,7 @@ class OSD(Widget.Window):
             visible=False,
             layer="overlay",
             style="background-color: transparent; border: unset;",
-            child=Widget.EventBox(
+            child=widgets.EventBox(
                 css_classes=["osd"],
                 on_hover=lambda _: on_hover(),
                 on_hover_lost=lambda _: on_hover_lost(),

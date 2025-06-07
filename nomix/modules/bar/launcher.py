@@ -1,5 +1,5 @@
 from ignis.app import IgnisApp
-from ignis.widgets import Widget
+from ignis import widgets
 
 from nomix.utils.constants import ModuleWindow
 from nomix.widgets.action_button import ActionButton
@@ -13,5 +13,5 @@ class Launcher(ActionButton):
             css_classes=["launcher-button", *css_classes],
             tooltip_text="App Launcher",
             toggle_window=ModuleWindow.LAUNCHER,
-            child=Widget.Icon(icon_name="view-grid-symbolic", pixel_size=24),
+            child=widgets.Icon(icon_name="view-grid-symbolic", pixel_size=24),
         )
