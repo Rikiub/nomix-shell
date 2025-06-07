@@ -1,5 +1,5 @@
-from ignis.app import IgnisApp
 from ignis import widgets
+from ignis.app import IgnisApp
 
 from nomix.utils.constants import ModuleWindow
 from nomix.widgets.action_button import ActionButton

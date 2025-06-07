@@ -1,8 +1,7 @@
 import asyncio
 
+from ignis import utils, widgets
 from ignis.services.mpris import MprisPlayer, MprisService
-from ignis import utils
-from ignis import widgets
 
 from nomix.utils.helpers import AppInfo
 

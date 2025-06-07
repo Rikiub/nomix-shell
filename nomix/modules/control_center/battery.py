@@ -1,5 +1,5 @@
-from ignis.services.upower import UPowerDevice, UPowerService
 from ignis import widgets
+from ignis.services.upower import UPowerDevice, UPowerService
 
 from nomix.utils.options import USER_OPTIONS
 

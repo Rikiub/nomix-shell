@@ -1,10 +1,10 @@
 import asyncio
 from typing import Callable
 
+from ignis import widgets
 from ignis.base_widget import BaseWidget
 from ignis.gobject import Binding, IgnisProperty
 from ignis.utils.shell import exec_sh_async
-from ignis import widgets
 
 from nomix.widgets.menu import Menu
 

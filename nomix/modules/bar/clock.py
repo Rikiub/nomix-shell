@@ -1,7 +1,6 @@
 import datetime
 
-from ignis import utils
-from ignis import widgets
+from ignis import utils, widgets
 
 from nomix.utils.constants import ModuleWindow
 from nomix.utils.options import USER_OPTIONS

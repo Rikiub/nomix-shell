@@ -1,6 +1,6 @@
+from ignis import widgets
 from ignis.services.hyprland import HyprlandKeyboard, HyprlandService
 from ignis.services.niri import NiriKeyboardLayouts, NiriService
-from ignis import widgets
 
 hyprland = HyprlandService.get_default()
 niri = NiriService.get_default()

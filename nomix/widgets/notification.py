@@ -1,10 +1,9 @@
 import datetime
 from typing import Callable, Generic, TypeVar
 
+from ignis import utils, widgets
 from ignis.gobject import IgnisProperty
 from ignis.services.notifications import Notification
-from ignis import utils
-from ignis import widgets
 
 T = TypeVar("T")
 

@@ -1,5 +1,5 @@
-from ignis.services.backlight import BacklightService
 from ignis import widgets
+from ignis.services.backlight import BacklightService
 
 backlight = BacklightService.get_default()
 

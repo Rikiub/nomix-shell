@@ -1,5 +1,6 @@
 from typing import Literal
 
+from ignis import widgets
 from ignis.app import IgnisApp
 from ignis.gobject import Binding
 from ignis.options import options
@@ -7,7 +8,6 @@ from ignis.services.audio import AudioService
 from ignis.services.bluetooth import BluetoothDevice, BluetoothService
 from ignis.services.network import Ethernet, NetworkService, Wifi
 from ignis.services.upower import UPowerDevice, UPowerService
-from ignis import widgets
 
 from nomix.utils.constants import ModuleWindow
 from nomix.utils.options import USER_OPTIONS

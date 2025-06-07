@@ -1,8 +1,7 @@
 import asyncio
 
+from ignis import utils, widgets
 from ignis.services.network import NetworkService, WifiAccessPoint, WifiDevice
-from ignis import utils
-from ignis import widgets
 
 from nomix.utils.options import USER_OPTIONS
 from nomix.widgets.header_label import HeaderLabel

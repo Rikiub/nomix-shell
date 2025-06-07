@@ -1,5 +1,5 @@
-from ignis.gobject import Binding, IgnisProperty
 from ignis import widgets
+from ignis.gobject import Binding, IgnisProperty
 
 
 class HeaderLabel(widgets.Box):

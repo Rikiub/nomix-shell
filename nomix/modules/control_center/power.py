@@ -1,9 +1,9 @@
 from typing import Callable
 
+from ignis import widgets
 from ignis.services.hyprland import HyprlandService
 from ignis.services.niri import NiriService
 from ignis.utils.shell import exec_sh
-from ignis import widgets
 
 from nomix.widgets.header_label import HeaderLabel
 from nomix.widgets.menu_devices import DeviceItem, DeviceMenu

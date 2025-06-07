@@ -1,7 +1,7 @@
 from typing import Callable
 
-from ignis.gobject import Binding, IgnisProperty
 from ignis import widgets
+from ignis.gobject import Binding, IgnisProperty
 
 from nomix.widgets.menu import Menu
 

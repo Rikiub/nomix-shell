@@ -4,9 +4,9 @@ import asyncio
 from dataclasses import dataclass
 
 from gi.repository import Gio  # type: ignore
+from ignis import utils
 from ignis.app import IgnisApp
 from ignis.services.niri import NiriService
-from ignis import utils
 from ignis.utils.shell import exec_sh_async
 
 from nomix.utils.constants import USER_CONFIG_DIR

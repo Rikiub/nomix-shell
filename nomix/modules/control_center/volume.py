@@ -1,7 +1,7 @@
 from typing import Literal
 
-from ignis.services.audio import AudioService, Stream
 from ignis import widgets
+from ignis.services.audio import AudioService, Stream
 
 from nomix.utils.options import USER_OPTIONS
 from nomix.widgets.header_label import HeaderLabel

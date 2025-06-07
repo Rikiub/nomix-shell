@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+from ignis import widgets
 from ignis.app import IgnisApp
 from ignis.services.notifications import NotificationService
-from ignis import widgets
 
 from nomix.utils.types import ANCHOR
 from nomix.widgets.notification_list import NotificationList

@@ -1,6 +1,6 @@
+from ignis import widgets
 from ignis.services.audio import AudioService
 from ignis.services.mpris import MprisPlayer, MprisService
-from ignis import widgets
 
 audio = AudioService.get_default()
 mpris = MprisService.get_default()

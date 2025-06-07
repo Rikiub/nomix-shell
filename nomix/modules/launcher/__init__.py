@@ -1,4 +1,5 @@
-from gi.repository import GLib, Gdk, Gtk  # type: ignore
+from gi.repository import Gdk, GLib, Gtk  # type: ignore
+from ignis import widgets
 from ignis.app import IgnisApp
 from ignis.gobject import Binding
 from ignis.menu_model import IgnisMenuItem, IgnisMenuModel, IgnisMenuSeparator
@@ -7,14 +8,13 @@ from ignis.services.applications import (
     ApplicationAction,
     ApplicationsService,
 )
-from ignis import widgets
 
 from nomix.utils.constants import NAVIGATION_KEYS, ModuleWindow
 from nomix.utils.options import USER_OPTIONS
 from nomix.utils.types import ALIGN
-from nomix.widgets.view import GridView
 from nomix.widgets.popup_window import PopupWindow
 from nomix.widgets.search_entry import SearchEntry
+from nomix.widgets.view import GridView
 
 ignis_app = IgnisApp.get_default()
 applications = ApplicationsService.get_default()

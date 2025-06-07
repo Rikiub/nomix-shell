@@ -1,5 +1,5 @@
-from ignis.services.audio import Stream
 from ignis import widgets
+from ignis.services.audio import Stream
 
 
 class StreamSlider(widgets.Scale):

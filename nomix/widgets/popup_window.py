@@ -1,10 +1,10 @@
 from typing import Callable
 
 from gi.repository import Gtk  # type: ignore
+from ignis import widgets
 from ignis.app import IgnisApp
 from ignis.base_widget import BaseWidget
 from ignis.variable import Variable
-from ignis import widgets
 
 from nomix.utils.types import ALIGN, TRANSITION_TYPE
 

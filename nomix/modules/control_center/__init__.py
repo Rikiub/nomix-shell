@@ -1,5 +1,5 @@
-from ignis.app import IgnisApp
 from ignis import widgets
+from ignis.app import IgnisApp
 
 from nomix.modules.control_center.battery import BatteryStatus
 from nomix.modules.control_center.brightness import Brightness

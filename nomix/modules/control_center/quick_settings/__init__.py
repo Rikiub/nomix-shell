@@ -1,6 +1,6 @@
+from ignis import widgets
 from ignis.services.bluetooth import BluetoothService
 from ignis.services.network import NetworkService
-from ignis import widgets
 
 from nomix.modules.control_center.quick_settings.night import night_light_control
 from nomix.modules.control_center.quick_settings.vpn import vpn_control

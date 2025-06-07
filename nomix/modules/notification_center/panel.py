@@ -1,6 +1,6 @@
+from ignis import widgets
 from ignis.options import options
 from ignis.services.notifications import NotificationService
-from ignis import widgets
 
 from nomix.modules.notification_center.player import MediaPlayer
 from nomix.widgets.notification_list import NotificationList

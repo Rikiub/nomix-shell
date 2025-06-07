@@ -1,7 +1,7 @@
 from typing import Callable
 
-from ignis.gobject import Binding
 from ignis import widgets
+from ignis.gobject import Binding
 
 
 class ToggleBox(widgets.Box):

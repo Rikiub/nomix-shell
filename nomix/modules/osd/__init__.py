@@ -1,6 +1,6 @@
+from ignis import widgets
 from ignis.services.audio import AudioService
 from ignis.utils.debounce import debounce
-from ignis import widgets
 
 from nomix.utils.constants import ModuleWindow
 from nomix.widgets.stream_slider import StreamVolume

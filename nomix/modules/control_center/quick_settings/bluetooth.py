@@ -1,7 +1,7 @@
 import asyncio
 
-from ignis.services.bluetooth import BluetoothDevice, BluetoothService
 from ignis import widgets
+from ignis.services.bluetooth import BluetoothDevice, BluetoothService
 
 from nomix.utils.options import USER_OPTIONS
 from nomix.widgets.header_label import HeaderLabel

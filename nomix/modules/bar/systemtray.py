@@ -1,5 +1,5 @@
-from ignis.services.system_tray import SystemTrayItem, SystemTrayService
 from ignis import widgets
+from ignis.services.system_tray import SystemTrayItem, SystemTrayService
 
 systemtray = SystemTrayService.get_default()
 

@@ -1,6 +1,6 @@
+from ignis import widgets
 from ignis.base_widget import BaseWidget
 from ignis.variable import Variable
-from ignis import widgets
 
 OPENED_MENU = Variable("")
 

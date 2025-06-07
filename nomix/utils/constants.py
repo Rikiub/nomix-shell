@@ -1,7 +1,7 @@
 from enum import Enum
 from pathlib import Path
 
-from gi.repository import GLib, Gdk  # type: ignore
+from gi.repository import Gdk, GLib  # type: ignore
 
 USER_CONFIG_DIR = Path(GLib.get_user_config_dir())
 USER_CACHE_DIR = Path(GLib.get_user_cache_dir())

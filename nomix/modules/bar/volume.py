@@ -1,7 +1,7 @@
 from typing import Literal
 
-from ignis.services.audio import AudioService
 from ignis import widgets
+from ignis.services.audio import AudioService
 
 audio = AudioService.get_default()
 

@@ -1,11 +1,10 @@
 from gi.repository import GLib  # type: ignore
+from ignis import widgets
 from ignis.services.notifications import Notification, NotificationService
 from ignis.utils.timeout import Timeout
-from ignis import widgets
 
-from nomix.widgets.view import ListView
 from nomix.widgets.notification import NotificationWidget
-
+from nomix.widgets.view import ListView
 
 notifications = NotificationService.get_default()
 
