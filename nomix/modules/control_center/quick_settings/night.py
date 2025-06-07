@@ -1,6 +1,6 @@
 import asyncio
 
-from ignis.utils.shell import exec_sh_async
+from ignis import utils
 
 from nomix.utils.options import CACHE_OPTIONS, USER_OPTIONS
 from nomix.widgets.qsbutton import QSButton
@@ -38,7 +38,7 @@ class NightLightQS(QSButton):
 
     async def _run_command(self, command: str):
         try:
-            await exec_sh_async(command)
+            await utils.exec_sh_async(command)
         except Exception:
             pass
 

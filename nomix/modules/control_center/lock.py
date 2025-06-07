@@ -1,7 +1,7 @@
 import asyncio
 
 from ignis import widgets
-from ignis.utils.shell import exec_sh_async
+from ignis import utils
 
 from nomix.utils.options import USER_OPTIONS
 
@@ -12,7 +12,7 @@ class LockButton(widgets.Button):
             css_classes=["lock-button"],
             tooltip_text="Lock Screen",
             on_click=lambda _: asyncio.create_task(
-                exec_sh_async(USER_OPTIONS.control_center.screenlocker)
+                utils.exec_sh_async(USER_OPTIONS.control_center.screenlocker)
             ),
             child=widgets.Icon(image="lock-symbolic"),
             **kwargs,

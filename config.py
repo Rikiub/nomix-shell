@@ -1,5 +1,5 @@
 from ignis.app import IgnisApp
-from ignis.utils.monitor import get_n_monitors
+from ignis import utils
 
 from nomix.modules.bar import Bar
 from nomix.modules.control_center import ControlCenter
@@ -39,6 +39,6 @@ NotificationCenter(halign="end")
 OSD()
 
 # Show in all monitors
-for m in range(get_n_monitors()):
+for m in range(utils.get_n_monitors()):
     Bar(m)
     NotificationPopup(m, anchor=["top", "right"])

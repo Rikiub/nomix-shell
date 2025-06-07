@@ -4,8 +4,7 @@ from pathlib import Path
 from typing import cast, get_args
 
 from ignis.base_service import BaseService
-from ignis.utils.file_monitor import FileMonitor
-from ignis.utils.shell import exec_sh_async
+from ignis import utils
 
 from nomix.services.color_scheme.service import ColorSchemeService
 from nomix.utils.constants import OVERRIDE_FILE
@@ -30,7 +29,7 @@ class MatugenService(BaseService):
     def __init__(self) -> None:
         super().__init__()
 
-        FileMonitor(
+        utils.FileMonitor(
             path=str(SWWW_CACHE),
             callback=lambda monitor, path, event: self._on_update_wallpaper(
                 monitor, path, event
@@ -72,7 +71,7 @@ class MatugenService(BaseService):
         update_scheme()
         USER_OPTIONS.matugen.connect_option("scheme", lambda *_: update_scheme())
 
-    def _on_update_wallpaper(self, monitor: FileMonitor, path: str, event: str):
+    def _on_update_wallpaper(self, monitor: utils.FileMonitor, path: str, event: str):
         if event == "changes_done_hint":
             file = Path(path)
 
@@ -161,7 +160,7 @@ class MatugenService(BaseService):
                 command = f"--config '{path}'"
 
             try:
-                await exec_sh_async(
+                await utils.exec_sh_async(
                     f"matugen {command} --mode {mode} --type {type} image {image}"
                 )
             except Exception:

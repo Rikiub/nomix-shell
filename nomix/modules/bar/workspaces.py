@@ -6,8 +6,7 @@ from ignis.app import IgnisApp
 from ignis.gobject import Binding
 from ignis.services.hyprland import HyprlandService, HyprlandWorkspace
 from ignis.services.niri import NiriService, NiriWorkspace
-from ignis.utils.monitor import get_monitor
-from ignis.utils.shell import exec_sh_async
+from ignis import utils
 
 from nomix.widgets.action_button import ActionButton
 from nomix.widgets.popup_window import OPENED_POPUP
@@ -109,7 +108,7 @@ class NiriWorkspaces(BaseWorkspaces):
         css_classes: list[str] = [],
     ) -> None:
         self.monitor = None
-        if monitor := get_monitor(monitor_id):
+        if monitor := utils.get_monitor(monitor_id):
             self.monitor = monitor.get_connector()
 
         super().__init__(
@@ -117,7 +116,7 @@ class NiriWorkspaces(BaseWorkspaces):
             enumerated,
             css_classes,
             on_click=lambda _: asyncio.create_task(
-                exec_sh_async("niri msg action toggle-overview")
+                utils.exec_sh_async("niri msg action toggle-overview")
             ),
         )
 
