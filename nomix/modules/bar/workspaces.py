@@ -1,12 +1,11 @@
 import asyncio
 from typing import Literal
 
-from ignis import widgets
+from ignis import utils, widgets
 from ignis.app import IgnisApp
 from ignis.gobject import Binding
 from ignis.services.hyprland import HyprlandService, HyprlandWorkspace
 from ignis.services.niri import NiriService, NiriWorkspace
-from ignis import utils
 
 from nomix.widgets.action_button import ActionButton
 from nomix.widgets.popup_window import OPENED_POPUP

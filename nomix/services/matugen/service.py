@@ -3,8 +3,8 @@ import tempfile
 from pathlib import Path
 from typing import cast, get_args
 
-from ignis.base_service import BaseService
 from ignis import utils
+from ignis.base_service import BaseService
 
 from nomix.services.color_scheme.service import ColorSchemeService
 from nomix.utils.constants import OVERRIDE_FILE

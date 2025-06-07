@@ -1,5 +1,5 @@
-from ignis.app import IgnisApp
 from ignis import utils
+from ignis.app import IgnisApp
 
 from nomix.modules.bar import Bar
 from nomix.modules.control_center import ControlCenter

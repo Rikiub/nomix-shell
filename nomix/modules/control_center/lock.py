@@ -1,7 +1,6 @@
 import asyncio
 
-from ignis import widgets
-from ignis import utils
+from ignis import utils, widgets
 
 from nomix.utils.options import USER_OPTIONS
 
