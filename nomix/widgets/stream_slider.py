@@ -34,7 +34,7 @@ class StreamVolume(widgets.Box):
                         if is_muted
                         else str(volume) + "%",
                     ),
-                    css_classes=["volume-icon"],
+                    css_classes=["icon"],
                     child=widgets.Icon(image=stream.bind("icon_name"), pixel_size=24),
                     sensitive=muteable,
                 ),

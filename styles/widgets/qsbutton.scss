@@ -1,6 +1,6 @@
 @use "../mixin.scss";
 
-.qs-box {
+.qs-button {
 	border-radius: var(--border-radius-md);
 	margin-bottom: 3px;
 
@@ -14,7 +14,7 @@
 		background-color: var(--color-surface);
 
 		button {
-			@include mixin.interactive(surface);
+			@include mixin.interactive("surface");
 		}
 	}
 
@@ -22,20 +22,27 @@
 		background-color: var(--color-primary);
 
 		button {
-			@include mixin.interactive(primary);
+			@include mixin.interactive("primary");
 		}
 	}
 
-	.qs-button-title {
-		font-weight: bold;
-	}
-	.qs-button-subtitle {
-		font-weight: normal;
-		font-size: small;
+	.sections {
+		.icon {
+			margin: 0 7px;
+		}
+
+		.title {
+			font-weight: bold;
+		}
+		
+		.subtitle {
+			font-weight: normal;
+			font-size: small;
+		}
 	}
 
 	&.has-menu {
-		.qs-button-text {
+		.sections {
 			border-top-left-radius: var(--border-radius-md);
 			border-bottom-left-radius: var(--border-radius-md);
 
@@ -43,7 +50,7 @@
 			border-bottom-right-radius: 0;
 		}
 
-		.qs-button-menu {
+		.menu {
 			border-top-right-radius: var(--border-radius-md);
 			border-bottom-right-radius: var(--border-radius-md);
 

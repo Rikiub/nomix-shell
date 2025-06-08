@@ -8,6 +8,11 @@
 	font-family: var(--font), system-ui, sans-serif;
 }
 
+window.transparent {
+	background-color: transparent;
+	border: unset;
+}
+
 button {
 	@include mixin.interactive("surface");
 	transition: background-color 200ms;

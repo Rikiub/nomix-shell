@@ -18,10 +18,10 @@ class NotificationPopup(widgets.Window):
         anchor: list[ANCHOR] = ["top", "right"],
     ):
         super().__init__(
+            css_classes=["transparent"],
             namespace=f"notification_popup_{monitor}",
             layer="top",
             anchor=anchor,  # type: ignore
             monitor=monitor,
             child=NotificationList(only_popups=True),
-            style="background-color: transparent; border: unset;",
         )

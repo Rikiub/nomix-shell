@@ -16,9 +16,7 @@
 	transition: 0.3s;
 
 	.notification-header {
-		--text-color: var(--color-on-surface);
-		--text-muted: oklch(from var(--text-color) l c h / 0.5);
-
+		--text-muted: oklch(from var(--color-on-surface) l c h / 0.5);
 		margin-bottom: 5px;
 
 		.app-icon {
@@ -107,7 +105,7 @@
 	.metadata {
 		margin: 0 10px;
 
-		.label-title {
+		.title {
 			font-weight: bold;
 			font-size: large;
 		}

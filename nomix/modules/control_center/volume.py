@@ -64,7 +64,7 @@ class Volume(widgets.Box):
                 pixel_size=20, rotated=device_menu.bind("reveal_child")
             ),
             on_click=lambda _: device_menu.toggle(),
-            css_classes=["volume-arrow"],
+            css_classes=["arrow"],
             visible=audio.bind(devices, lambda v: len(v) > 1),
         )
 

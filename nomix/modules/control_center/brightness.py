@@ -25,7 +25,7 @@ class Brightness(widgets.Box):
             visible=backlight.bind("available"),
             child=[
                 widgets.Icon(
-                    css_classes=["volume-icon"],
+                    css_classes=["icon"],
                     image="display-brightness-symbolic",
                     pixel_size=20,
                 ),

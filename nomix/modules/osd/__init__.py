@@ -21,11 +21,11 @@ class OSD(widgets.Window):
             self.__update_visible()
 
         super().__init__(
+            css_classes=["transparent"],
             namespace=ModuleWindow.OSD,
             anchor=anchor,
             visible=False,
             layer="overlay",
-            style="background-color: transparent; border: unset;",
             child=widgets.EventBox(
                 css_classes=["osd"],
                 on_hover=lambda _: on_hover(),

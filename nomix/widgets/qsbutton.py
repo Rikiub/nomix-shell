@@ -27,7 +27,7 @@ class QSButton(widgets.Box):
             halign="start",
             ellipsize="end",
             max_width_chars=13,
-            css_classes=["qs-button-subtitle"],
+            css_classes=["subtitle"],
         )
         self._subtitle.connect(
             "notify::label",
@@ -36,24 +36,27 @@ class QSButton(widgets.Box):
         self._subtitle.notify("label")
 
         super().__init__(
+            css_classes=["qs-button"],
             child=[
                 widgets.Button(
-                    on_click=self._callback,
-                    css_classes=["qs-button-text"],
+                    css_classes=["sections"],
                     hexpand=True,
+                    on_click=self._callback,
                     child=widgets.Box(
                         child=[
-                            widgets.Icon(image=icon_name, style="margin: 0 7px;")
+                            widgets.Icon(image=icon_name, css_classes=["icon"])
                             if icon_name
                             else None,
                             widgets.Box(
                                 vertical=True,
                                 valign="center",
                                 halign="start",
-                                css_classes=["qs-button-title"],
+                                css_classes=["title"],
                                 child=[
                                     widgets.Label(
-                                        label=title, halign="start", ellipsize="end"
+                                        label=title,
+                                        halign="start",
+                                        ellipsize="end",
                                     )
                                     if title
                                     else None,
@@ -65,8 +68,8 @@ class QSButton(widgets.Box):
                 ),
                 widgets.Separator() if menu else None,
                 widgets.Button(
+                    css_classes=["menu"],
                     on_click=lambda _: menu and menu.toggle(),
-                    css_classes=["qs-button-menu"],
                     child=widgets.Arrow(
                         pixel_size=20, rotated=menu and menu.bind("reveal_child")
                     ),
@@ -74,7 +77,6 @@ class QSButton(widgets.Box):
                 if menu
                 else None,
             ],
-            css_classes=["qs-box"],
             **kwargs,
         )
 

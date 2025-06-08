@@ -13,12 +13,12 @@ class Bar(widgets.Window):
         self.monitor_id: int = monitor
 
         super().__init__(
+            css_classes=["transparent"],
+            anchor=["left", "top", "right"],
             exclusivity="exclusive",
             kb_mode="on_demand",
-            anchor=["left", "top", "right"],
             namespace=f"bar_{self.monitor_id}",
             monitor=self.monitor_id,
-            style="background-color: transparent; border: unset;",
             child=widgets.CenterBox(
                 css_classes=["bar"],
                 start_widget=self.start(),

@@ -60,7 +60,7 @@ class PopupWindow(widgets.RevealerWindow):
         )
 
         super().__init__(
-            style="background-color: transparent; border: unset;",
+            css_classes=["transparent"],
             anchor=["top", "bottom", "left", "right"],
             kb_mode="on_demand",
             namespace=namespace,

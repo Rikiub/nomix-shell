@@ -57,7 +57,7 @@ class Player(widgets.Revealer):
             on_click=lambda _: play_pause(),
             child=[
                 widgets.Label(
-                    css_classes=["label-title"],
+                    css_classes=["title"],
                     label=self._player.bind("title"),
                     tooltip_text=self._player.bind("title"),
                     justify="left",
@@ -66,7 +66,7 @@ class Player(widgets.Revealer):
                     max_width_chars=self.TEXT_LIMIT,
                 ),
                 widgets.Label(
-                    css_classes=["label-artist"],
+                    css_classes=["artist"],
                     label=self._player.bind("artist"),
                     tooltip_text=self._player.bind("artist"),
                     justify="left",
