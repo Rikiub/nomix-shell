@@ -34,7 +34,12 @@ class BaseView(Generic[T], BaseWidget):
         self._filter_model = Gtk.FilterListModel(model=self._store, filter=self._filter)
         self._selection_model = Gtk.SingleSelection(model=self._filter_model)
 
-        super().__init__(model=self._selection_model, factory=self._factory, **kwargs)
+        super().__init__(
+            model=self._selection_model,
+            factory=self._factory,
+            single_click_activate=True,
+            **kwargs,
+        )
 
         self.connect("activate", self._activate)
 
