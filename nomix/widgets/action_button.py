@@ -1,14 +1,14 @@
 from typing import Callable
 
 from ignis import widgets
-from ignis.app import IgnisApp
 from ignis.base_widget import BaseWidget
 from ignis.gobject import Binding
+from ignis.window_manager import WindowManager
 
 from nomix.utils.constants import ModuleWindow
 from nomix.widgets.popup_window import is_popup_opened
 
-app = IgnisApp.get_default()
+windows = WindowManager.get_default()
 
 
 class ActionButton(widgets.EventBox):
@@ -42,15 +42,17 @@ class ActionButton(widgets.EventBox):
         )
 
         if toggle_window:
-            self._window = app.get_window(toggle_window)
-            self._window.connect("notify::visible", lambda *_: self._toggle_active())
+            windows.get_window(toggle_window).connect(
+                "notify::visible",
+                lambda *_: self._toggle_active(),
+            )
 
     def _proxy_on_click(self, value):
         if self.__on_click:
             self.__on_click(value)
 
         if self.__toggle_window:
-            app.toggle_window(self.__toggle_window)
+            windows.toggle_window(self.__toggle_window)
 
     def _proxy_on_hover(self, value):
         self._button.add_css_class("hover")
@@ -59,7 +61,7 @@ class ActionButton(widgets.EventBox):
             self.__on_hover(value)
 
         if self.__toggle_window and is_popup_opened():
-            app.open_window(self.__toggle_window)
+            windows.open_window(self.__toggle_window)
 
     def _proxy_on_hover_lost(self, value):
         self._button.remove_css_class("hover")
@@ -68,7 +70,10 @@ class ActionButton(widgets.EventBox):
             self.__on_hover_lost(value)
 
     def _toggle_active(self):
-        if self._window.is_visible():
+        if (
+            self.__toggle_window
+            and windows.get_window(self.__toggle_window).is_visible()
+        ):
             self._button.add_css_class("active")
         else:
             self._button.remove_css_class("active")
