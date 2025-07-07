@@ -13,7 +13,7 @@ from nomix.widgets.popup_window import OPENED_POPUP
 hyprland = HyprlandService.get_default()
 niri = NiriService.get_default()
 
-app = IgnisApp.get_default()
+app = IgnisApp.get_initialized()
 
 Service = HyprlandService | NiriService
 Workspace = HyprlandWorkspace | NiriWorkspace

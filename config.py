@@ -1,5 +1,6 @@
 from ignis import utils
 from ignis.app import IgnisApp
+from ignis.css_manager import CssManager, CssInfoPath
 
 from nomix.modules.bar import Bar
 from nomix.modules.control_center import ControlCenter
@@ -12,8 +13,16 @@ from nomix.utils.constants import OVERRIDE_FILE, STYLES_DIR
 from nomix.utils.helpers import monitor_gtk4_css
 from nomix.utils.options import USER_OPTIONS
 
-app = IgnisApp.get_default()
-app.apply_css(str(STYLES_DIR / "index.scss"))
+app = IgnisApp.get_initialized()
+
+css_manager = CssManager()
+css_manager.apply_css(
+    CssInfoPath(
+        name="nomix",
+        path=str(STYLES_DIR / "index.scss"),
+        compiler_function=utils.sass_compile,
+    )
+)
 
 # SETUP
 # services

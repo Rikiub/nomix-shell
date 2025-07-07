@@ -8,7 +8,7 @@ from ignis.variable import Variable
 
 from nomix.utils.types import ALIGN, TRANSITION_TYPE
 
-app = IgnisApp.get_default()
+app = IgnisApp.get_initialized()
 OPENED_POPUP = Variable("")
 
 

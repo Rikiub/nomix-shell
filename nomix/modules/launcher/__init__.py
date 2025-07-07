@@ -16,7 +16,7 @@ from nomix.widgets.popup_window import PopupWindow
 from nomix.widgets.search_entry import SearchEntry
 from nomix.widgets.view import GridView
 
-ignis_app = IgnisApp.get_default()
+ignis_app = IgnisApp.get_initialized()
 applications = ApplicationsService.get_default()
 
 PIN_APPS = False

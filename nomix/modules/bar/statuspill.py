@@ -13,7 +13,7 @@ from nomix.utils.constants import ModuleWindow
 from nomix.utils.options import USER_OPTIONS
 from nomix.widgets.action_button import ActionButton
 
-app = IgnisApp.get_default()
+app = IgnisApp.get_initialized()
 
 network = NetworkService.get_default()
 bluetooth = BluetoothService.get_default()

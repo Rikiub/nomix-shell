@@ -11,7 +11,7 @@ from ignis.utils.shell import exec_sh_async
 
 from nomix.utils.constants import USER_CONFIG_DIR
 
-app = IgnisApp.get_default()
+app = IgnisApp.get_initialized()
 niri = NiriService.get_default()
 
 

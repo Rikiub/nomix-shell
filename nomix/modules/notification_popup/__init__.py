@@ -7,7 +7,7 @@ from ignis.services.notifications import NotificationService
 from nomix.utils.types import ANCHOR
 from nomix.widgets.notification_list import NotificationList
 
-app = IgnisApp.get_default()
+app = IgnisApp.get_initialized()
 notifications = NotificationService.get_default()
 
 

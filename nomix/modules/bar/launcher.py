@@ -4,7 +4,7 @@ from ignis.app import IgnisApp
 from nomix.utils.constants import ModuleWindow
 from nomix.widgets.action_button import ActionButton
 
-app = IgnisApp.get_default()
+app = IgnisApp.get_initialized()
 
 
 class Launcher(ActionButton):

@@ -12,7 +12,7 @@ from nomix.utils.types import ALIGN
 from nomix.widgets.menu import OPENED_MENU
 from nomix.widgets.popup_window import PopupWindow
 
-app = IgnisApp.get_default()
+app = IgnisApp.get_initialized()
 
 
 class ControlCenter(PopupWindow):
