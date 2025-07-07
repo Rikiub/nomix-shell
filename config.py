@@ -15,7 +15,7 @@ from nomix.utils.options import USER_OPTIONS
 
 app = IgnisApp.get_initialized()
 
-css_manager = CssManager()
+css_manager = CssManager.get_default()
 css_manager.apply_css(
     CssInfoPath(
         name="nomix",
