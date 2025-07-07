@@ -1,6 +1,6 @@
 from ignis import utils
 from ignis.app import IgnisApp
-from ignis.css_manager import CssManager, CssInfoPath
+from ignis.css_manager import CssInfoPath, CssManager
 
 from nomix.modules.bar import Bar
 from nomix.modules.control_center import ControlCenter
