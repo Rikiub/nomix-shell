@@ -1,6 +1,5 @@
 from gi.repository import Gdk, GLib, Gtk  # type: ignore
 from ignis import widgets
-from ignis.app import IgnisApp
 from ignis.gobject import Binding
 from ignis.menu_model import IgnisMenuItem, IgnisMenuModel, IgnisMenuSeparator
 from ignis.services.applications import (
@@ -8,6 +7,7 @@ from ignis.services.applications import (
     ApplicationAction,
     ApplicationsService,
 )
+from ignis.window_manager import WindowManager
 
 from nomix.utils.constants import NAVIGATION_KEYS, ModuleWindow
 from nomix.utils.options import USER_OPTIONS
@@ -16,7 +16,7 @@ from nomix.widgets.popup_window import PopupWindow
 from nomix.widgets.search_entry import SearchEntry
 from nomix.widgets.view import GridView
 
-ignis_app = IgnisApp.get_initialized()
+window_manager = WindowManager.get_default()
 applications = ApplicationsService.get_default()
 
 PIN_APPS = False
@@ -24,7 +24,7 @@ PIN_APPS = False
 
 def launch_app(app: Application):
     app.launch()
-    ignis_app.close_window(ModuleWindow.LAUNCHER)
+    window_manager.close_window(ModuleWindow.LAUNCHER)
 
 
 class AppItem(widgets.Box):
@@ -56,7 +56,7 @@ class AppItem(widgets.Box):
 
     def launch_action(self, action: ApplicationAction) -> None:
         action.launch()
-        ignis_app.close_window(ModuleWindow.LAUNCHER)
+        window_manager.close_window(ModuleWindow.LAUNCHER)
 
     def update(self, app: Application):
         self.icon.image = app.icon
@@ -207,7 +207,7 @@ class Launcher(PopupWindow):
             self._grid.selected.launch()
 
         if keyval == Gdk.KEY_Escape:
-            ignis_app.close_window(ModuleWindow.LAUNCHER)
+            window_manager.close_window(ModuleWindow.LAUNCHER)
 
     def _on_key_pressed(self, controller, keyval, keycode, state):
         if keyval in NAVIGATION_KEYS:

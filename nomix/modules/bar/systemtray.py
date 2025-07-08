@@ -30,6 +30,7 @@ class SystemTray(widgets.Box):
     def __init__(self):
         super().__init__(
             css_classes=["systemtray"],
+            visible=systemtray.bind("items", lambda v: bool(v)),
             setup=lambda _: systemtray.connect(
                 "added",
                 lambda _, item: self.append(TrayItem(item)),

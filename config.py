@@ -18,8 +18,8 @@ app = IgnisApp.get_initialized()
 css_manager = CssManager.get_default()
 css_manager.apply_css(
     CssInfoPath(
-        name="index",
-        path=str(STYLES_DIR / "index.scss"),
+        name="main",
+        path=str(STYLES_DIR / "main.scss"),
         compiler_function=utils.sass_compile,
     )
 )
