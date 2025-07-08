@@ -9,7 +9,7 @@ from nomix.modules.notification_center import NotificationCenter
 from nomix.modules.notification_popup import NotificationPopup
 from nomix.modules.osd import OSD
 from nomix.services.color_scheme.service import ColorSchemeService
-from nomix.utils.constants import OVERRIDE_FILE, STYLES_DIR
+from nomix.utils.constants import CACHE_DIR, OVERRIDE_FILE, STYLES_DIR
 from nomix.utils.helpers import monitor_gtk4_css
 from nomix.utils.options import USER_OPTIONS
 
@@ -18,9 +18,15 @@ app = IgnisApp.get_initialized()
 css_manager = CssManager.get_default()
 css_manager.apply_css(
     CssInfoPath(
-        name="nomix",
+        name="index",
         path=str(STYLES_DIR / "index.scss"),
         compiler_function=utils.sass_compile,
+    )
+)
+css_manager.apply_css(
+    CssInfoPath(
+        name="theme",
+        path=str(CACHE_DIR / "override.scss"),
     )
 )
 
